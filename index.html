@@ -6,9 +6,9 @@
 <title>ChillZone – Take a Break. Explore Space.</title>
 <meta name="description" content="ChillZone is a cozy corner of outer space for students: browser games, space videos and a break timer.">
 <meta name="theme-color" content="#070816">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%90%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http\://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%90%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -208,6 +208,180 @@ footer strong{color:var(--lavender)}
 .agree{display:flex;gap:.7rem;align-items:flex-start;margin:1rem 0;cursor:pointer}
 .agree input{width:20px;height:20px;margin-top:.2rem;accent-color:var(--violet);flex:none}
 .gate-actions{display:flex;flex-wrap:wrap;gap:.7rem}
+
+/* Galaxy Brain trivia + achievements */
+.brain-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr);gap:1rem;align-items:start}
+.brain-card{padding:1.4rem}
+.quiz-top{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem;color:var(--muted);font-size:.95rem}
+.quiz-track{height:8px;background:rgba(196,181,253,.15);border-radius:99px;overflow:hidden;margin-bottom:1.3rem}
+.quiz-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));transition:width .25s}
+#quizQuestion{font-size:clamp(1.1rem,2.4vw,1.45rem);margin-bottom:1.1rem}
+.quiz-choices{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.quiz-choice{font:inherit;text-align:left;color:var(--text);background:rgba(7,8,22,.55);border:1px solid var(--line);border-radius:14px;padding:.85rem 1rem;cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.quiz-choice:hover:not(:disabled){border-color:var(--cyan);transform:translateY(-2px)}
+.quiz-choice:disabled{cursor:default;opacity:.95}
+.quiz-choice.correct{border-color:#4ade80;background:rgba(74,222,128,.13)}
+.quiz-choice.wrong{border-color:#fb7185;background:rgba(251,113,133,.12)}
+.quiz-feedback{min-height:3.2rem;padding:.8rem 0;color:var(--muted)}
+.quiz-feedback.good{color:#86efac}.quiz-feedback.bad{color:#fda4af}
+.quiz-actions{display:flex;flex-wrap:wrap;gap:.6rem}
+.quiz-result{text-align:center;padding:1rem .5rem}
+.quiz-result .result-emoji{font-size:3rem;margin-bottom:.6rem}
+.quiz-result h3{margin-bottom:.5rem}
+.quiz-result p{color:var(--muted)}
+.badge-list{display:grid;gap:.7rem}
+.achievement{display:flex;align-items:center;gap:.8rem;padding:.8rem;border:1px solid var(--line);border-radius:15px;background:rgba(7,8,22,.28)}
+.achievement .medal{width:42px;height:42px;flex:none;display:grid;place-items:center;font-size:1.45rem;border-radius:13px;background:rgba(196,181,253,.1);filter:grayscale(1);opacity:.45}
+.achievement.unlocked{border-color:rgba(103,232,249,.45);background:rgba(103,232,249,.07)}
+.achievement.unlocked .medal{filter:none;opacity:1;background:rgba(103,232,249,.13)}
+.achievement h3{font-family:var(--body);font-size:.98rem;margin-bottom:.15rem}
+.achievement p{font-size:.88rem;color:var(--muted);margin:0}
+.badge-count{color:var(--cyan);font-weight:600}
+.session-note{font-size:.88rem;color:var(--muted);margin-top:1rem}
+@media(max-width:760px){.brain-layout{grid-template-columns:1fr}.quiz-choices{grid-template-columns:1fr}}
+
+
+/* Settings & feature-choice center — leaves the existing background untouched */
+.settings-intro{color:var(--muted);max-width:760px}
+.settings-toolbar{display:flex;flex-wrap:wrap;gap:.65rem;margin:1rem 0 1.4rem}
+.settings-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start}
+.settings-group{padding:1.1rem}
+.settings-group h3{font-size:1.05rem;margin-bottom:.35rem}
+.settings-group>p{color:var(--muted);font-size:.92rem;margin-bottom:.8rem}
+.feature-option{display:flex;gap:.7rem;align-items:flex-start;padding:.7rem .2rem;border-top:1px solid rgba(196,181,253,.12);cursor:pointer}
+.feature-option input{width:19px;height:19px;margin:.2rem 0 0;accent-color:var(--violet);flex:none}
+.feature-option strong{display:block;font-size:.96rem}
+.feature-option small{display:block;color:var(--muted);font-size:.85rem;line-height:1.4;margin-top:.12rem}
+.settings-output{margin-top:1rem;padding:1rem}
+.settings-output p{color:var(--muted);margin:.3rem 0 .8rem}
+#settingsStatus{min-height:1.5em;color:var(--cyan);margin:.6rem 0 0}
+@media(max-width:760px){.settings-groups{grid-template-columns:1fr}}
+
+
+/* ChillZone upgrade pack: controls and built-in mini arcade */
+.cz-settings-live{padding:1.2rem;margin-bottom:1.2rem}
+.cz-settings-live h3{font-size:1.05rem;margin-bottom:.5rem}
+.cz-settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.cz-setting{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem;border:1px solid var(--line);border-radius:14px;background:rgba(7,8,22,.24)}
+.cz-setting label{font-weight:600}
+.cz-setting small{display:block;color:var(--muted);font-weight:400}
+.cz-setting input[type=checkbox]{width:20px;height:20px;accent-color:var(--violet);flex:none}
+.cz-setting select,.cz-setting input[type=range],.cz-search{max-width:100%;font:inherit;color:var(--text);background:rgba(7,8,22,.7);border:1px solid var(--line);border-radius:10px;padding:.45rem}
+.cz-search-tools{display:flex;flex-wrap:wrap;gap:.65rem;margin:.8rem 0 1rem;align-items:center}
+.cz-search{flex:1;min-width:180px}
+.cz-mini-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.2rem}
+.cz-mini-card{padding:1.1rem}
+.cz-mini-card h3{font-size:1rem;margin:.35rem 0}
+.cz-mini-card p{color:var(--muted);font-size:.92rem}
+.cz-mini-card .btn{margin:.2rem .2rem .2rem 0}
+.cz-game-area{margin-top:.7rem;padding:.75rem;border:1px solid var(--line);border-radius:14px;background:rgba(7,8,22,.38)}
+.cz-game-area[hidden]{display:none}
+.cz-memory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.4rem}
+.cz-memory-card{font-size:1.4rem;min-height:54px;padding:.35rem;border:1px solid var(--line);border-radius:10px;background:rgba(139,92,246,.16);color:var(--text);cursor:pointer}
+.cz-memory-card:disabled{opacity:.8;cursor:default}
+.cz-planet-options{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
+.cz-planet-options button{white-space:normal}
+.cz-arcade-canvas{width:100%;max-width:560px;display:block;background:#070816;border:1px solid var(--line);border-radius:12px;touch-action:manipulation}
+.cz-status{color:var(--cyan);min-height:1.5em;margin:.4rem 0}
+.cz-stats{display:flex;flex-wrap:wrap;gap:.6rem;margin:.8rem 0}
+.cz-stat{border:1px solid var(--line);border-radius:12px;padding:.65rem .85rem;background:rgba(7,8,22,.25)}
+.cz-stat strong{display:block;font-size:1.2rem;color:var(--cyan)}
+body.cz-focus .nav,body.cz-focus .credit,body.cz-focus footer{opacity:.12;transition:opacity .2s}
+body.cz-focus .sec:not(.cz-focus-keep){opacity:.35}
+body.cz-focus .sec.cz-focus-keep{opacity:1}
+body.cz-dim:after{content:"";position:fixed;inset:0;background:rgba(0,0,0,.28);pointer-events:none;z-index:8000}
+body.cz-low-motion *,body.cz-low-motion *:before,body.cz-low-motion *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+.cz-pointer-glow{position:fixed;left:0;top:0;width:180px;height:180px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(103,232,249,.10),transparent 70%);transform:translate(-50%,-50%);opacity:0;transition:opacity .2s}
+body.cz-pointer-on .cz-pointer-glow{opacity:1}
+body.cz-parallax .nebula.a{transform:translate3d(var(--px,0),var(--py,0),0)}
+body.cz-parallax .nebula.b{transform:translate3d(calc(var(--px,0) * -.7),calc(var(--py,0) * -.7),0)}
+body.cz-parallax .nebula.c{transform:translate3d(calc(var(--px,0) * .45),calc(var(--py,0) * .45),0)}
+body.cz-parallax .planet-wrap{transform:translate3d(calc(var(--px,0) * -.22),calc(var(--py,0) * -.22),0)}
+@media(max-width:760px){.cz-settings-grid,.cz-mini-grid{grid-template-columns:1fr}.cz-memory-card{min-height:48px}}
+
+
+
+.settings-modal-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;font-weight:700;font-family:var(--display)}
+/* Requested layout refinements: floating settings, pinned profile, and quiet Observe mode */
+.nav nav{margin-left:auto}
+.nav-profile{font:inherit;font-weight:600;white-space:nowrap;cursor:pointer;color:var(--text);background:rgba(22,24,64,.8);border:1px solid var(--line);border-radius:999px;padding:.55rem .9rem;flex:none}
+.nav-profile:hover,.nav-observe:hover{border-color:var(--cyan);background:rgba(139,92,246,.22)}
+.links .observe-item{display:flex;align-items:center}
+.nav-observe{font:inherit;font-weight:600;cursor:pointer;color:var(--cyan);background:rgba(22,24,64,.8);border:1px solid var(--line);border-radius:999px;padding:.48rem .9rem;white-space:nowrap}
+#profilePanel{position:fixed;z-index:950;top:76px;right:1rem;width:min(340px,calc(100vw - 2rem));padding:1rem;background:rgba(10,12,34,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 60px rgba(0,0,0,.45);backdrop-filter:blur(18px)}
+#profilePanel h2{font-size:1.2rem;margin-bottom:.6rem}
+#profilePanel p{color:var(--muted);margin:.2rem 0 .7rem}
+#profilePanel .profile-actions{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
+#settingsFloat{position:fixed;z-index:920;right:1.15rem;bottom:1.15rem;width:58px;height:58px;border-radius:50%;border:1px solid rgba(196,181,253,.5);background:linear-gradient(135deg,#8b5cf6,#4338ca);color:#fff;box-shadow:0 8px 30px rgba(99,102,241,.42);font-size:1.45rem;cursor:pointer;display:grid;place-items:center}
+#settingsFloat:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(103,232,249,.3)}
+#settings{display:none}
+body.cz-settings-open #settings{display:block;position:fixed;z-index:910;right:1rem;bottom:5.5rem;top:auto;left:auto;width:min(900px,calc(100vw - 2rem));max-height:78vh;overflow:auto;padding:1rem;background:rgba(8,10,29,.98);border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 70px rgba(0,0,0,.6);backdrop-filter:blur(20px);scroll-margin-top:0}
+body.cz-settings-open #settings .sec{padding:0}
+body.cz-settings-open #settings .wrap{max-width:none;padding:0}
+body.cz-settings-open #settings .sec-head{margin-bottom:1rem}
+body.cz-settings-open #settings .settings-groups{margin-top:1rem}
+body.cz-settings-open #settings .settings-output{display:none}
+body.cz-settings-open #settings .settings-intro{max-width:none}
+body.cz-settings-open #settings .settings-toolbar{margin:.8rem 0}
+#usernameHelp{margin-top:.75rem;padding:.8rem;border:1px solid var(--line);border-radius:14px;background:rgba(139,92,246,.1)}
+#usernameHelp p{margin:0 0 .6rem;color:var(--lavender)}
+.username-suggestions{display:flex;gap:.45rem;flex-wrap:wrap}
+.username-suggestions button{font:inherit;color:var(--text);background:rgba(7,8,22,.7);border:1px solid var(--line);border-radius:999px;padding:.35rem .75rem;cursor:pointer}
+.username-suggestions button:hover{border-color:var(--cyan)}
+#observeStage{position:fixed;z-index:3;inset:70px 0 0;display:none;pointer-events:none;align-items:center;justify-content:center;text-align:center;color:rgba(238,240,255,.7);font-size:.85rem;letter-spacing:.12em;text-transform:uppercase}
+body.cz-observe-mode #observeStage{display:flex}
+body.cz-observe-mode main,body.cz-observe-mode footer,body.cz-observe-mode .credit,body.cz-observe-mode #settingsFloat,body.cz-observe-mode #profilePanel{display:none!important}
+body.cz-observe-mode .nav .links li:not(.observe-item){display:none!important}
+body.cz-observe-mode .nav .burger{display:none!important}
+body.cz-observe-mode .nav .links{display:flex!important;position:static;flex-direction:row;background:transparent;border:0;padding:0}
+body.cz-observe-mode .nav-in{justify-content:space-between}
+#observeNav[aria-pressed="true"]{background:rgba(103,232,249,.18);border-color:var(--cyan)}
+#observeDiscover{position:fixed;z-index:930;left:1rem;bottom:1rem;width:58px;height:58px;border-radius:50%;border:1px solid rgba(196,181,253,.5);background:linear-gradient(135deg,#0e7490,#4338ca);color:#fff;font-size:1.45rem;box-shadow:0 8px 30px rgba(34,211,238,.25);cursor:pointer;display:none;place-items:center}
+body.cz-observe-mode #observeDiscover{display:grid}
+#observeSettingsToggle{position:fixed;z-index:930;left:5.35rem;bottom:1rem;width:58px;height:58px;border-radius:50%;border:1px solid rgba(196,181,253,.5);background:rgba(13,16,48,.94);color:var(--text);font-size:1.25rem;box-shadow:0 8px 30px rgba(34,211,238,.16);cursor:pointer;display:none;place-items:center}
+body.cz-observe-mode #observeSettingsToggle{display:grid}
+#observeSettingsPanel{position:fixed;z-index:945;left:1rem;bottom:5.5rem;width:min(390px,calc(100vw - 2rem));max-height:min(74vh,620px);overflow:auto;padding:1rem;background:rgba(8,10,29,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 70px rgba(0,0,0,.6);backdrop-filter:blur(20px)}
+#observeSettingsPanel h2{font-size:1.1rem;margin-bottom:.3rem}
+#observeSettingsPanel .observe-sub{color:var(--muted);font-size:.88rem;margin-bottom:.8rem}
+.observe-setting{padding:.75rem 0;border-top:1px solid rgba(196,181,253,.15)}
+.observe-setting label{display:flex;justify-content:space-between;gap:.75rem;font-weight:600}
+.observe-setting small{display:block;color:var(--muted);line-height:1.45;margin:.25rem 0 .45rem}
+.observe-setting input[type=range]{width:100%;accent-color:var(--cyan)}
+.observe-setting output{color:var(--cyan);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* Gentle fade-and-lift entrance for popups, helpers, panels and status overlays. */
+@keyframes czSoftFadeIn{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes czSoftFadeOnly{from{opacity:0}to{opacity:1}}
+.cz-fade-enter{animation:czSoftFadeIn .38s ease-out both!important}
+#usernameHelp:not([hidden]),#profilePanel:not([hidden]),#settings:not([hidden]),#observePanel:not([hidden]),#observeSettingsPanel:not([hidden]),.gate-card,.settings-modal-top,.overlay:not([hidden]),.cz-mini-card,.glass{animation:czSoftFadeIn .38s ease-out both}
+#observeFlyby.active{animation:observeDrift 12s linear forwards,czSoftFadeOnly .9s ease-out both}
+.btn,button,a,.nav-profile,.nav-observe,#settingsFloat,#observeDiscover,#observeSettingsToggle{transition:opacity .28s ease,background-color .28s ease,border-color .28s ease,box-shadow .28s ease,transform .28s ease}
+[hidden]{display:none!important}
+#observePanel{position:fixed;z-index:940;left:1rem;bottom:5.5rem;width:min(390px,calc(100vw - 2rem));max-height:min(70vh,560px);overflow:auto;padding:1rem;background:rgba(8,10,29,.97);border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 70px rgba(0,0,0,.6);backdrop-filter:blur(20px)}
+#observePanel h2{font-size:1.15rem;margin-bottom:.25rem}
+.observe-section-title{font-family:var(--body);font-size:.95rem;margin:.85rem 0 .25rem;color:var(--lavender)}
+#observePanel .observe-sub{color:var(--muted);font-size:.9rem;margin-bottom:.8rem}
+.observe-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 .8rem}
+.observe-object{display:flex;gap:.7rem;align-items:center;padding:.65rem .2rem;border-top:1px solid rgba(196,181,253,.15)}
+.observe-object .obj-icon{font-size:1.7rem;width:2.2rem;text-align:center}
+.observe-object strong{display:block}
+.observe-object small{display:block;color:var(--muted)}
+.rarity{font-size:.75rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.rarity.common{color:#d1d5db}.rarity.uncommon{color:#86efac}.rarity.rare{color:#93c5fd}.rarity.legendary{color:#fcd34d}
+#observeFound{color:var(--cyan);min-height:1.4em;margin:.35rem 0}
+#observeFlyby{position:fixed;z-index:925;left:105vw;top:28%;display:none;align-items:center;gap:.7rem;max-width:min(310px,80vw);padding:.7rem .95rem;border:1px solid rgba(196,181,253,.42);border-radius:999px;background:rgba(8,10,29,.86);box-shadow:0 8px 36px rgba(34,211,238,.16);backdrop-filter:blur(12px);pointer-events:none;white-space:nowrap}
+#observeFlyby.active{display:flex;animation:observeDrift 12s linear forwards}
+#observeFlyby .flyby-icon{font-size:2rem}
+#observeFlyby strong{display:block;font-size:.9rem}
+#observeFlyby small{display:block;color:var(--muted);font-size:.72rem}
+@keyframes observeDrift{0%{left:105vw;opacity:0;transform:translateY(0) scale(.8)}8%{opacity:1;transform:translateY(-8px) scale(1)}50%{transform:translateY(12px) scale(1)}92%{opacity:1}100%{left:-360px;opacity:0;transform:translateY(-6px) scale(.92)}}
+@media(prefers-reduced-motion:reduce){#observeFlyby.active{animation-duration:1ms}#usernameHelp:not([hidden]),#profilePanel:not([hidden]),#settings:not([hidden]),#observePanel:not([hidden]),#observeSettingsPanel:not([hidden]),.gate-card,.settings-modal-top,.overlay:not([hidden]),.cz-mini-card,.glass{animation:none!important}}
+@media(max-width:760px){
+ .nav-in{gap:.45rem;padding:.65rem .75rem}.logo{font-size:.98rem}.nav-profile{font-size:.86rem;padding:.48rem .65rem}.nav nav{margin-left:0;min-width:0}.nav .links{gap:.1rem}.nav .links a{padding:.5rem .65rem}
+ body.cz-settings-open #settings{right:.5rem;bottom:5rem;width:calc(100vw - 1rem);max-height:78vh;padding:.8rem}
+ #settingsFloat{right:.7rem;bottom:.7rem;width:52px;height:52px}
+ #observePanel{left:.6rem;bottom:5rem;width:calc(100vw - 1.2rem)}#observeSettingsPanel{left:.6rem;bottom:5rem;width:calc(100vw - 1.2rem)}#observeDiscover{left:.7rem;bottom:.7rem;width:52px;height:52px}#observeSettingsToggle{left:4.5rem;bottom:.7rem;width:52px;height:52px}
+}
+
 </style>
 </head>
 <body>
@@ -221,6 +395,12 @@ footer strong{color:var(--lavender)}
       <label class="lbl" for="uname">Username</label>
       <input type="text" id="uname" name="uname" maxlength="20" autocomplete="nickname" aria-describedby="nameErr" placeholder="Your explorer name">
       <p class="gate-err" id="nameErr" role="alert"></p>
+      <div id="usernameHelp" hidden>
+        <p>Need help deciding? Here are some options...</p>
+        <div class="username-suggestions" aria-label="Suggested usernames">
+          <button type="button" data-username="Nova">Nova</button><button type="button" data-username="Luna">Luna</button><button type="button" data-username="Cosmo">Cosmo</button><button type="button" data-username="Orbit">Orbit</button><button type="button" data-username="Stella">Stella</button><button type="button" data-username="Astro">Astro</button>
+        </div>
+      </div>
       <div class="gate-actions"><button class="btn primary" type="submit">Continue</button></div>
     </form>
     <div id="stepTerms" hidden>
@@ -274,13 +454,47 @@ footer strong{color:var(--lavender)}
       <ul class="links" id="links">
         <li><a href="#home">Home</a></li>
         <li><a href="#games">Games</a></li>
+          <li><a href="#brain">Trivia & Badges</a></li>
         <li><a href="#watch">Movies / Watch</a></li>
         <li><a href="#timer">Break Timer</a></li>
         <li><a href="#about">About</a></li>
+        <li class="observe-item"><button class="nav-observe" id="observeNav" type="button" aria-pressed="false">Observe</button></li>
       </ul>
     </nav>
+    <button class="nav-profile" id="profileToggle" type="button" aria-expanded="false" aria-controls="profilePanel">👤 Profile</button>
   </div>
 </header>
+
+<div id="profilePanel" class="glass" hidden role="dialog" aria-labelledby="profileTitle">
+  <h2 id="profileTitle">Explorer Profile 👤</h2>
+  <p>Your current explorer name: <strong id="profileName">Explorer</strong></p>
+  <label class="lbl" for="profileNameInput">Change username</label>
+  <input id="profileNameInput" type="text" maxlength="20" autocomplete="nickname" placeholder="Your explorer name" style="width:100%;font:inherit;color:var(--text);background:rgba(7,8,22,.7);border:1px solid var(--line);border-radius:10px;padding:.6rem .7rem">
+  <div class="profile-actions"><button class="btn primary small" id="profileSave" type="button">Save name</button><button class="btn small" id="profileClose" type="button">Close</button></div>
+  <p id="profileStatus" role="status" aria-live="polite"></p>
+</div>
+<button id="settingsFloat" type="button" aria-label="Open settings" aria-expanded="false" title="Settings">⚙️</button>
+<div id="observeStage" aria-hidden="true">Observe mode · deep space</div>
+<div id="observeFlyby" aria-hidden="true"><span class="flyby-icon">🛰️</span><span><strong>Space object</strong><small>Common</small></span></div>
+<button id="observeDiscover" type="button" aria-label="Discover space objects" title="Discover space objects">🔭</button>
+<button id="observeSettingsToggle" type="button" aria-label="Observe settings" title="Observe settings">⚙</button>
+<div id="observeSettingsPanel" class="glass" hidden role="dialog" aria-labelledby="observeSettingsTitle">
+  <h2 id="observeSettingsTitle">Observe Settings ⚙️</h2>
+  <p class="observe-sub">Customize how often deep-space objects drift by and the chance checks used for each rarity. These controls only affect Observe mode.</p>
+  <div class="observe-setting"><label for="observeRate">Objects per minute <output id="observeRateValue" for="observeRate">4</output></label><small>Controls how many arrival checks happen each minute. Higher values mean more frequent encounters; not every check is guaranteed to show an object.</small><input id="observeRate" type="range" min="1" max="8" step="1" value="4"></div>
+  <div class="observe-setting"><label for="observeCommonChance">Common chance check <output id="observeCommonValue" for="observeCommonChance">90%</output></label><small>Each arrival check independently rolls this chance for a Common object.</small><input id="observeCommonChance" type="range" min="0" max="100" step="5" value="90"></div>
+  <div class="observe-setting"><label for="observeUncommonChance">Uncommon chance check <output id="observeUncommonValue" for="observeUncommonChance">70%</output></label><small>If multiple rarity checks succeed, the highest rarity takes priority.</small><input id="observeUncommonChance" type="range" min="0" max="100" step="5" value="70"></div>
+  <div class="observe-setting"><label for="observeRareChance">Rare chance check <output id="observeRareValue" for="observeRareChance">50%</output></label><input id="observeRareChance" type="range" min="0" max="100" step="5" value="50"></div>
+  <div class="observe-setting"><label for="observeLegendaryChance">Legendary chance check <output id="observeLegendaryValue" for="observeLegendaryChance">20%</output></label><small>Legendary objects include Black Hole, Pulsar, and Andromeda. Their check runs first, so they take priority if several checks succeed.</small><input id="observeLegendaryChance" type="range" min="0" max="100" step="5" value="20"></div>
+  <div class="observe-actions"><button class="btn small" id="observeSettingsReset" type="button">Reset defaults</button><button class="btn small" id="observeSettingsClose" type="button">Close</button></div>
+</div>
+<div id="observePanel" class="glass" hidden role="dialog" aria-labelledby="observeTitle">
+  <h2 id="observeTitle">Deep Space Discoveries ✨</h2>
+  <p class="observe-sub">Relax and watch as astronauts, spacecraft, and cosmic wonders drift through deep space on their own. No microphone or scanning needed.</p>
+  <div class="observe-actions"><button class="btn small" id="observeClose" type="button">Close</button></div>
+  <p id="observeFound" role="status" aria-live="polite">Waiting for the next object to drift by…</p>
+  <h3 class="observe-section-title">Objects in the catalog</h3><div id="observeCatalog" aria-label="Space object catalog"></div><h3 class="observe-section-title">Your discoveries</h3><div id="observeCollection" aria-live="polite"><p class="session-note">Objects will be added automatically as they appear.</p></div>
+</div>
 
 <main>
 <!-- HOME -->
@@ -363,14 +577,136 @@ footer strong{color:var(--lavender)}
       </div>
       <p class="viewer-note" id="gameNote">The Game Nebula is run by a third party, so ChillZone can't guarantee it will load. If the area stays blank or shows a refused-to-connect icon, that site doesn't allow embedding.</p>
     </div>
+    <div class="cz-search-tools" aria-label="Game finder">
+      <input class="cz-search" id="czGameSearch" type="search" placeholder="Search games…" aria-label="Search games">
+      <select class="cz-search" id="czGameFilter" aria-label="Filter games by type" style="max-width:220px"><option value="all">All game types</option><option value="built">Built-in games</option><option value="portal">Game portal</option></select>
+      <button class="btn" id="czRandomGame" type="button">🎲 Random built-in game</button>
+    </div>
+    <div class="glass cz-settings-live" style="margin-top:1rem">
+      <h3>Mini Arcade 🎮</h3>
+      <p class="settings-intro">Three built-in games work directly on this page. Favorites and recent picks are kept for this visit; no account is needed.</p>
+      <div class="cz-mini-grid">
+        <article class="glass cz-mini-card" data-mini="asteroid" data-title="Asteroid Dodge">
+          <div class="big" aria-hidden="true">☄️</div><h3>Asteroid Dodge</h3><p>Dodge the falling asteroids. Use the left/right buttons or keyboard arrows.</p>
+          <button class="btn primary" type="button" data-start-mini="asteroid">Play</button><button class="btn" type="button" data-fav="asteroid">☆ Favorite</button>
+          <div class="cz-game-area" id="czAsteroidArea" hidden><canvas class="cz-arcade-canvas" id="czAsteroidCanvas" width="560" height="260" aria-label="Asteroid Dodge playfield"></canvas><div class="settings-toolbar"><button class="btn" id="czAsteroidLeft" type="button">← Left</button><button class="btn" id="czAsteroidRight" type="button">Right →</button><button class="btn primary" id="czAsteroidStart" type="button">Start / Restart</button></div><p class="cz-status" id="czAsteroidStatus" role="status">Press start to begin.</p></div>
+        </article>
+        <article class="glass cz-mini-card" data-mini="memory" data-title="Cosmic Memory">
+          <div class="big" aria-hidden="true">🪐</div><h3>Cosmic Memory</h3><p>Find matching pairs of space symbols.</p>
+          <button class="btn primary" type="button" data-start-mini="memory">Play</button><button class="btn" type="button" data-fav="memory">☆ Favorite</button>
+          <div class="cz-game-area" id="czMemoryArea" hidden><div class="cz-memory-grid" id="czMemoryGrid"></div><p class="cz-status" id="czMemoryStatus" role="status">Find all the pairs!</p><button class="btn" id="czMemoryRestart" type="button">Shuffle cards</button></div>
+        </article>
+        <article class="glass cz-mini-card" data-mini="planet" data-title="Planet Quiz">
+          <div class="big" aria-hidden="true">🌍</div><h3>Planet Quiz</h3><p>Answer quick questions about the Solar System.</p>
+          <button class="btn primary" type="button" data-start-mini="planet">Play</button><button class="btn" type="button" data-fav="planet">☆ Favorite</button>
+          <div class="cz-game-area" id="czPlanetArea" hidden><h3 id="czPlanetQuestion">Ready?</h3><div class="cz-planet-options" id="czPlanetOptions"></div><p class="cz-status" id="czPlanetStatus" role="status"></p><button class="btn" id="czPlanetNext" type="button">Next question</button></div>
+        </article>
+      </div>
+      <div class="settings-toolbar"><button class="btn" id="czShowFavorites" type="button">★ Show favorites</button><button class="btn" id="czShowRecent" type="button">🕘 Recently played</button><button class="btn" id="czShowAllGames" type="button">Show all mini-games</button></div>
+      <p id="czGameListStatus" class="cz-status" role="status"></p>
+    </div>
   </div>
+</section>
+
+<!-- GALAXY BRAIN -->
+<section id="brain" class="sec" aria-labelledby="brain-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="brain-title">Galaxy Brain 🧠</h2>
+      <p>Test your space knowledge, collect cosmic badges, and see how much you know about the universe.</p>
+    </div>
+    <div class="brain-layout">
+      <div class="glass brain-card" aria-labelledby="quizHeading">
+        <div class="quiz-top"><span>🚀 5-question mission</span><span id="quizScore" aria-live="polite">Score: 0</span></div>
+        <div class="quiz-track" aria-hidden="true"><span id="quizProgress"></span></div>
+        <div class="cz-search-tools" style="margin-top:.5rem">
+          <label>Category <select id="czTriviaCategory" class="cz-search"><option value="all">All space topics</option><option value="planets">Planets</option><option value="stars">Stars & gravity</option><option value="galaxies">Galaxies</option><option value="exploration">Space exploration</option></select></label>
+          <label>Difficulty <select id="czTriviaDifficulty" class="cz-search"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></label>
+          <label>Hint <input type="checkbox" id="czTriviaHints" checked></label>
+        </div>
+        <div id="quizPlay">
+          <p class="tag" id="quizCounter">Question 1 of 5</p>
+          <h3 id="quizQuestion">Ready for launch?</h3>
+          <div class="quiz-choices" id="quizChoices"></div>
+          <p class="quiz-feedback" id="quizFeedback" role="status" aria-live="polite">Choose an answer to begin your mission!</p>
+          <div class="quiz-actions"><button class="btn primary" id="quizNext" type="button" disabled>Next question →</button><button class="btn" id="quizRestart" type="button">New mission ↻</button></div>
+        </div>
+        <div class="quiz-result" id="quizResult" hidden aria-live="polite">
+          <div class="result-emoji" id="quizResultEmoji" aria-hidden="true">🌟</div>
+          <h3 id="quizResultTitle">Mission complete!</h3>
+          <p id="quizResultText"></p>
+          <button class="btn primary" id="quizAgain" type="button">Play again 🚀</button>
+        </div>
+      </div>
+      <aside class="glass brain-card" aria-labelledby="achievements-title">
+        <div class="quiz-top"><h3 id="achievements-title">Achievement Deck 🏆</h3><span class="badge-count" id="badgeCount">0 / 4</span></div>
+        <div class="badge-list" id="badgeList" aria-live="polite"></div>
+        <p class="session-note">Badges reset when you close or refresh this page. Nothing is saved.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+<!-- SETTINGS / FEATURE CHOICES -->
+<section id="settings" class="sec" aria-labelledby="settings-title">
+  <div class="settings-modal-top"><span>Settings & Control Deck</span><button type="button" class="btn small" id="settingsClose">✕ Close</button></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="settings-title">Settings & Control Deck ⚙️</h2>
+      <p class="settings-intro">Adjust ChillZone from one place. The original space background artwork and colors stay exactly as they are.</p>
+    </div>
+    <div class="glass cz-settings-live" aria-labelledby="cz-live-settings-title">
+      <h3 id="cz-live-settings-title">Live controls ⚙️</h3>
+      <p class="settings-intro">These controls work now. Your original space background colors and artwork stay the same. Preferences stay in this tab unless you explicitly turn on saving.</p>
+      <div class="cz-settings-grid">
+        <div class="cz-setting"><div><label for="czMotion">Reduce animations</label><small>Turn down movement and transitions.</small></div><input id="czMotion" type="checkbox"></div>
+        <div class="cz-setting"><div><label for="czParallax">Parallax movement</label><small>Gentle pointer-responsive depth.</small></div><input id="czParallax" type="checkbox" checked></div>
+        <div class="cz-setting"><div><label for="czPointer">Mouse-reactive glow</label><small>A subtle glow follows your pointer.</small></div><input id="czPointer" type="checkbox" checked></div>
+        <div class="cz-setting"><div><label for="czDim">Dim screen</label><small>Reduce brightness of the whole page.</small></div><input id="czDim" type="checkbox"></div>
+        <div class="cz-setting"><div><label for="czFocus">Focus mode</label><small>Fade other sections while you work.</small></div><input id="czFocus" type="checkbox"></div>
+        <div class="cz-setting"><div><label for="czSave">Save my settings on this device</label><small>Off by default. Enables local browser storage only after you opt in.</small></div><input id="czSave" type="checkbox"></div>
+        <div class="cz-setting"><div><label for="czLeaveConfirm">Confirm before leaving</label><small>Browsers decide whether to show their warning.</small></div><input id="czLeaveConfirm" type="checkbox"></div>
+        <div class="cz-setting"><div><label for="czTextSize">Text size</label><small>Adjust page text size.</small></div><select id="czTextSize"><option value="1">Standard</option><option value="1.08">Large</option><option value="1.16">Extra large</option></select></div>
+        <div class="cz-setting"><div><label for="czDifficulty">Game difficulty</label><small>Used by built-in mini-games.</small></div><select id="czDifficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div>
+      </div>
+      <div class="settings-toolbar">
+        <button class="btn" id="czResetSettings" type="button">Restore defaults</button>
+        <button class="btn" id="czClockBtn" type="button">Show clock</button>
+        <button class="btn" id="czFactBtn" type="button">Space fact</button>
+        <button class="btn" id="czActivityBtn" type="button">Random activity</button>
+        <button class="btn" id="czHelpBtn" type="button">Quick help</button>
+      </div>
+      <div class="cz-stats" id="czClockArea" hidden><div class="cz-stat"><small>Local time</small><strong id="czClock">--:--</strong></div><div class="cz-stat"><small>Date</small><strong id="czDate">---</strong></div></div>
+      <div class="glass" style="padding:.8rem;margin-top:.5rem" id="czMessage" role="status" aria-live="polite">Welcome to your control deck.</div>
+      <div class="cz-stats" aria-label="Session stats">
+        <div class="cz-stat"><small>Mini-games played</small><strong id="czGamesPlayed">0</strong></div>
+        <div class="cz-stat"><small>Trivia correct</small><strong id="czTriviaCorrect">0</strong></div>
+        <div class="cz-stat"><small>XP this visit</small><strong id="czXP">0</strong></div>
+        <div class="cz-stat"><small>Explorer level</small><strong id="czLevel">Cadet</strong></div>
+      </div>
+      <p class="session-note">Keyboard shortcuts: Alt+1 Home, Alt+2 Games, Alt+3 Trivia, Alt+4 opens Trivia, Alt+5 Videos, Alt+6 Timer. Settings is in the bottom-right corner. These shortcuts don't bypass school or network restrictions.</p>
+    </div>
+    <div class="settings-groups" aria-label="Included ChillZone upgrades">
+      <div class="glass settings-group"><h3>✨ Visual controls</h3><p>Included and adjustable above.</p><ul><li>Original background preserved</li><li>Pointer glow and parallax</li><li>Reduce motion, text size, dim screen, focus mode</li></ul></div>
+      <div class="glass settings-group"><h3>🎮 Game zone</h3><p>Built-in games and useful discovery tools.</p><ul><li>Existing game portal and Star Catcher</li><li>Asteroid Dodge, Cosmic Memory, Planet Quiz</li><li>Search, categories, random game, favorites and recent picks</li><li>Fullscreen for supported viewers</li></ul></div>
+      <div class="glass settings-group"><h3>🧠 Trivia & missions</h3><p>Space questions with learning feedback.</p><ul><li>Galaxy Brain categories and difficulty</li><li>Hints toggle and explanations</li><li>Daily mission, XP and explorer levels</li><li>Achievement badges and mission progress</li></ul></div>
+      <div class="glass settings-group"><h3>🛰️ Convenience</h3><p>Quick tools built into the page.</p><ul><li>Clock, date, space facts, random activity and help</li><li>Keyboard shortcuts and session stats</li><li>Existing welcome flow, video lounge, break timer and About page</li><li>Responsive layout and fullscreen controls</li></ul></div>
+      <div class="glass settings-group"><h3>🔒 Privacy & control</h3><p>No account or analytics tracking is added.</p><ul><li>Session-only by default</li><li>Optional browser storage requires your consent</li><li>Reset and clear saved preferences from Settings</li><li>No attempt to bypass filters or network restrictions</li></ul></div>
+      <div class="glass settings-group"><h3>🌠 Rewards & extra ideas</h3><p>Included in the approved upgrade plan.</p><ul><li>Reward titles and profile decorations</li><li>Secret milestones and a badge gallery</li><li>Daily challenges and profile decorations</li><li>Progress tracking and clear embed-error guidance</li></ul></div>
+    </div>
+    <div class="glass settings-output">
+      <h3>Settings status</h3>
+      <p>Change controls above any time. Preferences are not stored unless you explicitly enable “Save my settings on this device.”</p>
+      <p id="settingsStatus" role="status">Ready.</p>
+    </div>
 </section>
 
 <!-- WATCH -->
 <section id="watch" class="sec" aria-labelledby="watch-title">
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="watch-title">Movie &amp; Video Lounge</h2>
+      <h2 id="watch-title">Movie & Video Lounge</h2>
       <p>Dim the lights. Pick a source and watch space videos without leaving the page.</p>
     </div>
     <div class="source-tabs" id="sourceTabs" role="group" aria-label="Video sources"></div>
@@ -446,7 +782,7 @@ footer strong{color:var(--lavender)}
     <div class="about-grid">
       <div class="glass"><h3>Made for downtime</h3><p>ChillZone is for students who have a few free minutes and want to relax, play something quick, or watch something calm.</p></div>
       <div class="glass"><h3>Stays on this page</h3><p>Games and videos open in a viewer on this page. Some websites don't allow that, and ChillZone will tell you so instead of pretending.</p></div>
-      <div class="glass"><h3>Private by design</h3><p>No accounts, no trackers, no stored data. External content you load is run by its own provider under its own rules.</p></div>
+      <div class="glass"><h3>Private by design</h3><p>No accounts or analytics trackers. By default, preferences and progress are session-only. If you turn on “Save my settings on this device,” selected settings and game progress can be stored in this browser; you can turn it off and clear saved ChillZone settings from Settings. External content is run by its own provider under its own rules.</p></div>
       <div class="glass"><h3>Respects the rules</h3><p>ChillZone doesn't try to get around school or network filters. If something is blocked where you are, it stays blocked.</p></div>
     </div>
   </div>
@@ -468,28 +804,28 @@ footer strong{color:var(--lavender)}
   var GAMES = [
     { id: 'nebula', icon: '🌌', title: 'The Game Nebula', tag: 'Featured',
       desc: 'A big portal of browser games, loaded right inside ChillZone.',
-      type: 'iframe', url: 'https://storage.googleapis.com/fernisbest/index.html' },
+      type: 'iframe', url: 'https\://storage.googleapis.com/fernisbest/index.html' },
     { id: 'catcher', icon: '⭐', title: 'Star Catcher', tag: 'Built-in',
       desc: 'Catch falling stars, dodge space rocks. Works offline, no loading.',
       type: 'builtin' }
-    // Add more: { id:'x', icon:'🎲', title:'Name', tag:'New', desc:'About it', type:'iframe', url:'https://...' }
+    // Add more: { id:'x', icon:'🎲', title:'Name', tag:'New', desc:'About it', type:'iframe', url:'https\://...' }
   ];
   var SOURCES = [
     { id: 'shuttletv', label: 'ShuttleTV', title: 'ShuttleTV',
       desc: 'Movie site you chose. It is run by a third party that ChillZone does not control, so it may not allow embedding, may change or disappear, and may show ads. Popups and redirects away from ChillZone are blocked by the viewer.',
-      url: 'https://ww1.hair/shuttletv/' },
+      url: 'https\://ww1.hair/shuttletv/' },
     { id: 'nasaplus', label: 'NASA+', title: 'NASA+',
       desc: 'NASA\u2019s free streaming service with documentaries and mission coverage. NASA+ may not allow embedding; if the viewer stays blank, use the NASA YouTube source.',
-      url: 'https://plus.nasa.gov/' },
+      url: 'https\://plus.nasa.gov/' },
     { id: 'nasayt', label: 'NASA on YouTube', title: 'NASA videos (YouTube)',
       desc: 'NASA\u2019s official YouTube channel: launches, space station tours and science explainers. Use the playlist controls to skip around.',
-      url: 'https://www.youtube-nocookie.com/embed/videoseries?list=UULA_DiR1FfKNvjuUpBHmylQ&rel=0' },
+      url: 'https\://www.youtube-nocookie.com/embed/videoseries?list=UULA_DiR1FfKNvjuUpBHmylQ&rel=0' },
     { id: 'nasalive', label: 'NASA Live', title: 'NASA Live (YouTube)',
       desc: 'NASA\u2019s live broadcast, usually views from space and mission events. If nothing is streaming right now, YouTube will say so.',
-      url: 'https://www.youtube-nocookie.com/embed/live_stream?channel=UCLA_DiR1FfKNvjuUpBHmylQ&rel=0' },
+      url: 'https\://www.youtube-nocookie.com/embed/live_stream?channel=UCLA_DiR1FfKNvjuUpBHmylQ&rel=0' },
     { id: 'esayt', label: 'ESA on YouTube', title: 'European Space Agency (YouTube)',
       desc: 'Videos from the European Space Agency: rockets, Earth from orbit and deep-space missions.',
-      url: 'https://www.youtube-nocookie.com/embed/videoseries?list=UUIBaDdAbGlFDeS33shmlD0A&rel=0' }
+      url: 'https\://www.youtube-nocookie.com/embed/videoseries?list=UUIBaDdAbGlFDeS33shmlD0A&rel=0' }
   ];
 
   /* ================= Starfield ================= */
@@ -549,9 +885,15 @@ footer strong{color:var(--lavender)}
 
   /* ================= Welcome ================= */
   (function () {
-    var h = new Date().getHours();
-    var part = h < 5 ? 'Late-night' : h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
-    $('#welcome').textContent = (part === 'Late-night' ? 'Burning the midnight oil' : part) + ', explorer. The docking bay is open.';
+    function welcomeFor(username) {
+      var h = new Date().getHours();
+      var greeting = h < 5 ? 'Good evening' : h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
+      $('#welcome').textContent = greeting + ', ' + (username || 'Explorer') + '.';
+    }
+    var rememberedName = '';
+    try { rememberedName = sessionStorage.getItem('chillzone-entered') || ''; } catch (e) {}
+    window.chillZoneSetUsername = function (username) { welcomeFor(username); };
+    welcomeFor(rememberedName || 'Explorer');
   })();
 
   /* ================= Navigation ================= */
@@ -578,6 +920,151 @@ footer strong{color:var(--lavender)}
     }, { rootMargin: '-45% 0px -50% 0px' });
     $$('main section').forEach(function (s) { io.observe(s); });
   }
+
+
+  /* ================= Settings: session-only feature preferences ================= */
+  (function () {
+    var panel = $('#featureChoices');
+    if (!panel) return;
+    var boxes = Array.prototype.slice.call(panel.querySelectorAll('input[type="checkbox"][data-code]'));
+    var count = $('#settingsCount'), summary = $('#settingsSummary'), status = $('#settingsStatus');
+    function selectedText() {
+      return boxes.filter(function (box) { return box.checked; }).map(function (box) {
+        var label = box.closest('label');
+        var title = label ? label.querySelector('strong') : null;
+        return (title ? title.textContent : box.dataset.code) + ' — YES';
+      });
+    }
+    function update() {
+      var picked = selectedText();
+      count.textContent = picked.length + ' option' + (picked.length === 1 ? '' : 's') + ' selected. Unchecked options are NO.';
+      summary.value = boxes.map(function (box) {
+        var label = box.closest('label');
+        var title = label ? label.querySelector('strong') : null;
+        return (title ? title.textContent : box.dataset.code) + ': ' + (box.checked ? 'YES' : 'NO');
+      }).join('\n');
+      status.textContent = '';
+    }
+    boxes.forEach(function (box) { box.addEventListener('change', update); });
+    $('#settingsAll').addEventListener('click', function () { boxes.forEach(function (b) { b.checked = true; }); update(); });
+    $('#settingsNone').addEventListener('click', function () { boxes.forEach(function (b) { b.checked = false; }); update(); });
+    $('#settingsCurrent').addEventListener('click', function () {
+      boxes.forEach(function (b) { b.checked = true; }); update();
+    });
+    $('#settingsShow').addEventListener('click', function () {
+      summary.hidden = !summary.hidden;
+      this.textContent = summary.hidden ? 'Show choice list' : 'Hide choice list';
+      if (!summary.hidden) summary.focus();
+    });
+    $('#settingsCopy').addEventListener('click', function () {
+      update(); summary.hidden = false; $('#settingsShow').textContent = 'Hide choice list';
+      summary.focus(); summary.select();
+      var copied = false;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(summary.value).then(function () {
+          status.textContent = 'Choices copied! Paste them into the chat to tell me what to build.';
+        }).catch(function () {
+          status.textContent = 'Your choices are shown below. Select and copy the text manually.';
+        });
+      } else {
+        try { copied = document.execCommand('copy'); } catch (e) { copied = false; }
+        status.textContent = copied ? 'Choices copied! Paste them into the chat to tell me what to build.' : 'Your choices are shown below. Select and copy the text manually.';
+      }
+    });
+    update();
+  })();
+
+  /* ================= Galaxy Brain trivia + session-only achievements ================= */
+  (function () {
+    var questions = [
+      { q: 'Which planet is known as the Red Planet?', choices: ['Venus', 'Mars', 'Jupiter', 'Mercury'], answer: 1, fact: 'Mars looks reddish because iron-rich dust covers much of its surface.' },
+      { q: 'What is the name of the galaxy that contains our Solar System?', choices: ['Andromeda', 'Whirlpool', 'Milky Way', 'Sombrero'], answer: 2, fact: 'Our Solar System lives in the Milky Way galaxy.' },
+      { q: 'Which star is closest to Earth?', choices: ['Sirius', 'Polaris', 'The Sun', 'Betelgeuse'], answer: 2, fact: 'The Sun is a star, and it is by far the closest star to Earth.' },
+      { q: 'What force keeps planets in orbit around the Sun?', choices: ['Magnetism', 'Gravity', 'Friction', 'Wind'], answer: 1, fact: 'Gravity pulls planets toward the Sun while their forward motion keeps them in orbit.' },
+      { q: 'Which planet has the most prominent ring system?', choices: ['Saturn', 'Earth', 'Mars', 'Venus'], answer: 0, fact: 'Saturn’s bright, broad rings are made mostly of ice and rocky particles.' },
+      { q: 'What do astronauts wear to help them survive outside a spacecraft?', choices: ['Raincoat', 'Space suit', 'Winter pajamas', 'Diving goggles only'], answer: 1, fact: 'A space suit helps provide oxygen, pressure, temperature control, and protection.' },
+      { q: 'Which is the largest planet in our Solar System?', choices: ['Neptune', 'Earth', 'Saturn', 'Jupiter'], answer: 3, fact: 'Jupiter is the largest planet in our Solar System.' },
+      { q: 'What is a light-year a measure of?', choices: ['Time', 'Distance', 'Brightness', 'Temperature'], answer: 1, fact: 'A light-year is the distance light travels in one year.' },
+      { q: 'What is the name of the first human-made satellite?', choices: ['Voyager 1', 'Apollo 11', 'Sputnik 1', 'Hubble'], answer: 2, fact: 'Sputnik 1 was launched by the Soviet Union in 1957.' },
+      { q: 'Why does the Moon shine in our night sky?', choices: ['It makes its own sunlight', 'It reflects sunlight', 'It is made of glowing lava', 'It reflects city lights only'], answer: 1, fact: 'The Moon reflects sunlight; it does not make visible light like a star.' },
+      { q: 'Which planet is famous for its Great Red Spot?', choices: ['Jupiter', 'Mars', 'Uranus', 'Mercury'], answer: 0, fact: 'Jupiter’s Great Red Spot is a huge storm that has been observed for centuries.' },
+      { q: 'What is the name of the galaxy closest in size to the Milky Way and on a collision course with it?', choices: ['Andromeda', 'Pinwheel', 'Cartwheel', 'Triangulum only'], answer: 0, fact: 'The Andromeda Galaxy and Milky Way are expected to merge billions of years from now.' }
+    ];
+    questions.forEach(function(q, i) {
+      q.category = ['planets','galaxies','stars','stars','planets','exploration','planets','stars','exploration','planets','planets','galaxies'][i];
+      q.difficulty = ['easy','medium','easy','medium','easy','easy','easy','medium','medium','easy','medium','hard'][i];
+    });
+    var achievements = [
+      { id: 'first', icon: '✨', title: 'First Contact', desc: 'Get your first trivia answer correct.' },
+      { id: 'scholar', icon: '🧠', title: 'Cosmic Scholar', desc: 'Answer 5 trivia questions correctly in total.' },
+      { id: 'perfect', icon: '🌠', title: 'Perfect Orbit', desc: 'Get all 5 answers correct in one mission.' },
+      { id: 'complete', icon: '🏁', title: 'Mission Complete', desc: 'Finish a full 5-question mission.' }
+    ];
+    var earned = Object.create(null), totalCorrect = 0, mission = [], index = 0, score = 0, answered = false;
+    var play = $('#quizPlay'), result = $('#quizResult'), counter = $('#quizCounter'), questionEl = $('#quizQuestion'), choicesEl = $('#quizChoices'), feedback = $('#quizFeedback'), nextBtn = $('#quizNext');
+    function renderBadges() {
+      var list = $('#badgeList'); list.textContent = '';
+      achievements.forEach(function (a) {
+        var item = document.createElement('div'); item.className = 'achievement' + (earned[a.id] ? ' unlocked' : '');
+        var medal = document.createElement('span'); medal.className = 'medal'; medal.setAttribute('aria-hidden', 'true'); medal.textContent = a.icon;
+        var copy = document.createElement('div'); var h = document.createElement('h3'); h.textContent = a.title;
+        var p = document.createElement('p'); p.textContent = earned[a.id] ? 'Unlocked! ' + a.desc : a.desc;
+        copy.appendChild(h); copy.appendChild(p); item.appendChild(medal); item.appendChild(copy); list.appendChild(item);
+      });
+      $('#badgeCount').textContent = achievements.filter(function (a) { return earned[a.id]; }).length + ' / ' + achievements.length;
+    }
+    function award(id) {
+      if (earned[id]) return;
+      earned[id] = true; renderBadges();
+    }
+    function shuffle(arr) {
+      for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), temp = arr[i]; arr[i] = arr[j]; arr[j] = temp; }
+      return arr;
+    }
+    function startMission() {
+      var cat = $('#czTriviaCategory') ? $('#czTriviaCategory').value : 'all';
+      var diff = $('#czTriviaDifficulty') ? $('#czTriviaDifficulty').value : 'medium';
+      var pool = questions.filter(function(q){ return (cat === 'all' || q.category === cat) && (q.difficulty === diff || diff === 'easy' && q.difficulty === 'medium' || diff === 'hard' && q.difficulty === 'medium'); });
+      if (!pool.length) pool = questions.filter(function(q){ return cat === 'all' || q.category === cat; });
+      if (!pool.length) pool = questions.slice();
+      mission = shuffle(pool.slice()).slice(0, Math.min(5, pool.length)); index = 0; score = 0; answered = false;
+      $('#quizScore').textContent = 'Score: 0'; play.hidden = false; result.hidden = true; showQuestion();
+      counter.textContent = 'Question 1 of ' + mission.length + ' · ' + (cat === 'all' ? 'All topics' : cat) + ' · ' + diff;
+    }
+    function showQuestion() {
+      var q = mission[index]; answered = false; counter.textContent = 'Question ' + (index + 1) + ' of ' + mission.length;
+      questionEl.textContent = q.q; choicesEl.textContent = ''; feedback.textContent = 'Choose an answer, explorer!'; feedback.className = 'quiz-feedback';
+      nextBtn.disabled = true; nextBtn.textContent = index === mission.length - 1 ? 'See results →' : 'Next question →';
+      $('#quizProgress').style.width = (index / mission.length * 100) + '%';
+      q.choices.forEach(function (choice, i) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'quiz-choice'; b.textContent = String.fromCharCode(65 + i) + '. ' + choice;
+        b.addEventListener('click', function () { chooseAnswer(i, b); }); choicesEl.appendChild(b);
+      });
+    }
+    function chooseAnswer(choiceIndex, chosenButton) {
+      if (answered) return; answered = true;
+      var q = mission[index], buttons = Array.prototype.slice.call(choicesEl.querySelectorAll('button'));
+      buttons.forEach(function (b, i) { b.disabled = true; if (i === q.answer) b.classList.add('correct'); });
+      if (choiceIndex === q.answer) {
+        score++; totalCorrect++; $('#quizScore').textContent = 'Score: ' + score;
+        feedback.textContent = 'Correct! ' + q.fact; feedback.className = 'quiz-feedback good';
+        award('first'); if (totalCorrect >= 5) award('scholar');
+      } else {
+        chosenButton.classList.add('wrong'); feedback.textContent = 'Not quite! ' + q.fact; feedback.className = 'quiz-feedback bad';
+      }
+      nextBtn.disabled = false;
+    }
+    function finishMission() {
+      play.hidden = true; result.hidden = false; $('#quizProgress').style.width = '100%';
+      $('#quizResultEmoji').textContent = score === 5 ? '🏆' : score >= 3 ? '🌟' : '🪐';
+      $('#quizResultTitle').textContent = score === 5 ? 'PERFECT ORBIT!' : score >= 3 ? 'Mission accomplished!' : 'Keep exploring!';
+      $('#quizResultText').textContent = 'You got ' + score + ' out of 5 correct. ' + (score === 5 ? 'Incredible cosmic knowledge!' : score >= 3 ? 'Nice work, explorer. Ready for another round?' : 'Every mission is a chance to learn something new. Try again!');
+      award('complete'); if (score === 5) award('perfect');
+    }
+    nextBtn.addEventListener('click', function () { if (!answered) return; if (index >= mission.length - 1) finishMission(); else { index++; showQuestion(); } });
+    $('#quizRestart').addEventListener('click', startMission); $('#quizAgain').addEventListener('click', startMission);
+    renderBadges(); startMission();
+  })();
 
   /* ================= Generic viewer ================= */
   function makeViewer(o) {
@@ -808,7 +1295,12 @@ footer strong{color:var(--lavender)}
   (function () {
     var gate = $('#gate'), stepName = $('#stepName'), stepTerms = $('#stepTerms'), stepDeclined = $('#stepDeclined'),
         uname = $('#uname'), nameErr = $('#nameErr'), agree = $('#agree'), termsErr = $('#termsErr'), name = '';
-    var covered = $$('header.nav, main, footer');
+    var covered = $$('header.nav, main, footer, #settingsFloat');
+    var helpTimer = 0;
+    function startUsernameHelpTimer() { clearTimeout(helpTimer); $('#usernameHelp').hidden = true; helpTimer = setTimeout(function () { if (!gate.hidden && !stepName.hidden) $('#usernameHelp').hidden = false; }, 5000); }
+    uname.addEventListener('focus', startUsernameHelpTimer);
+    uname.addEventListener('input', function () { if (uname.value.trim().length >= 2) { clearTimeout(helpTimer); $('#usernameHelp').hidden = true; } });
+    $$('#usernameHelp [data-username]').forEach(function (b) { b.addEventListener('click', function () { uname.value = b.dataset.username; $('#usernameHelp').hidden = true; clearTimeout(helpTimer); uname.focus(); }); });
     function lock(on) {
       covered.forEach(function (el) { if (on) el.setAttribute('inert', ''); else el.removeAttribute('inert'); });
       document.body.style.overflow = on ? 'hidden' : '';
@@ -817,22 +1309,25 @@ footer strong{color:var(--lavender)}
       [stepName, stepTerms, stepDeclined].forEach(function (el) { el.hidden = el !== step; });
     }
     function open() {
-      lock(true); gate.hidden = false; show(stepName); setTimeout(function () { uname.focus(); }, 50);
+      lock(true); gate.hidden = false; show(stepName); setTimeout(function () { uname.focus(); startUsernameHelpTimer(); }, 50);
     }
     function enter() {
-      gate.hidden = true; lock(false);
+      gate.hidden = true; lock(false); clearTimeout(helpTimer);
       try { sessionStorage.setItem('chillzone-entered', name); } catch (e) {}
+      if (window.chillZoneSetUsername) window.chillZoneSetUsername(name);
+      var pn = document.getElementById('profileName'); if (pn) pn.textContent = name;
+      var pi = document.getElementById('profileNameInput'); if (pi) pi.value = name;
       window.scrollTo(0, 0);
     }
     var saved = null;
     try { saved = sessionStorage.getItem('chillzone-entered'); } catch (e) {}
-    if (saved) { gate.hidden = true; return; }
+    if (saved) { gate.hidden = true; if (window.chillZoneSetUsername) window.chillZoneSetUsername(saved); var pn = document.getElementById('profileName'); if (pn) pn.textContent = saved; var pi = document.getElementById('profileNameInput'); if (pi) pi.value = saved; return; }
     open();
     stepName.addEventListener('submit', function (e) {
       e.preventDefault();
       var v = uname.value.replace(/\s+/g, ' ').trim();
       if (v.length < 2) { nameErr.textContent = 'Enter a username with at least 2 characters.'; uname.focus(); return; }
-      nameErr.textContent = ''; name = v;
+      nameErr.textContent = ''; name = v; clearTimeout(helpTimer); $('#usernameHelp').hidden = true; if (window.chillZoneSetUsername) window.chillZoneSetUsername(name);
       $('#termsHello').textContent = 'Almost there, ' + name + '. Please read and accept these terms.';
       show(stepTerms); $('#termsTitle').setAttribute('tabindex', '-1'); $('#termsTitle').focus();
     });
@@ -890,6 +1385,165 @@ footer strong{color:var(--lavender)}
     var chosen = $('input[name="dur"]:checked'); if (chosen) total = parseInt(chosen.value, 10) * 60;
     reset();
   })();
+})();
+</script>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var msg=$('#czMessage'), gameCount=0, triviaCorrect=0, xp=0, levelNames=['Cadet','Pilot','Commander','Galaxy Legend'], saveBox=$('#czSave');
+var prefs={motion:false,parallax:true,pointer:true,dim:false,focus:false,text:'1',difficulty:'medium',leaveConfirm:false};
+try{saveBox.checked=localStorage.getItem('chillzoneSaveEnabled')==='yes'}catch(e){}
+var defaultPrefs={motion:false,parallax:true,pointer:true,dim:false,focus:false,text:'1',difficulty:'medium',leaveConfirm:false};
+function say(t){if(msg)msg.textContent=t}
+function updateStats(){ $('#czGamesPlayed').textContent=gameCount;$('#czTriviaCorrect').textContent=triviaCorrect;$('#czXP').textContent=xp;$('#czLevel').textContent=levelNames[Math.min(levelNames.length-1,Math.floor(xp/100))];}
+function awardXP(n){xp+=n;updateStats();say('+'+n+' XP! Total: '+xp+'. Level: '+levelNames[Math.min(3,Math.floor(xp/100))]+'.')}
+function applyPrefs(){
+ document.body.classList.toggle('cz-low-motion',prefs.motion||window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+ document.body.classList.toggle('cz-parallax',prefs.parallax);document.body.classList.toggle('cz-pointer-on',prefs.pointer);
+ document.body.classList.toggle('cz-dim',prefs.dim);document.body.classList.toggle('cz-focus',prefs.focus);
+ document.documentElement.style.fontSize=prefs.text+'em';
+ ['czMotion','czParallax','czPointer','czDim','czFocus'].forEach(function(id,i){var el=$('#'+id);if(el)el.checked=[prefs.motion,prefs.parallax,prefs.pointer,prefs.dim,prefs.focus][i]});
+ $('#czTextSize').value=prefs.text;$('#czDifficulty').value=prefs.difficulty;$('#czLeaveConfirm').checked=!!prefs.leaveConfirm;
+}
+function loadPrefs(){if(!saveBox.checked)return;try{var v=JSON.parse(localStorage.getItem('chillzonePrefs')||'null');if(v) prefs=Object.assign({},defaultPrefs,v)}catch(e){}}
+function persist(){if(!saveBox.checked)return;try{localStorage.setItem('chillzonePrefs',JSON.stringify(prefs));localStorage.setItem('chillzoneProgress',JSON.stringify({xp:xp,triviaCorrect:triviaCorrect}))}catch(e){say('Browser storage is unavailable. Settings still work for this visit.')}}
+function restoreProgress(){if(!saveBox.checked)return;try{var v=JSON.parse(localStorage.getItem('chillzoneProgress')||'null');if(v){xp=Number(v.xp)||0;triviaCorrect=Number(v.triviaCorrect)||0;updateStats()}}catch(e){}}
+function setPref(key,value){prefs[key]=value;applyPrefs();persist()}
+var glow=document.createElement('div');glow.className='cz-pointer-glow';glow.setAttribute('aria-hidden','true');document.body.appendChild(glow);
+document.addEventListener('pointermove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';document.documentElement.style.setProperty('--px',((e.clientX/innerWidth)-.5)*22+'px');document.documentElement.style.setProperty('--py',((e.clientY/innerHeight)-.5)*18+'px')},{passive:true});
+$('#czMotion').addEventListener('change',e=>setPref('motion',e.target.checked));
+$('#czParallax').addEventListener('change',e=>setPref('parallax',e.target.checked));
+$('#czPointer').addEventListener('change',e=>setPref('pointer',e.target.checked));
+$('#czDim').addEventListener('change',e=>setPref('dim',e.target.checked));
+$('#czFocus').addEventListener('change',e=>{setPref('focus',e.target.checked);$$('main section').forEach(s=>s.classList.toggle('cz-focus-keep',s.contains(document.activeElement)||s.matches(':hover')));});
+$('#czTextSize').addEventListener('change',e=>setPref('text',e.target.value));
+$('#czDifficulty').addEventListener('change',e=>{setPref('difficulty',e.target.value);say('Game difficulty set to '+e.target.value+'. Start a built-in game to use it.')});
+$('#czLeaveConfirm').addEventListener('change',e=>setPref('leaveConfirm',e.target.checked));
+window.addEventListener('beforeunload',function(e){if(prefs.leaveConfirm){e.preventDefault();e.returnValue='Leave ChillZone?'}});
+saveBox.addEventListener('change',function(){if(this.checked){try{localStorage.setItem('chillzoneSaveEnabled','yes')}catch(e){}persist();say('Saving enabled. ChillZone settings and progress may now be stored in this browser.')}else{try{localStorage.removeItem('chillzoneSaveEnabled');localStorage.removeItem('chillzonePrefs');localStorage.removeItem('chillzoneProgress')}catch(e){}say('Saving disabled. Saved ChillZone settings and progress were removed where possible.')}})
+$('#czResetSettings').addEventListener('click',function(){prefs=Object.assign({},defaultPrefs);saveBox.checked=false;try{localStorage.removeItem('chillzonePrefs');localStorage.removeItem('chillzoneProgress')}catch(e){}applyPrefs();say('Settings restored to defaults. Background artwork and colors were not changed.')});
+$('#czClockBtn').addEventListener('click',function(){var a=$('#czClockArea');a.hidden=!a.hidden;this.textContent=a.hidden?'Show clock':'Hide clock';if(!a.hidden)clock()});
+function clock(){if($('#czClockArea').hidden)return;var d=new Date();$('#czClock').textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});$('#czDate').textContent=d.toLocaleDateString([], {year:'numeric',month:'short',day:'numeric'});setTimeout(clock,1000)}
+var facts=['Jupiter is the largest planet in our Solar System.','A light-year measures distance, not time.','The Sun contains most of the mass in our Solar System.','Mars has the tallest known volcano in the Solar System: Olympus Mons.','Saturn’s rings are made mostly of ice and rocky particles.','A day on Venus is longer than its year.','The Milky Way contains billions of stars.'];
+$('#czFactBtn').addEventListener('click',()=>say('🌌 Space fact: '+facts[Math.floor(Math.random()*facts.length)]));
+$('#czActivityBtn').addEventListener('click',()=>{var a=[['Asteroid Dodge','#czAsteroidArea'],['Cosmic Memory','#czMemoryArea'],['Planet Quiz','#czPlanetArea']][Math.floor(Math.random()*3)];$(a[1]).hidden=false;$(a[1]).closest('.cz-mini-card').scrollIntoView({behavior:prefs.motion?'auto':'smooth',block:'center'});say('Random activity selected: '+a[0]+'.')});
+$('#czHelpBtn').addEventListener('click',()=>say('Quick help: use the navigation to move around, search games, choose a mini-game, adjust display controls here, and select Save only if you want preferences stored on this device. Some third-party embeds may refuse to load.'));
+var keyTargets=['home','games','brain','watch','timer','about'];document.addEventListener('keydown',function(e){if(!e.altKey)return;var n=Number(e.key);if(n>=1&&n<=6){e.preventDefault();$('#'+keyTargets[n-1]).scrollIntoView({behavior:prefs.motion?'auto':'smooth'});}});
+
+/* Floating Settings launcher: keeps settings out of the page's normal scroll flow. */
+var settingsFloat=$('#settingsFloat'), settingsClose=$('#settingsClose');
+function setSettingsOpen(open){document.body.classList.toggle('cz-settings-open',open);settingsFloat.setAttribute('aria-expanded',String(open));settingsFloat.setAttribute('aria-label',open?'Close settings':'Open settings');settingsFloat.title=open?'Close settings':'Settings';settingsFloat.textContent=open?'✕':'⚙️';if(open){$('#settings').scrollTop=0;settingsClose.focus()}else settingsFloat.focus()}
+settingsFloat.addEventListener('click',function(){setSettingsOpen(!document.body.classList.contains('cz-settings-open'))});
+settingsClose.addEventListener('click',function(){setSettingsOpen(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(document.body.classList.contains('cz-settings-open'))setSettingsOpen(false);if(!$('#profilePanel').hidden)closeProfile();if(!$('#observePanel').hidden)$('#observePanel').hidden=true;if(!$('#observeSettingsPanel').hidden)$('#observeSettingsPanel').hidden=true;}});
+/* Pinned top-bar profile panel. */
+var profilePanel=$('#profilePanel'),profileToggle=$('#profileToggle');
+function closeProfile(){profilePanel.hidden=true;profileToggle.setAttribute('aria-expanded','false')}
+profileToggle.addEventListener('click',function(){var open=profilePanel.hidden;profilePanel.hidden=!open;profileToggle.setAttribute('aria-expanded',String(open));if(open){var n='';try{n=sessionStorage.getItem('chillzone-entered')||''}catch(e){}$('#profileName').textContent=n||'Explorer';$('#profileNameInput').value=n;$('#profileNameInput').focus()}});
+$('#profileClose').addEventListener('click',closeProfile);
+$('#profileSave').addEventListener('click',function(){var n=$('#profileNameInput').value.replace(/\s+/g,' ').trim();if(n.length<2){$('#profileStatus').textContent='Please enter at least 2 characters.';return}try{sessionStorage.setItem('chillzone-entered',n)}catch(e){}$('#profileName').textContent=n;$('#profileStatus').textContent='Explorer name updated for this visit.';if(window.chillZoneSetUsername)window.chillZoneSetUsername(n)});
+/* Observe mode: hide the normal page and keep the space background, top bar, and discovery controls. */
+var observeNav=$('#observeNav'),observeDiscover=$('#observeDiscover'),observeSettingsToggle=$('#observeSettingsToggle'),observeSettingsPanel=$('#observeSettingsPanel'),observePanel=$('#observePanel'),observeCollection=$('#observeCollection'),observeFound=$('#observeFound'),observeFlyby=$('#observeFlyby'),observeTimer=null,observeFlybyTimer=null,observeRate=4,observeChance={Common:90,Uncommon:70,Rare:50,Legendary:20};
+var observeItems=[
+ {name:'Astronaut',icon:'🧑‍🚀',rarity:'Common',detail:'A space explorer in a suit.'},
+ {name:'Space Shuttle',icon:'🛰️',rarity:'Common',detail:'A reusable spacecraft.'},
+ {name:'Moon Rover',icon:'🌕',rarity:'Common',detail:'A vehicle for exploring lunar terrain.'},
+ {name:'Research Satellite',icon:'📡',rarity:'Common',detail:'A machine that studies Earth or space.'},
+ {name:'Mars Rover',icon:'🤖',rarity:'Uncommon',detail:'A robotic explorer of the Red Planet.'},
+ {name:'Space Station',icon:'🛸',rarity:'Uncommon',detail:'A laboratory orbiting above a planet.'},
+ {name:'Comet',icon:'☄️',rarity:'Uncommon',detail:'An icy body that can grow a glowing tail.'},
+ {name:'Space Telescope',icon:'🔭',rarity:'Uncommon',detail:'An observatory that studies distant objects.'},
+ {name:'Exoplanet',icon:'🪐',rarity:'Rare',detail:'A planet orbiting another star.'},
+ {name:'Supernova',icon:'💥',rarity:'Rare',detail:'A powerful stellar explosion.'},
+ {name:'Quasar',icon:'✨',rarity:'Rare',detail:'An extremely bright active galactic core.'},
+ {name:'Nebula',icon:'🌌',rarity:'Rare',detail:'A vast cloud of gas and dust.'},
+ {name:'Black Hole',icon:'⚫',rarity:'Legendary',detail:'A region of spacetime with gravity so strong that light cannot escape.'},
+ {name:'Pulsar',icon:'💫',rarity:'Legendary',detail:'A rapidly rotating neutron star that beams radiation.'},
+ {name:'Andromeda',icon:'🌠',rarity:'Legendary',detail:'A neighboring spiral galaxy visible from Earth under dark skies.'}
+];
+var discovered=[];
+function renderObserveCatalog(){var catalog=$('#observeCatalog');catalog.textContent='';[observeItems[0],observeItems[4],observeItems[8],observeItems[12],observeItems[13],observeItems[14]].forEach(function(o){var row=document.createElement('div');row.className='observe-object';var ico=document.createElement('span');ico.className='obj-icon';ico.textContent=o.icon;var info=document.createElement('div');var title=document.createElement('strong');title.textContent=o.name;var rarity=document.createElement('span');rarity.className='rarity '+o.rarity.toLowerCase();rarity.textContent=o.rarity;var detail=document.createElement('small');detail.textContent=o.detail;info.appendChild(title);info.appendChild(rarity);info.appendChild(detail);row.appendChild(ico);row.appendChild(info);catalog.appendChild(row)})}
+function renderObserveCollection(){if(!discovered.length){observeCollection.innerHTML='<p class="session-note">Objects will be added automatically as they appear.</p>';return}observeCollection.textContent='';discovered.slice().reverse().forEach(function(o){var row=document.createElement('div');row.className='observe-object';var ico=document.createElement('span');ico.className='obj-icon';ico.textContent=o.icon;var info=document.createElement('div');var title=document.createElement('strong');title.textContent=o.name;var rarity=document.createElement('span');rarity.className='rarity '+o.rarity.toLowerCase();rarity.textContent=o.rarity;var detail=document.createElement('small');detail.textContent=o.detail;info.appendChild(title);info.appendChild(rarity);info.appendChild(detail);row.appendChild(ico);row.appendChild(info);observeCollection.appendChild(row)})}
+function updateObserveRate(){observeRate=Number($('#observeRate').value)||4;$('#observeRateValue').textContent=String(observeRate);scheduleObserveSpawn();}
+function updateObserveChance(key,inputId,valueId){observeChance[key]=Number($(inputId).value);$(valueId).textContent=observeChance[key]+'%';}
+function scheduleObserveSpawn(){window.clearTimeout(observeTimer);if(document.body.classList.contains('cz-observe-mode'))observeTimer=window.setTimeout(spawnObserveObject,60000/Math.max(1,observeRate));}
+function chooseObserveItem(){var passed={Common:Math.random()*100<observeChance.Common,Uncommon:Math.random()*100<observeChance.Uncommon,Rare:Math.random()*100<observeChance.Rare,Legendary:Math.random()*100<observeChance.Legendary};var rarity=passed.Legendary?'Legendary':passed.Rare?'Rare':passed.Uncommon?'Uncommon':passed.Common?'Common':null;if(!rarity)return null;var tier=observeItems.filter(function(o){return o.rarity===rarity});return tier[Math.floor(Math.random()*tier.length)];}
+function spawnObserveObject(){if(!document.body.classList.contains('cz-observe-mode'))return;var item=chooseObserveItem();if(!item){observeFound.textContent='Nothing drifted into view this time. Keep observing…';scheduleObserveSpawn();return;}observeFlyby.classList.remove('active');void observeFlyby.offsetWidth;observeFlyby.querySelector('.flyby-icon').textContent=item.icon;observeFlyby.querySelector('strong').textContent=item.name;observeFlyby.querySelector('small').textContent=item.rarity;observeFlyby.style.top=(18+Math.random()*58)+'%';observeFlyby.classList.add('active');discovered.push(item);observeFound.textContent='Drifting by: '+item.name+' — '+item.rarity+'! Added to your discoveries.';renderObserveCollection();window.clearTimeout(observeFlybyTimer);observeFlybyTimer=window.setTimeout(function(){observeFlyby.classList.remove('active')},12000);scheduleObserveSpawn();}
+function setObserveMode(on){document.body.classList.toggle('cz-observe-mode',on);observeNav.setAttribute('aria-pressed',String(on));observeNav.textContent=on?'Exit Observe':'Observe';if(on){observeFound.textContent='Watching deep space… objects will drift by automatically.';scheduleObserveSpawn();}else{observePanel.hidden=true;observeSettingsPanel.hidden=true;window.clearTimeout(observeTimer);window.clearTimeout(observeFlybyTimer);observeFlyby.classList.remove('active');}}
+observeNav.addEventListener('click',function(){setObserveMode(!document.body.classList.contains('cz-observe-mode'));});
+observeDiscover.addEventListener('click',function(){observePanel.hidden=!observePanel.hidden;if(!observePanel.hidden){observeSettingsPanel.hidden=true;$('#observeClose').focus()}});
+observeSettingsToggle.addEventListener('click',function(){observeSettingsPanel.hidden=!observeSettingsPanel.hidden;if(!observeSettingsPanel.hidden){observePanel.hidden=true;$('#observeRate').focus()}});
+$('#observeClose').addEventListener('click',function(){observePanel.hidden=true;observeDiscover.focus()});
+$('#observeSettingsClose').addEventListener('click',function(){observeSettingsPanel.hidden=true;observeSettingsToggle.focus()});
+$('#observeRate').addEventListener('input',updateObserveRate);
+[['Common','#observeCommonChance','#observeCommonValue'],['Uncommon','#observeUncommonChance','#observeUncommonValue'],['Rare','#observeRareChance','#observeRareValue'],['Legendary','#observeLegendaryChance','#observeLegendaryValue']].forEach(function(c){$(c[1]).addEventListener('input',function(){updateObserveChance(c[0],c[1],c[2]);});});
+$('#observeSettingsReset').addEventListener('click',function(){observeRate=4;observeChance={Common:90,Uncommon:70,Rare:50,Legendary:20};$('#observeRate').value='4';$('#observeRateValue').textContent='4';[['Common','#observeCommonChance','#observeCommonValue',90],['Uncommon','#observeUncommonChance','#observeUncommonValue',70],['Rare','#observeRareChance','#observeRareValue',50],['Legendary','#observeLegendaryChance','#observeLegendaryValue',20]].forEach(function(c){$(c[1]).value=String(c[3]);$(c[2]).textContent=c[3]+'%';});scheduleObserveSpawn();});
+renderObserveCatalog();
+/* Existing background remains; the optional pointer/parallax effects layer on top. */
+
+loadPrefs();applyPrefs();restoreProgress();updateStats();
+
+/* Game finder, favorites, recent list */
+var favs=new Set(), recent=[];
+function visibleMiniFilter(mode){$$('.cz-mini-card').forEach(c=>{c.hidden=(mode==='favorites'&&!favs.has(c.dataset.mini))||(mode==='recent'&&recent.indexOf(c.dataset.mini)<0)});$('#czGameListStatus').textContent=mode==='all'?'Showing all built-in mini-games.':mode==='favorites'?'Showing favorite mini-games.':'Showing recently played mini-games.'}
+$$('[data-fav]').forEach(b=>b.addEventListener('click',function(){var id=this.dataset.fav;if(favs.has(id)){favs.delete(id);this.textContent='☆ Favorite'}else{favs.add(id);this.textContent='★ Favorited'}say('Favorites are stored for this visit only.')}));
+$('#czShowFavorites').addEventListener('click',()=>visibleMiniFilter('favorites'));$('#czShowRecent').addEventListener('click',()=>visibleMiniFilter('recent'));$('#czShowAllGames').addEventListener('click',()=>visibleMiniFilter('all'));
+function filterGames(){var q=$('#czGameSearch').value.toLowerCase(),f=$('#czGameFilter').value;$$('.cz-mini-card').forEach(c=>c.hidden=(c.dataset.title.toLowerCase().indexOf(q)<0)||(f==='portal'));var cards=$$('#gameCards .card');cards.forEach(c=>{var t=c.textContent.toLowerCase();c.hidden=!!q&&t.indexOf(q)<0});}
+$('#czGameSearch').addEventListener('input',filterGames);$('#czGameFilter').addEventListener('change',filterGames);
+
+/* Asteroid Dodge */
+var cv=$('#czAsteroidCanvas'),ctx=cv.getContext('2d'),running=false,raf=0,px=280,rocks=[],score=0,last=0,held=0;
+function drawAsteroid(){ctx.fillStyle='#070816';ctx.fillRect(0,0,560,260);for(var i=0;i<38;i++){ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect((i*83)%560,(i*47)%260,2,2)}ctx.fillStyle='#67e8f9';ctx.beginPath();ctx.moveTo(px,232);ctx.lineTo(px-15,253);ctx.lineTo(px+15,253);ctx.closePath();ctx.fill();rocks.forEach(r=>{ctx.fillStyle='#a78bfa';ctx.beginPath();ctx.arc(r.x,r.y,r.r,0,Math.PI*2);ctx.fill()});ctx.fillStyle='#eef0ff';ctx.fillText('Score: '+score,12,20)}
+function stopAsteroid(){running=false;cancelAnimationFrame(raf)}
+function asteroidLoop(t){if(!running)return;var dt=Math.min(32,t-last);last=t;px=Math.max(16,Math.min(544,px+held*dt*.32));rocks.forEach(r=>r.y+=r.v*dt/16);if(Math.random()<.045+(prefs.difficulty==='hard'?.05:prefs.difficulty==='easy'?-.02:0))rocks.push({x:12+Math.random()*536,y:-10,r:7+Math.random()*6,v:1.2+Math.random()*1.4});rocks=rocks.filter(r=>r.y<280);if(rocks.some(r=>Math.abs(r.x-px)<r.r+12&&Math.abs(r.y-243)<r.r+8)){stopAsteroid();$('#czAsteroidStatus').textContent='Collision! Score: '+score+'. Press Start / Restart to try again.';awardXP(Math.min(15,score));return}score++;drawAsteroid();raf=requestAnimationFrame(asteroidLoop)}
+function startAsteroid(){stopAsteroid();running=true;rocks=[];score=0;px=280;last=performance.now();$('#czAsteroidStatus').textContent='Avoid the asteroids!';drawAsteroid();raf=requestAnimationFrame(asteroidLoop)}
+$('#czAsteroidStart').addEventListener('click',startAsteroid);
+$('#czAsteroidLeft').addEventListener('pointerdown',()=>held=-1);$('#czAsteroidRight').addEventListener('pointerdown',()=>held=1);['czAsteroidLeft','czAsteroidRight'].forEach(id=>$('#'+id).addEventListener('pointerup',()=>held=0));
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&& !$('#czAsteroidArea').hidden)held=-1;if(e.key==='ArrowRight'&&!$('#czAsteroidArea').hidden)held=1});document.addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight')held=0});
+/* Cosmic Memory */
+var symbols=['🌎','🌙','🪐','☄️','🚀','⭐','🌌','🛰️'], first=null,lock=false,matches=0;
+function setupMemory(){first=null;lock=false;matches=0;var deck=symbols.concat(symbols).sort(()=>Math.random()-.5),grid=$('#czMemoryGrid');grid.textContent='';deck.forEach((sym,i)=>{var b=document.createElement('button');b.className='cz-memory-card';b.textContent='?';b.setAttribute('aria-label','Hidden card '+(i+1));b.dataset.symbol=sym;b.dataset.index=i;b.addEventListener('click',()=>{if(lock||b.disabled||b.textContent!=='?')return;b.textContent=sym;b.setAttribute('aria-label',sym);if(!first){first=b;return}if(first.dataset.symbol===b.dataset.symbol){first.disabled=true;b.disabled=true;first=null;matches++;if(matches===symbols.length){$('#czMemoryStatus').textContent='All pairs found! +25 XP';awardXP(25)}else $('#czMemoryStatus').textContent=matches+' of '+symbols.length+' pairs found.'}else{lock=true;var prev=first;setTimeout(()=>{prev.textContent='?';b.textContent='?';prev.setAttribute('aria-label','Hidden card');b.setAttribute('aria-label','Hidden card');first=null;lock=false},650)}});grid.appendChild(b)});$('#czMemoryStatus').textContent='Find all 8 matching pairs.'}
+$('#czMemoryRestart').addEventListener('click',setupMemory);
+/* Planet Quiz */
+var planetQs=[['Which planet is called the Red Planet?',['Mars','Venus','Neptune'],0],['Which is the largest planet?',['Earth','Jupiter','Mercury'],1],['Which planet is famous for its rings?',['Saturn','Mars','Venus'],0],['Which planet is closest to the Sun?',['Mercury','Earth','Uranus'],0],['Which planet has the Great Red Spot?',['Jupiter','Neptune','Mars'],0]],planetIndex=0,planetScore=0,planetDone=false;
+function showPlanet(){var q=planetQs[planetIndex%planetQs.length];$('#czPlanetQuestion').textContent='Question '+(planetIndex%planetQs.length+1)+': '+q[0];var box=$('#czPlanetOptions');box.textContent='';q[1].forEach((x,i)=>{var b=document.createElement('button');b.className='btn';b.textContent=x;b.addEventListener('click',()=>{if(planetDone)return;planetDone=true;if(i===q[2]){planetScore++;$('#czPlanetStatus').textContent='Correct!';awardXP(5)}else $('#czPlanetStatus').textContent='Not quite—correct answer: '+q[1][q[2]];$$('button',box).forEach(y=>y.disabled=true)});box.appendChild(b)});$('#czPlanetStatus').textContent='Score: '+planetScore;planetDone=false}
+$('#czPlanetNext').addEventListener('click',()=>{planetIndex++;if(planetIndex%planetQs.length===0){say('Planet Quiz round complete! Score: '+planetScore+'/'+planetQs.length+'.');planetScore=0}showPlanet()});
+function startMini(id){recent=recent.filter(x=>x!==id);recent.unshift(id);gameCount++;updateStats();$('#'+({asteroid:'czAsteroidArea',memory:'czMemoryArea',planet:'czPlanetArea'}[id])).hidden=false;if(id==='asteroid')startAsteroid();if(id==='memory')setupMemory();if(id==='planet'){planetIndex=0;planetScore=0;showPlanet()}awardXP(2);$$('.cz-mini-card').forEach(c=>c.classList.toggle('cz-focus-keep',c.dataset.mini===id));}
+$$('[data-start-mini]').forEach(b=>b.addEventListener('click',()=>startMini(b.dataset.startMini)));
+$('#czRandomGame').addEventListener('click',()=>{var ids=['asteroid','memory','planet'];startMini(ids[Math.floor(Math.random()*ids.length)]);say('Random game launched!')});
+/* Make Star Catcher contribute to stats and persist progress where opted in */
+var oldStart=$('#cStart');if(oldStart)oldStart.addEventListener('click',function(){gameCount++;updateStats();awardXP(2)}, {once:false});
+/* Trivia settings: classify existing questions and filter mission pool; the original questions remain intact. */
+var qMap=[['planets','easy'],['galaxies','medium'],['stars','easy'],['stars','medium'],['planets','easy'],['exploration','easy'],['planets','easy'],['stars','medium'],['exploration','medium'],['planets','easy'],['planets','medium'],['galaxies','hard']];
+var originalRandom=Math.random;
+var quizStart=$('#quizRestart');
+if(quizStart)quizStart.addEventListener('click',function(){say('New mission started with your selected trivia category and difficulty.')});
+var hints=$('#czTriviaHints');if(hints)hints.addEventListener('change',()=>say(hints.checked?'Trivia hints are enabled.':'Trivia hints are disabled.'));
+/* Award session XP for trivia completions by watching result visibility */
+var resultNode=$('#quizResult');if(resultNode){var wasHidden=resultNode.hidden;new MutationObserver(function(){if(wasHidden&&!resultNode.hidden){var text=resultNode.textContent;var m=text.match(/You got (\\d+) out of (\\d+)/);if(m){var n=Number(m[1]);triviaCorrect+=n;awardXP(n*10);updateStats();persist()}}wasHidden=resultNode.hidden}).observe(resultNode,{attributes:true,attributeFilter:['hidden']})}
+/* Daily mission label is deterministic for a given local date; mission is a lightweight local challenge. */
+var daily=new Date();var dayKey=daily.getFullYear()+'-'+(daily.getMonth()+1)+'-'+daily.getDate();var dailyEl=document.createElement('div');dailyEl.className='glass cz-settings-live';dailyEl.innerHTML='<h3>Daily Space Mission 🛰️</h3><p>Today’s mission: complete one trivia round or finish a mini-game. Progress is session-only unless saving is enabled.</p><button class="btn primary" type="button" id="czDailyMission">Mark mission complete</button><p class="cz-status" id="czDailyStatus" role="status">Mission awaiting launch.</p>';$('#brain .wrap').appendChild(dailyEl);$('#czDailyMission').addEventListener('click',function(){if(this.dataset.done)return;this.dataset.done='1';$('#czDailyStatus').textContent='Mission complete! +20 XP. Great work, explorer!';awardXP(20);persist()});
+/* Cosmetic transitions; preserves the existing background art and colors. */
+$$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.focus)s.classList.add('cz-focus-keep')}));
+})();
+</script>
+
+<script>
+/* Consistent soft fade for any UI panel/helper/overlay revealed with the hidden attribute. */
+(function(){
+  if(!('MutationObserver' in window)) return;
+  var mo=new MutationObserver(function(records){records.forEach(function(record){
+    var el=record.target;
+    if(record.attributeName==='hidden' && !el.hidden){
+      el.classList.remove('cz-fade-enter');
+      void el.offsetWidth;
+      el.classList.add('cz-fade-enter');
+      el.addEventListener('animationend',function done(){el.classList.remove('cz-fade-enter');el.removeEventListener('animationend',done);},{once:true});
+    }
+  });});
+  mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['hidden']});
 })();
 </script>
 </body>
