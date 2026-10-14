@@ -382,6 +382,18 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
  #observePanel{left:.6rem;bottom:5rem;width:calc(100vw - 1.2rem)}#observeSettingsPanel{left:.6rem;bottom:5rem;width:calc(100vw - 1.2rem)}#observeDiscover{left:.7rem;bottom:.7rem;width:52px;height:52px}#observeSettingsToggle{left:4.5rem;bottom:.7rem;width:52px;height:52px}
 }
 
+
+/* HTML/CSS/JS Executor: run user code inside an isolated sandboxed preview */
+.executor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;align-items:stretch}
+.executor-editor{padding:1rem;min-width:0}
+.executor-editor label{display:block;font-weight:700;margin-bottom:.5rem}
+.executor-editor textarea{display:block;width:100%;min-height:220px;resize:vertical;background:rgba(3,5,18,.88);color:#eef0ff;border:1px solid var(--line);border-radius:12px;padding:.8rem;font: .9rem/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;tab-size:2}
+.executor-toolbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+.executor-preview{overflow:hidden}
+.executor-preview-head{padding:.75rem 1rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:.8rem}
+.executor-preview iframe{display:block;width:100%;height:360px;background:#fff;border:0}
+.executor-note{font-size:.9rem;color:var(--muted);margin-top:.7rem}
+@media(max-width:900px){.executor-grid{grid-template-columns:1fr}.executor-editor textarea{min-height:150px}}
 </style>
 </head>
 <body>
@@ -458,6 +470,7 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
         <li><a href="#watch">Movies / Watch</a></li>
         <li><a href="#timer">Break Timer</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#executor">Executor</a></li>
         <li class="observe-item"><button class="nav-observe" id="observeNav" type="button" aria-pressed="false">Observe</button></li>
       </ul>
     </nav>
@@ -769,6 +782,52 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
         <div class="done-msg" id="tDone" hidden role="status">🌠 Break complete! Hope you recharged. Time to head back to class.</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- EXECUTOR -->
+<section id="executor" class="sec" aria-labelledby="executor-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="executor-title">Executor 🧪</h2>
+      <p>Write HTML, CSS, and JavaScript, then run your project in the preview below.</p>
+    </div>
+    <div class="executor-grid">
+      <div class="glass executor-editor">
+        <label for="executorHTML">HTML</label>
+        <textarea id="executorHTML" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="HTML code editor"><h1>Hello, space!</h1>
+<p>Change this HTML, then press Run Code.</p>
+<button id="launch">Launch!</button></textarea>
+      </div>
+      <div class="glass executor-editor">
+        <label for="executorCSS">CSS</label>
+        <textarea id="executorCSS" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="CSS code editor">body {
+  font-family: system-ui, sans-serif;
+  padding: 2rem;
+  color: #eef0ff;
+  background: #10142e;
+}
+h1 { color: #a5f3fc; }
+button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; }</textarea>
+      </div>
+      <div class="glass executor-editor">
+        <label for="executorJS">JavaScript</label>
+        <textarea id="executorJS" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="JavaScript code editor">document.querySelector('#launch')?.addEventListener('click', () => {
+  document.querySelector('p').textContent = 'Launch successful! 🚀';
+});</textarea>
+      </div>
+    </div>
+    <div class="executor-toolbar">
+      <button class="btn primary" id="executorRun" type="button">▶ Run Code</button>
+      <button class="btn" id="executorClear" type="button">Clear editors</button>
+      <button class="btn" id="executorReset" type="button">Restore example</button>
+      <span id="executorStatus" role="status" aria-live="polite">Ready to run.</span>
+    </div>
+    <div class="glass executor-preview">
+      <div class="executor-preview-head"><strong>Live Preview</strong><span class="dot live" aria-hidden="true"></span></div>
+      <iframe id="executorOutput" title="Executor code preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+    </div>
+    <p class="executor-note">Safety note: your code runs in a sandboxed preview separated from ChillZone. Avoid pasting code you don't understand, and don't enter passwords or private information into test pages.</p>
   </div>
 </section>
 
@@ -1544,6 +1603,32 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
     }
   });});
   mo.observe(document.body,{subtree:true,attributes:true,attributeFilter:['hidden']});
+})();
+</script>
+<script>
+/* Executor: HTML/CSS/JS are combined into a sandboxed iframe preview. */
+(function(){
+  'use strict';
+  var htmlEl=document.getElementById('executorHTML');
+  var cssEl=document.getElementById('executorCSS');
+  var jsEl=document.getElementById('executorJS');
+  var output=document.getElementById('executorOutput');
+  var status=document.getElementById('executorStatus');
+  if(!htmlEl||!cssEl||!jsEl||!output||!status)return;
+  var defaults={html:htmlEl.value,css:cssEl.value,js:jsEl.value};
+  function runCode(){
+    var html=htmlEl.value;
+    var css=cssEl.value.replace(/<\/style/gi,'<\\/style');
+    var js=jsEl.value.replace(/<\/script/gi,'<\\/script');
+    var doc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{box-sizing:border-box}'+css+'</style></head><body>'+html+'<scr'+'ipt>\n'+js+'\n</scr'+'ipt></body></html>';
+    output.srcdoc=doc;
+    status.textContent='Code ran in the isolated preview.';
+  }
+  document.getElementById('executorRun').addEventListener('click',runCode);
+  document.getElementById('executorClear').addEventListener('click',function(){htmlEl.value='';cssEl.value='';jsEl.value='';status.textContent='Editors cleared. Press Run Code to update the preview.';});
+  document.getElementById('executorReset').addEventListener('click',function(){htmlEl.value=defaults.html;cssEl.value=defaults.css;jsEl.value=defaults.js;runCode();});
+  [htmlEl,cssEl,jsEl].forEach(function(el){el.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();runCode();}})});
+  runCode();
 })();
 </script>
 </body>
