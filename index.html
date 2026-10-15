@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ChillZone – Take a Break. Explore Space.</title>
+<title>ChillZone</title>
 <meta name="description" content="ChillZone is a cozy corner of outer space for students: browser games, space videos and a break timer.">
 <meta name="theme-color" content="#070816">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 viewBox=%270 0 100 100%27%3E%3Cdefs%3E%3ClinearGradient id=%27p%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%23c4b5fd%27/%3E%3Cstop offset=%271%27 stop-color=%27%2367e8f9%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%27100%27 height=%27100%27 rx=%2722%27 fill=%27%23070816%27/%3E%3Cellipse cx=%2750%27 cy=%2750%27 rx=%2741%27 ry=%2715%27 fill=%27none%27 stroke=%27%23f9a8d4%27 stroke-width=%276%27 transform=%27rotate(-25 50 50)%27/%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2723%27 fill=%27url(%23p)%27/%3E%3Ccircle cx=%2777%27 cy=%2720%27 r=%274%27 fill=%27%23ffffff%27/%3E%3Ccircle cx=%2720%27 cy=%2775%27 r=%273%27 fill=%27%2367e8f9%27/%3E%3C/svg%3E">
@@ -456,7 +456,7 @@ body.cz-observe-mode .nav .burger{display:block!important}
       </div>
       <label class="agree"><input type="checkbox" id="agree"><span>I have read and accept the terms and conditions.</span></label>
       <label class="blob-option"><input type="checkbox" id="blobMode"><span><strong>Blob?</strong> <span style="color:var(--muted)">(optional)</span></span></label>
-      <p class="blob-hint" id="blobHint" hidden>Before trying anything with Blob URLs, bookmark this page first so you can find ChillZone again. Press <strong>Ctrl+D</strong> on Windows/Linux or <strong>⌘+D</strong> on Mac, or use your browser’s Bookmark menu. A Blob URL is a temporary browser-created address and cannot turn the hosted website itself into a permanent Blob copy. This checkbox is a reminder only.</p>
+      <p class="blob-hint" id="blobHint" hidden>Before trying anything with Blob URLs, bookmark this page first so you can find ChillZone again. Press <strong>Ctrl+D</strong> on Windows/Linux or <strong>⌘+D</strong> on Mac, or use your browser’s Bookmark menu. When you accept the terms, ChillZone will try to open a temporary Blob copy of the full page in a new tab. Some external games or resources may still load from their original websites.</p>
       <p class="gate-err" id="termsErr" role="alert"></p>
       <div class="gate-actions">
         <button class="btn primary" type="button" id="accept">Accept and enter</button>
@@ -1430,9 +1430,49 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
       $('#termsHello').textContent = 'Almost there, ' + name + '. Please read and accept these terms.';
       show(stepTerms); $('#termsTitle').setAttribute('tabindex', '-1'); $('#termsTitle').focus();
     });
+    function openWholeSiteBlob() {
+      if (!window.Blob || !window.URL || !URL.createObjectURL) {
+        termsErr.textContent = 'This browser does not support Blob URLs. You can enter ChillZone normally.';
+        return false;
+      }
+      // Serialize the complete current page. Add a base URL so relative images/assets
+      // continue resolving against the hosted ChillZone page in the Blob copy.
+      var html = '<!doctype html>\n' + document.documentElement.outerHTML;
+      var baseTag = '<base href="' + location.href.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '">';
+      if (/<head\b[^>]*>/i.test(html) && !/<base\b/i.test(html)) {
+        html = html.replace(/<head\b[^>]*>/i, function (head) { return head + baseTag; });
+      }
+      // The copy was created after the entry flow, so preserve the accepted username
+      // and prevent the entry gate from appearing again in the new tab.
+      var seed = '<script>try{sessionStorage.setItem("chillzone-entered",' + JSON.stringify(name) + ')}catch(e){}<\/script>';
+      html = html.replace(/<script\b/i, seed + '<script');
+      var url = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
+      var opened = window.open(url, '_blank');
+      if (!opened) {
+        URL.revokeObjectURL(url);
+        termsErr.textContent = 'Your browser blocked the new tab. Allow pop-ups for this page, then try Blob? again.';
+        return false;
+      }
+      // Keep the original hosted page visible and clearly identify what happened.
+      var notice = document.createElement('div');
+      notice.setAttribute('role', 'status');
+      notice.style.cssText = 'position:fixed;z-index:100000;left:50%;bottom:20px;transform:translateX(-50%);max-width:min(90vw,620px);padding:14px 18px;border:1px solid #22d3ee;border-radius:14px;background:#080d24;color:#fff;box-shadow:0 10px 35px #0008;font:500 15px/1.5 system-ui,sans-serif;text-align:center';
+      notice.textContent = 'Your ChillZone Blob copy opened in a new tab. This tab is still the original hosted page.';
+      document.body.appendChild(notice);
+      setTimeout(function () { if (notice.parentNode) notice.parentNode.removeChild(notice); }, 9000);
+      return true;
+    }
     $('#accept').addEventListener('click', function () {
       if (!agree.checked) { termsErr.textContent = 'Tick the box to accept the terms and enter.'; agree.focus(); return; }
-      termsErr.textContent = ''; enter();
+      termsErr.textContent = '';
+      if (blobMode.checked) {
+        var bookmarked = window.confirm('Blob? Before opening the whole-site Blob copy, please bookmark the original ChillZone page so you can return to it. Continue?');
+        if (!bookmarked) return;
+        enter();
+        if (!openWholeSiteBlob()) { gate.hidden = false; lock(true); show(stepTerms); }
+        return;
+      }
+      enter();
     });
     agree.addEventListener('change', function () { if (agree.checked) termsErr.textContent = ''; });
     blobMode.addEventListener('change', function () { blobHint.hidden = !blobMode.checked; });
