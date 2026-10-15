@@ -6,7 +6,7 @@
 <title>ChillZone – Take a Break. Explore Space.</title>
 <meta name="description" content="ChillZone is a cozy corner of outer space for students: browser games, space videos and a break timer.">
 <meta name="theme-color" content="#070816">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http\://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%90%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27 viewBox=%270 0 100 100%27%3E%3Cdefs%3E%3ClinearGradient id=%27p%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop stop-color=%27%23c4b5fd%27/%3E%3Cstop offset=%271%27 stop-color=%27%2367e8f9%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%27100%27 height=%27100%27 rx=%2722%27 fill=%27%23070816%27/%3E%3Cellipse cx=%2750%27 cy=%2750%27 rx=%2741%27 ry=%2715%27 fill=%27none%27 stroke=%27%23f9a8d4%27 stroke-width=%276%27 transform=%27rotate(-25 50 50)%27/%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2723%27 fill=%27url(%23p)%27/%3E%3Ccircle cx=%2777%27 cy=%2720%27 r=%274%27 fill=%27%23ffffff%27/%3E%3Ccircle cx=%2720%27 cy=%2775%27 r=%273%27 fill=%27%2367e8f9%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
@@ -207,6 +207,10 @@ footer strong{color:var(--lavender)}
 .terms li{margin-bottom:.7rem;color:var(--text);font-size:.98rem}
 .agree{display:flex;gap:.7rem;align-items:flex-start;margin:1rem 0;cursor:pointer}
 .agree input{width:20px;height:20px;margin-top:.2rem;accent-color:var(--violet);flex:none}
+.blob-option{display:flex;gap:.7rem;align-items:flex-start;margin:.7rem 0;cursor:pointer}
+.blob-option input{width:20px;height:20px;margin-top:.2rem;accent-color:var(--cyan);flex:none}
+.blob-hint{margin:.4rem 0 1rem;padding:.8rem 1rem;border:1px solid var(--line);border-radius:12px;background:rgba(34,211,238,.08);font-size:.92rem}
+.blob-hint[hidden]{display:none}
 .gate-actions{display:flex;flex-wrap:wrap;gap:.7rem}
 
 /* Galaxy Brain trivia + achievements */
@@ -394,6 +398,26 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
 .executor-preview iframe{display:block;width:100%;height:360px;background:#fff;border:0}
 .executor-note{font-size:.9rem;color:var(--muted);margin-top:.7rem}
 @media(max-width:900px){.executor-grid{grid-template-columns:1fr}.executor-editor textarea{min-height:150px}}
+
+/* App-like navigation: three-line menu, one section visible at a time. */
+.nav-in{max-width:none;min-height:58px;padding:.45rem .85rem;justify-content:flex-start}
+.nav .burger{display:block;position:relative;z-index:1001;width:48px;height:44px;padding:.45rem .7rem;background:rgba(22,24,64,.9)}
+.nav nav{margin:0}
+.nav .links{position:absolute;top:calc(100% + 8px);left:.85rem;right:auto;z-index:1000;display:none;flex-direction:column;gap:.15rem;min-width:210px;max-width:min(300px,calc(100vw - 1.7rem));padding:.45rem;background:rgba(7,8,25,.97);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.5);backdrop-filter:blur(18px)}
+.nav .links.open{display:flex}
+.nav .links li{display:block!important;margin:0;padding:0}
+.nav .menu-item{display:block;width:100%;padding:.7rem .9rem;text-align:left;font:inherit;font-weight:500;color:var(--text);background:transparent;border:0;border-radius:10px;cursor:pointer}
+.nav .menu-item:hover,.nav .menu-item:focus-visible{background:rgba(139,92,246,.24);color:#fff}
+main>section{min-height:calc(100vh - 60px)}
+main>section[hidden]{display:none!important}
+body.cz-single-page footer,body.cz-single-page .credit{display:none!important}
+body.cz-observe-mode .nav .links{position:absolute!important;left:.85rem!important;right:auto!important;top:calc(100% + 8px)!important;display:none!important;flex-direction:column!important;background:rgba(7,8,25,.97)!important;border:1px solid var(--line)!important;padding:.45rem!important}
+body.cz-observe-mode .nav .links.open{display:flex!important}
+body.cz-observe-mode .nav .links li{display:block!important}
+body.cz-observe-mode .nav .links li:not(.observe-item){display:block!important}
+body.cz-observe-mode .nav .burger{display:block!important}
+@media(max-width:760px){.nav-in{padding:.45rem .7rem}.nav .links{left:.7rem;top:calc(100% + 6px)}}
+
 </style>
 </head>
 <body>
@@ -431,6 +455,8 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
         </ol>
       </div>
       <label class="agree"><input type="checkbox" id="agree"><span>I have read and accept the terms and conditions.</span></label>
+      <label class="blob-option"><input type="checkbox" id="blobMode"><span><strong>Blob?</strong> <span style="color:var(--muted)">(optional)</span></span></label>
+      <p class="blob-hint" id="blobHint" hidden>Before trying anything with Blob URLs, bookmark this page first so you can find ChillZone again. Press <strong>Ctrl+D</strong> on Windows/Linux or <strong>⌘+D</strong> on Mac, or use your browser’s Bookmark menu. A Blob URL is a temporary browser-created address and cannot turn the hosted website itself into a permanent Blob copy. This checkbox is a reminder only.</p>
       <p class="gate-err" id="termsErr" role="alert"></p>
       <div class="gate-actions">
         <button class="btn primary" type="button" id="accept">Accept and enter</button>
@@ -452,31 +478,27 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
 <div class="nebula c" aria-hidden="true"></div>
 <div class="galaxy" aria-hidden="true"></div>
 
-<header class="nav">
+<header class="nav" aria-label="ChillZone navigation">
   <div class="nav-in">
-    <a class="logo" href="#home" aria-label="ChillZone home">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4b5fd"/><stop offset="1" stop-color="#67e8f9"/></linearGradient></defs>
-        <ellipse cx="20" cy="20" rx="19" ry="6" transform="rotate(-20 20 20)" fill="none" stroke="#f9a8d4" stroke-width="2" opacity=".8"/>
-        <circle cx="20" cy="20" r="10" fill="url(#lg)"/>
-        <path d="M4.5 25.5 Q20 31 35.5 14.5" fill="none" stroke="#f9a8d4" stroke-width="2" stroke-linecap="round"/></svg>
-      ChillZone
-    </a>
-    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
-    <nav aria-label="Main">
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+    <nav aria-label="Pages">
       <ul class="links" id="links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#games">Games</a></li>
-          <li><a href="#brain">Trivia & Badges</a></li>
-        <li><a href="#watch">Movies / Watch</a></li>
-        <li><a href="#timer">Break Timer</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#executor">Executor</a></li>
-        <li class="observe-item"><button class="nav-observe" id="observeNav" type="button" aria-pressed="false">Observe</button></li>
+        <li><button class="menu-item" type="button" data-page="home">Home</button></li>
+        <li><button class="menu-item" type="button" data-page="games">Games</button></li>
+        <li><button class="menu-item" type="button" data-page="brain">Trivia &amp; Badges</button></li>
+        <li><button class="menu-item" type="button" data-page="watch">Movies / Watch</button></li>
+        <li><button class="menu-item" type="button" data-page="timer">Break Timer</button></li>
+        <li><button class="menu-item" type="button" data-page="about">About</button></li>
+        <li><button class="menu-item" type="button" data-page="executor">Executor</button></li>
+        <li><button class="menu-item" type="button" data-action="observe">Observe</button></li>
+        <li><button class="menu-item" type="button" data-action="profile">Profile</button></li>
+        <li><button class="menu-item" type="button" data-action="settings">Settings</button></li>
       </ul>
     </nav>
-    <button class="nav-profile" id="profileToggle" type="button" aria-expanded="false" aria-controls="profilePanel">👤 Profile</button>
   </div>
 </header>
+<button id="profileToggle" hidden type="button" aria-expanded="false" aria-controls="profilePanel">Profile</button>
+<button id="observeNav" hidden type="button" aria-pressed="false">Observe</button>
 
 <div id="profilePanel" class="glass" hidden role="dialog" aria-labelledby="profileTitle">
   <h2 id="profileTitle">Explorer Profile 👤</h2>
@@ -571,12 +593,13 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
         <div class="viewer-title"><span class="dot" id="gameDot"></span><span id="gameTitle">No game selected</span></div>
         <div class="viewer-actions">
           <button class="btn primary small" id="gameLaunch" type="button">▶ Launch</button>
+          <button class="btn small" id="gameOpenExternal" type="button" title="Open the selected third-party game directly in a new tab">↗ Open in new tab</button>
           <button class="btn small" id="gameReload" type="button" disabled>↻ Reload</button>
           <button class="btn small" id="gameFull" type="button">⛶ Full screen</button>
         </div>
       </div>
       <div class="stage" id="gameStage">
-        <div class="overlay" id="gameIdle"><div><div class="big" aria-hidden="true">🪐</div><h3>Ready when you are</h3><p>Choose a game above and press Launch to start playing inside ChillZone.</p></div></div>
+        <div class="overlay" id="gameIdle"><div><div class="big" aria-hidden="true">🪐</div><h3>Ready when you are</h3><p>Choose Fern, Totally Science, Mazean, or Star Catcher above and press Launch to play in this viewer.</p></div></div>
         <iframe id="gameFrame" title="ChillZone game viewer" hidden
           sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock allow-modals"
           allow="fullscreen; gamepad; autoplay; clipboard-write" referrerpolicy="no-referrer" loading="lazy"></iframe>
@@ -588,7 +611,7 @@ body.cz-observe-mode #observeSettingsToggle{display:grid}
         <div class="overlay" id="gameLoading" hidden><div><div class="spinner" aria-hidden="true"></div><h3>Loading game…</h3><p>Hang tight, warming up the engines.</p></div></div>
         <div class="banner" id="gameBanner" hidden role="status"><span id="gameBannerText"></span><button class="btn small" id="gameBannerBtn" type="button">Play Star Catcher</button></div>
       </div>
-      <p class="viewer-note" id="gameNote">The Game Nebula is run by a third party, so ChillZone can't guarantee it will load. If the area stays blank or shows a refused-to-connect icon, that site doesn't allow embedding.</p>
+      <p class="viewer-note" id="gameNote">Fern is run by a third party, so ChillZone can't guarantee it will load. If the area stays blank or shows a refused-to-connect icon, that site doesn't allow embedding.</p>
     </div>
     <div class="cz-search-tools" aria-label="Game finder">
       <input class="cz-search" id="czGameSearch" type="search" placeholder="Search games…" aria-label="Search games">
@@ -819,15 +842,19 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
     </div>
     <div class="executor-toolbar">
       <button class="btn primary" id="executorRun" type="button">▶ Run Code</button>
+      <button class="btn" id="executorBlob" type="button">Create Blob URL</button>
+      <button class="btn" id="executorCopyBlob" type="button" disabled>Copy Blob URL</button>
       <button class="btn" id="executorClear" type="button">Clear editors</button>
       <button class="btn" id="executorReset" type="button">Restore example</button>
       <span id="executorStatus" role="status" aria-live="polite">Ready to run.</span>
+      <label for="executorBlobUrl" class="executor-note" style="width:100%;display:block">Temporary Blob URL for your own HTML/CSS/JS project</label>
+      <input id="executorBlobUrl" type="text" readonly aria-label="Generated Blob URL" placeholder="Click Create Blob URL to generate a temporary URL" style="width:100%;min-width:0;box-sizing:border-box;background:rgba(3,5,18,.88);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:.7rem;font: .85rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace">
     </div>
     <div class="glass executor-preview">
       <div class="executor-preview-head"><strong>Live Preview</strong><span class="dot live" aria-hidden="true"></span></div>
       <iframe id="executorOutput" title="Executor code preview" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
     </div>
-    <p class="executor-note">Safety note: your code runs in a sandboxed preview separated from ChillZone. Avoid pasting code you don't understand, and don't enter passwords or private information into test pages.</p>
+    <p class="executor-note">Your code runs in a sandboxed preview separated from ChillZone. A Blob URL is a temporary address for code generated in this browser; it usually stops working when the page or browser session ends. It does not host a site publicly or bypass network, school, or website restrictions. Avoid pasting code you don't understand, and don't enter passwords or private information into test pages.</p>
   </div>
 </section>
 
@@ -861,13 +888,18 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
 
   /* ================= CONFIG: add more games and video sources here ================= */
   var GAMES = [
-    { id: 'nebula', icon: '🌌', title: 'The Game Nebula', tag: 'Featured',
-      desc: 'A big portal of browser games, loaded right inside ChillZone.',
-      type: 'iframe', url: 'https\://storage.googleapis.com/fernisbest/index.html' },
+    { id: 'fern', icon: '🌿', title: 'Fern', tag: 'Featured',
+      desc: 'A browser game portal. If the embedded viewer stays blank, try opening the site directly in a new tab.',
+      type: 'iframe', url: 'https://storage.googleapis.com/fernisbest/index.html' },
+    { id: 'totally-science', icon: '🧪', title: 'Totally Science', tag: 'Portal',
+      desc: 'Open the Totally Science game portal in the in-page viewer.',
+      type: 'iframe', url: 'https://d11jzht7mj96rr.cloudfront.net/' },
+    { id: 'mazean', icon: '🌀', title: 'Mazean', tag: 'Portal',
+      desc: 'Play Mazean in the in-page viewer when the site permits embedding.',
+      type: 'iframe', url: 'https://mazean.com' },
     { id: 'catcher', icon: '⭐', title: 'Star Catcher', tag: 'Built-in',
       desc: 'Catch falling stars, dodge space rocks. Works offline, no loading.',
       type: 'builtin' }
-    // Add more: { id:'x', icon:'🎲', title:'Name', tag:'New', desc:'About it', type:'iframe', url:'https\://...' }
   ];
   var SOURCES = [
     { id: 'shuttletv', label: 'ShuttleTV', title: 'ShuttleTV',
@@ -958,7 +990,7 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
   /* ================= Navigation ================= */
   var burger = $('#burger'), links = $('#links');
   function setMenu(open) { links.classList.toggle('open', open); burger.setAttribute('aria-expanded', String(open)); }
-  burger.addEventListener('click', function () { setMenu(!links.classList.contains('open')); });
+  // Menu toggling is handled by the app-like router added near the end of this file.
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && links.classList.contains('open')) { setMenu(false); burger.focus(); } });
   $$('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
@@ -1216,7 +1248,15 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
       b.addEventListener('click', function () { selectedGame = g; renderGames(); launchGame(); $('#gameViewer').scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' }); });
       cardWrap.appendChild(b);
     });
+    $('#gameOpenExternal').disabled = selectedGame.type === 'builtin';
   }
+  $('#gameOpenExternal').addEventListener('click', function () {
+    if (!selectedGame || selectedGame.type === 'builtin' || !selectedGame.url) return;
+    var opened = window.open(selectedGame.url, '_blank');
+    if (opened) opened.opener = null;
+    if (!opened) $('#gameNote').textContent = 'Your browser blocked the new tab. Allow pop-ups for ChillZone or copy the game URL from the address bar after opening it directly.';
+    else $('#gameNote').textContent = selectedGame.title + ' opened in a new tab. Some third-party sites do not allow embedding inside ChillZone.';
+  });
   function launchGame() {
     catcher.stop();
     if (selectedGame.type === 'builtin') {
@@ -1353,7 +1393,7 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
   /* ================= Entry gate (username + terms) ================= */
   (function () {
     var gate = $('#gate'), stepName = $('#stepName'), stepTerms = $('#stepTerms'), stepDeclined = $('#stepDeclined'),
-        uname = $('#uname'), nameErr = $('#nameErr'), agree = $('#agree'), termsErr = $('#termsErr'), name = '';
+        uname = $('#uname'), nameErr = $('#nameErr'), agree = $('#agree'), termsErr = $('#termsErr'), blobMode = $('#blobMode'), blobHint = $('#blobHint'), name = '';
     var covered = $$('header.nav, main, footer, #settingsFloat');
     var helpTimer = 0;
     function startUsernameHelpTimer() { clearTimeout(helpTimer); $('#usernameHelp').hidden = true; helpTimer = setTimeout(function () { if (!gate.hidden && !stepName.hidden) $('#usernameHelp').hidden = false; }, 5000); }
@@ -1395,6 +1435,7 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
       termsErr.textContent = ''; enter();
     });
     agree.addEventListener('change', function () { if (agree.checked) termsErr.textContent = ''; });
+    blobMode.addEventListener('change', function () { blobHint.hidden = !blobMode.checked; });
     $('#decline').addEventListener('click', function () { show(stepDeclined); $('#back').focus(); });
     $('#back').addEventListener('click', function () { show(stepTerms); $('#termsTitle').focus(); });
   })();
@@ -1614,22 +1655,80 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
   var jsEl=document.getElementById('executorJS');
   var output=document.getElementById('executorOutput');
   var status=document.getElementById('executorStatus');
+  var blobButton=document.getElementById('executorBlob');
+  var copyBlobButton=document.getElementById('executorCopyBlob');
+  var blobUrlInput=document.getElementById('executorBlobUrl');
   if(!htmlEl||!cssEl||!jsEl||!output||!status)return;
   var defaults={html:htmlEl.value,css:cssEl.value,js:jsEl.value};
-  function runCode(){
+  var currentBlobUrl='';
+  function buildDocument(){
     var html=htmlEl.value;
     var css=cssEl.value.replace(/<\/style/gi,'<\\/style');
     var js=jsEl.value.replace(/<\/script/gi,'<\\/script');
-    var doc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{box-sizing:border-box}'+css+'</style></head><body>'+html+'<scr'+'ipt>\n'+js+'\n</scr'+'ipt></body></html>';
-    output.srcdoc=doc;
+    return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{box-sizing:border-box}'+css+'</style></head><body>'+html+'<scr'+'ipt>\n'+js+'\n</scr'+'ipt></body></html>';
+  }
+  function runCode(){
+    output.removeAttribute('src');
+    output.srcdoc=buildDocument();
     status.textContent='Code ran in the isolated preview.';
   }
+  function createBlobUrl(){
+    if(!window.Blob||!window.URL||!URL.createObjectURL){status.textContent='Blob URLs are not supported in this browser.';return;}
+    if(currentBlobUrl)URL.revokeObjectURL(currentBlobUrl);
+    currentBlobUrl=URL.createObjectURL(new Blob([buildDocument()],{type:'text/html;charset=utf-8'}));
+    blobUrlInput.value=currentBlobUrl;
+    copyBlobButton.disabled=false;
+    output.removeAttribute('srcdoc');
+    output.src=currentBlobUrl;
+    status.textContent='Temporary Blob URL created for your project.';
+  }
   document.getElementById('executorRun').addEventListener('click',runCode);
+  if(blobButton)blobButton.addEventListener('click',createBlobUrl);
+  if(copyBlobButton)copyBlobButton.addEventListener('click',async function(){
+    if(!currentBlobUrl)return;
+    try{await navigator.clipboard.writeText(currentBlobUrl);status.textContent='Blob URL copied.';}
+    catch(err){blobUrlInput.focus();blobUrlInput.select();try{var ok=document.execCommand('copy');status.textContent=ok?'Blob URL copied.':'Select the URL and copy it manually.';}catch(e){status.textContent='Select the URL and copy it manually.';}}
+  });
   document.getElementById('executorClear').addEventListener('click',function(){htmlEl.value='';cssEl.value='';jsEl.value='';status.textContent='Editors cleared. Press Run Code to update the preview.';});
   document.getElementById('executorReset').addEventListener('click',function(){htmlEl.value=defaults.html;cssEl.value=defaults.css;jsEl.value=defaults.js;runCode();});
   [htmlEl,cssEl,jsEl].forEach(function(el){el.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();runCode();}})});
+  window.addEventListener('beforeunload',function(){if(currentBlobUrl)URL.revokeObjectURL(currentBlobUrl)});
   runCode();
 })();
 </script>
+
+<script>
+/* ChillZone page switcher: the menu contains names only and each selection opens one page. */
+(function(){
+  'use strict';
+  var body=document.body, menu=document.getElementById('links'), burger=document.getElementById('burger');
+  var sections=Array.prototype.slice.call(document.querySelectorAll('main > section'));
+  var pageIds=sections.map(function(s){return s.id}).filter(Boolean);
+  function closeMenu(){menu.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.setAttribute('aria-label','Open menu')}
+  function showPage(id){
+    if(!pageIds.includes(id)) return;
+    if(body.classList.contains('cz-observe-mode')){var ob=document.getElementById('observeNav');if(ob&&ob.getAttribute('aria-pressed')==='true')ob.click();}
+    body.classList.add('cz-single-page');
+    sections.forEach(function(sec){sec.hidden=sec.id!==id;});
+    body.classList.remove('cz-settings-open');
+    var pp=document.getElementById('profilePanel');if(pp)pp.hidden=true;
+    window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+    if(history.replaceState)history.replaceState(null,'','#'+id);
+    closeMenu();
+  }
+  burger.addEventListener('click',function(){var open=!menu.classList.contains('open');menu.classList.toggle('open',open);burger.setAttribute('aria-expanded',String(open));burger.setAttribute('aria-label',open?'Close menu':'Open menu')});
+  menu.addEventListener('click',function(e){var b=e.target.closest('button[data-page],button[data-action]');if(!b)return;
+    if(b.dataset.page){showPage(b.dataset.page);return;}
+    var action=b.dataset.action;closeMenu();
+    if(action==='observe'){var ob=document.getElementById('observeNav');if(ob)ob.click();}
+    if(action==='profile'){if(body.classList.contains('cz-observe-mode')){var ob2=document.getElementById('observeNav');if(ob2)ob2.click();}var p=document.getElementById('profilePanel'),t=document.getElementById('profileToggle');if(p){p.hidden=false;if(t)t.setAttribute('aria-expanded','true');var n='';try{n=sessionStorage.getItem('chillzone-entered')||''}catch(err){}var nameEl=document.getElementById('profileName');var input=document.getElementById('profileNameInput');if(nameEl)nameEl.textContent=n||'Explorer';if(input)input.value=n;}}
+    if(action==='settings'){if(body.classList.contains('cz-observe-mode')){var ob3=document.getElementById('observeNav');if(ob3)ob3.click();}var sp=document.getElementById('settings');if(sp)sp.hidden=false;var sf=document.getElementById('settingsFloat');if(sf)sf.click();}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+  // Start with the Home view; the original sections remain intact as separate pages.
+  var initial=(location.hash||'').slice(1);if(!pageIds.includes(initial))initial='home';showPage(initial);
+})();
+</script>
+
 </body>
 </html>
