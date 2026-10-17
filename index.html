@@ -418,7 +418,56 @@ body.cz-observe-mode .nav .links li:not(.observe-item){display:block!important}
 body.cz-observe-mode .nav .burger{display:block!important}
 @media(max-width:760px){.nav-in{padding:.45rem .7rem}.nav .links{left:.7rem;top:calc(100% + 6px)}}
 
+
+/* YouTube lounge: search videos and Shorts inside ChillZone */
+.youtube-browser{padding:1rem;margin:0 0 1rem}
+.youtube-browser[hidden]{display:none}
+.youtube-toolbar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:.8rem}
+.youtube-search{display:flex;flex:1 1 280px;gap:.5rem;min-width:min(100%,260px)}
+.youtube-search input{flex:1;min-width:0;font:inherit;color:var(--text);background:rgba(7,8,22,.7);border:1px solid var(--line);border-radius:12px;padding:.7rem .9rem}
+.youtube-mode{display:flex;gap:.45rem;flex-wrap:wrap}
+.youtube-status{color:var(--muted);font-size:.92rem;min-height:1.5em;margin:.4rem 0 .8rem}
+.youtube-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.8rem}
+.youtube-result{display:flex;flex-direction:column;gap:.5rem;text-align:left;padding:.65rem;border:1px solid var(--line);border-radius:14px;background:rgba(7,8,22,.55);color:var(--text);font:inherit;cursor:pointer;min-width:0}
+.youtube-result:hover,.youtube-result[aria-pressed="true"]{border-color:var(--cyan);box-shadow:0 0 0 1px rgba(34,211,238,.18)}
+.youtube-result img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;background:#03040d}
+.youtube-result .yt-title{font-weight:650;line-height:1.3;overflow-wrap:anywhere}
+.youtube-result .yt-channel{font-size:.85rem;color:var(--muted)}
+.youtube-result.shorts img{aspect-ratio:9/16;max-height:260px;object-fit:cover}
+.youtube-result.shorts{max-width:230px}
+.youtube-key-help{font-size:.86rem;color:var(--muted);margin:.5rem 0 0}
+.youtube-key-help a{color:var(--cyan)}
+.stage.shorts-stage{aspect-ratio:9/16;max-width:440px;margin-inline:auto;min-height:420px;width:100%}
+@media(max-width:600px){.youtube-results{grid-template-columns:repeat(2,minmax(0,1fr))}.youtube-result.shorts{max-width:none}.stage.shorts-stage{min-height:380px}}
+
 </style>
+<script id="chillzone-auto-blob-bootstrap">
+(function () {
+  'use strict';
+  var isPublishedChillZone = location.hostname === 'starfighter45.github.io' && /^\/ChillZone\/?$/.test(location.pathname);
+  if (!isPublishedChillZone || location.protocol === 'blob:' || window.__CHILLZONE_BLOB_COPY__) return;
+  function launchBlobCopy() {
+    if (location.protocol === 'blob:' || window.__CHILLZONE_BLOB_COPY__) return;
+    try {
+      var html = '<!doctype html>\n' + document.documentElement.outerHTML;
+      var baseHref = location.origin + location.pathname.replace(/[^/]*$/, '');
+      var baseTag = '<base href="' + baseHref.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '">';
+      var marker = '<script>window.__CHILLZONE_BLOB_COPY__=true;try{sessionStorage.removeItem(\"chillzone-entered\")}catch(e){}<\/script>';
+      html = html.replace(/<head\b[^>]*>/i, function (head) { return head + baseTag + marker; });
+      var blobUrl = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
+      location.replace(blobUrl + location.hash);
+    } catch (err) {
+      console.warn('ChillZone could not launch its Blob copy; keeping the hosted page open.', err);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', launchBlobCopy, { once: true });
+  } else {
+    launchBlobCopy();
+  }
+})();
+</script>
+
 </head>
 <body>
 <div class="credit" aria-label="Made by Aashrith Kummera">By Aashrith Kummera</div>
@@ -426,7 +475,7 @@ body.cz-observe-mode .nav .burger{display:block!important}
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
   <div class="glass gate-card">
     <form id="stepName" novalidate>
-      <h2 id="gateTitle">Welcome to ChillZone 🪐! For any Feedback, come to Aashrith. If you don't know who that is, ask a friend.</h2>
+      <h2 id="gateTitle">Welcome to ChillZone 🪐</h2>
       <p>Pick a username to come aboard.</p>
       <label class="lbl" for="uname">Username</label>
       <input type="text" id="uname" name="uname" maxlength="20" autocomplete="nickname" aria-describedby="nameErr" placeholder="Your explorer name">
@@ -456,7 +505,7 @@ body.cz-observe-mode .nav .burger{display:block!important}
       </div>
       <label class="agree"><input type="checkbox" id="agree"><span>I have read and accept the terms and conditions.</span></label>
       <label class="blob-option"><input type="checkbox" id="blobMode"><span><strong>Blob?</strong> <span style="color:var(--muted)">(optional)</span></span></label>
-      <p class="blob-hint" id="blobHint" hidden>Before trying anything with Blob URLs, bookmark this page first so you can find ChillZone again. Press <strong>Ctrl+D</strong> on Windows/Linux or <strong>⌘+D</strong> on Mac, or use your browser’s Bookmark menu. When you accept the terms, ChillZone will try to open a temporary Blob copy of the full page in a new tab. Some external games or resources may still load from their original websites.</p>
+      <p class="blob-hint" id="blobHint" hidden>Before trying anything with Blob URLs, bookmark this page first so you can find ChillZone again. Press <strong>Ctrl+D</strong> on Windows/Linux or <strong>⌘+D</strong> on Mac, or use your browser’s Bookmark menu. ChillZone automatically opens as a temporary Blob copy. Keep the original hosted link bookmarked so you can return to it. External games and resources may still load from their original websites.</p>
       <p class="gate-err" id="termsErr" role="alert"></p>
       <div class="gate-actions">
         <button class="btn primary" type="button" id="accept">Accept and enter</button>
@@ -748,6 +797,22 @@ body.cz-observe-mode .nav .burger{display:block!important}
     <div class="source-tabs" id="sourceTabs" role="group" aria-label="Video sources"></div>
     <p class="source-desc" id="sourceDesc" aria-live="polite"></p>
 
+    <div class="glass youtube-browser" id="youtubeBrowser" hidden>
+      <div class="youtube-toolbar">
+        <form class="youtube-search" id="youtubeSearchForm">
+          <input id="youtubeQuery" type="search" maxlength="120" placeholder="Search YouTube videos or Shorts…" aria-label="Search YouTube videos or Shorts" required>
+          <button class="btn primary" type="submit">Search</button>
+        </form>
+        <div class="youtube-mode" role="group" aria-label="YouTube search type">
+          <button class="btn small" id="youtubeVideosMode" type="button" aria-pressed="true">Videos</button>
+          <button class="btn small" id="youtubeShortsMode" type="button" aria-pressed="false">Shorts</button>
+        </div>
+      </div>
+      <p class="youtube-status" id="youtubeStatus" role="status" aria-live="polite">Search YouTube, then select a result to play it inside ChillZone.</p>
+      <div class="youtube-results" id="youtubeResults"></div>
+      <p class="youtube-key-help">YouTube search requires a restricted YouTube Data API v3 key configured in this file. <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer">Manage API credentials</a>. Use a new key restricted to YouTube Data API v3 and your site; never put an unrestricted key in public code.</p>
+    </div>
+
     <div class="glass viewer" id="watchViewer">
       <div class="viewer-bar">
         <div class="viewer-title"><span class="dot" id="watchDot"></span><span id="watchTitle">No source selected</span></div>
@@ -763,9 +828,9 @@ body.cz-observe-mode .nav .burger{display:block!important}
           sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-modals"
           allow="fullscreen; autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
         <div class="overlay" id="watchLoading" hidden><div><div class="spinner" aria-hidden="true"></div><h3>Loading video…</h3><p>Tuning the telescope.</p></div></div>
-        <div class="banner" id="watchBanner" hidden role="status"><span id="watchBannerText"></span><button class="btn small" id="watchBannerBtn" type="button">Try NASA on YouTube</button></div>
+        <div class="banner" id="watchBanner" hidden role="status"><span id="watchBannerText"></span><button class="btn small" id="watchBannerBtn" type="button">Open YouTube search</button></div>
       </div>
-      <p class="viewer-note" id="watchNote">Some providers don't allow their pages to be embedded. When that happens, the viewer may stay blank or show a refused-to-connect icon.</p>
+      <p class="viewer-note" id="watchNote">1Shows and YouTube are loaded inside ChillZone when their providers permit embedding. Some videos disable embedding and may not play here.</p>
     </div>
   </div>
 </section>
@@ -890,42 +955,23 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
   var GAMES = [
     { id: 'fern', icon: '🌿', title: 'Fern', tag: 'Featured',
       desc: 'A browser game portal. If the embedded viewer stays blank, try opening the site directly in a new tab.',
-      type: 'iframe', url: 'https://storage.googleapis.com/fernisbest/index.html' },
+      type: 'iframe', url: 'https://xcahd3.mimo.run/index.html' },
     { id: 'totally-science', icon: '🧪', title: 'Totally Science', tag: 'Portal',
       desc: 'Open the Totally Science game portal in the in-page viewer.',
       type: 'iframe', url: 'https://d11jzht7mj96rr.cloudfront.net/' },
     { id: 'mazean', icon: '🌀', title: 'Mazean', tag: 'Portal',
       desc: 'Play Mazean in the in-page viewer when the site permits embedding.',
       type: 'iframe', url: 'https://d1w7oj52hl4x53.cloudfront.net/search?query=bWF6ZWFuLmNvbQ%3D%3D' },
-    { id: 'Ragdoll Archers', icon: '🏹', title: 'Ragdoll Archers', tag: 'Portal',
-      desc: 'Play Ragdoll Archers in the in-page viewer when the site permits embedding.',
-      type: 'iframe', url: 'https://ragdollarchers.pages.dev/' },
-    { id: 'Online Games', icon: '🎮', title: 'Online Games', tag: 'Portal',
-      desc: 'Play a variety of games in the in-page viewer when the site permits embedding.',
-      type: 'iframe', url: 'https://www.onlinegames.io/t/embeddable-games-for-websites/' },
-    { id: 'Sandboxels', icon: '🏝️', title: 'Sandboxels', tag: 'Portal',
-      desc: 'Play Sandboxels in the in-page viewer when the site permits embedding.',
-      type: 'iframe', url: 'https://d1w7oj52hl4x53.cloudfront.net/search?query=cm9ja2lzZGlydC5naXRodWIuaW8%3D' },
     { id: 'catcher', icon: '⭐', title: 'Star Catcher', tag: 'Built-in',
       desc: 'Catch falling stars, dodge space rocks. Works offline, no loading.',
       type: 'builtin' }
   ];
   var SOURCES = [
-    { id: 'shuttletv', label: 'ShuttleTV', title: 'ShuttleTV',
-      desc: 'Movie site. It is run by a third party that ChillZone does not control, so it may not allow embedding, may change or disappear, and may show ads. Popups and redirects away from ChillZone are blocked by the viewer.',
-      url: 'https\://ww1.hair/shuttletv/' },
-    { id: 'nasaplus', label: 'NASA+', title: 'NASA+',
-      desc: 'NASA\u2019s free streaming service with documentaries and mission coverage. NASA+ may not allow embedding; if the viewer stays blank, use the NASA YouTube source.',
-      url: 'https\://plus.nasa.gov/' },
-    { id: 'nasayt', label: 'NASA on YouTube', title: 'NASA videos (YouTube)',
-      desc: 'NASA\u2019s official YouTube channel: launches, space station tours and science explainers. Use the playlist controls to skip around.',
-      url: 'https\://www.youtube-nocookie.com/embed/videoseries?list=UULA_DiR1FfKNvjuUpBHmylQ&rel=0' },
-    { id: 'nasalive', label: 'NASA Live', title: 'NASA Live (YouTube)',
-      desc: 'NASA\u2019s live broadcast, usually views from space and mission events. If nothing is streaming right now, YouTube will say so.',
-      url: 'https\://www.youtube-nocookie.com/embed/live_stream?channel=UCLA_DiR1FfKNvjuUpBHmylQ&rel=0' },
-    { id: 'esayt', label: 'ESA on YouTube', title: 'European Space Agency (YouTube)',
-      desc: 'Videos from the European Space Agency: rockets, Earth from orbit and deep-space missions.',
-      url: 'https\://www.youtube-nocookie.com/embed/videoseries?list=UUIBaDdAbGlFDeS33shmlD0A&rel=0' }
+    { id: 'oneshows', label: '1Shows', title: '1Shows', type: 'iframe',
+      desc: '1Shows uses your existing Shuttle TV iframe link. The third-party site may change or restrict embedding.',
+      url: 'https://ww1.hair/shuttletv/' },
+    { id: 'youtube', label: 'YouTube', title: 'YouTube', type: 'youtube',
+      desc: 'Search YouTube videos and Shorts, then play supported results inside ChillZone.' }
   ];
 
   /* ================= Starfield ================= */
@@ -1369,32 +1415,139 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
     return { reset: function () { resumable = false; reset(); }, stop: function () { stop(); } };
   })();
 
-  /* ================= Video lounge ================= */
+  /* ================= Video lounge: 1Shows + YouTube videos/Shorts ================= */
   var watchV = makeViewer({
     frame: '#watchFrame', idle: '#watchIdle', loading: '#watchLoading', banner: '#watchBanner', bannerText: '#watchBannerText',
     bannerBtn: '#watchBannerBtn', dot: '#watchDot', title: '#watchTitle', reloadBtn: '#watchReload', note: '#watchNote',
-    loadedHint: 'Loaded. If you only see a blank area or a refused-to-connect icon, this provider blocks embedding.',
-    slowHint: 'Still not loaded. The provider may be slow, offline, or may not allow embedding. Your browser won\u2019t tell ChillZone which.',
-    fallbackLabel: 'Try NASA on YouTube'
+    loadedHint: 'Loaded. If the player stays blank, this provider or video may block embedding.',
+    slowHint: 'Still not loaded. The provider may be slow, offline, or may not allow embedding.',
+    fallbackLabel: 'Open YouTube search'
   });
   var selectedSource = SOURCES[0], tabs = $('#sourceTabs');
+  var youtubeBrowser = $('#youtubeBrowser'), youtubeForm = $('#youtubeSearchForm'), youtubeQuery = $('#youtubeQuery');
+  var youtubeResults = $('#youtubeResults'), youtubeStatus = $('#youtubeStatus');
+  var youtubeVideosMode = $('#youtubeVideosMode'), youtubeShortsMode = $('#youtubeShortsMode');
+  var youtubeMode = 'videos', selectedYoutubeVideo = null;
+  // Add a NEW restricted key here after rotating the key shared in chat.
+  // Browser-side API keys are visible to visitors; restrict the key to YouTube Data API v3
+  // and HTTP referrers for your published site in Google Cloud Console.
+  var YOUTUBE_API_KEY = 'AIzaSyAvcAIrmS0B2zRguASqGx-vvRdfoqpagDI';
+
   function renderSources() {
     tabs.innerHTML = '';
-    SOURCES.forEach(function (s) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'chip'; b.textContent = s.label; b.setAttribute('aria-pressed', String(s === selectedSource));
-      b.addEventListener('click', function () { selectedSource = s; renderSources(); $('#sourceDesc').textContent = s.desc; });
-      tabs.appendChild(b);
+    SOURCES.forEach(function (source) {
+      var button = document.createElement('button');
+      button.type = 'button'; button.className = 'chip'; button.textContent = source.label;
+      button.setAttribute('aria-pressed', String(source === selectedSource));
+      button.addEventListener('click', function () {
+        selectedSource = source;
+        youtubeBrowser.hidden = source.id !== 'youtube';
+        $('#watchPlay').textContent = source.id === 'youtube' ? '▶ Play selected' : '▶ Load 1Shows';
+        $('#watchPlay').disabled = source.id === 'youtube' && !selectedYoutubeVideo;
+        $('#watchTitle').textContent = source.id === 'youtube' ? (selectedYoutubeVideo ? selectedYoutubeVideo.title : 'YouTube') : source.title;
+        $('#sourceDesc').textContent = source.desc;
+        $('#watchBanner').hidden = true;
+        renderSources();
+        if (source.id === 'youtube') {
+          $('#watchNote').textContent = 'Select a YouTube result to play it in this viewer. Some creators disable embedding, and those videos may not play inside ChillZone.';
+        } else {
+          $('#watchNote').textContent = '1Shows is an external site. If it stays blank, it may not allow embedding.';
+        }
+      });
+      tabs.appendChild(button);
     });
     $('#sourceDesc').textContent = selectedSource.desc;
+    youtubeBrowser.hidden = selectedSource.id !== 'youtube';
+    $('#watchPlay').textContent = selectedSource.id === 'youtube' ? '▶ Play selected' : '▶ Load 1Shows';
+    $('#watchPlay').disabled = selectedSource.id === 'youtube' && !selectedYoutubeVideo;
   }
-  function loadSource() { watchV.load(selectedSource.url, selectedSource.title); }
+  function loadSource() {
+    if (selectedSource.id === 'youtube') {
+      if (!selectedYoutubeVideo) {
+        youtubeStatus.textContent = 'Search for a video or Short, then select a result first.';
+        youtubeQuery.focus();
+        return;
+      }
+      var videoId = selectedYoutubeVideo.id;
+      var embedUrl = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&rel=0&playsinline=1';
+      $('#watchStage').classList.toggle('shorts-stage', youtubeMode === 'shorts');
+      watchV.load(embedUrl, selectedYoutubeVideo.title);
+      return;
+    }
+    $('#watchStage').classList.remove('shorts-stage');
+    watchV.load(selectedSource.url, selectedSource.title);
+  }
+  function setYoutubeMode(mode) {
+    youtubeMode = mode;
+    youtubeVideosMode.setAttribute('aria-pressed', String(mode === 'videos'));
+    youtubeShortsMode.setAttribute('aria-pressed', String(mode === 'shorts'));
+    youtubeResults.innerHTML = '';
+    selectedYoutubeVideo = null;
+    $('#watchPlay').disabled = true;
+    $('#watchTitle').textContent = 'YouTube';
+    $('#watchStage').classList.remove('shorts-stage');
+    youtubeStatus.textContent = mode === 'shorts' ? 'Search for Shorts. Results play vertically inside ChillZone when embedding is allowed.' : 'Search YouTube videos and choose one to play inside ChillZone.';
+  }
+  function searchYoutube(query) {
+    query = String(query || '').trim();
+    if (!query) { youtubeStatus.textContent = 'Enter a search term first.'; return; }
+    if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY === 'PASTE_NEW_RESTRICTED_YOUTUBE_API_KEY_HERE') {
+      youtubeStatus.textContent = 'YouTube search is ready, but it needs your new restricted API key. Add it to YOUTUBE_API_KEY in the script, then reload ChillZone.';
+      return;
+    }
+    youtubeStatus.textContent = 'Searching YouTube…';
+    youtubeResults.innerHTML = '';
+    selectedYoutubeVideo = null;
+    $('#watchPlay').disabled = true;
+    var q = youtubeMode === 'shorts' ? query + ' #shorts' : query;
+    var endpoint = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&maxResults=12&safeSearch=moderate&q=' + encodeURIComponent(q) + '&key=' + encodeURIComponent(YOUTUBE_API_KEY);
+    fetch(endpoint).then(function (response) {
+      return response.json().then(function (data) {
+        if (!response.ok || data.error) throw new Error(data.error && data.error.message ? data.error.message : 'YouTube search failed (' + response.status + ').');
+        return data;
+      });
+    }).then(function (data) {
+      var items = (data.items || []).filter(function (item) { return item.id && item.id.videoId && item.snippet; });
+      if (!items.length) { youtubeStatus.textContent = 'No embeddable results found. Try a different search.'; return; }
+      youtubeStatus.textContent = 'Found ' + items.length + ' results. Select one to play it here.';
+      items.forEach(function (item) {
+        var id = item.id.videoId, snippet = item.snippet;
+        var result = { id: id, title: snippet.title || 'Untitled video', channel: snippet.channelTitle || 'YouTube', thumbnail: (snippet.thumbnails && (snippet.thumbnails.high || snippet.thumbnails.medium || snippet.thumbnails.default) || {}).url || '' };
+        var card = document.createElement('button');
+        card.type = 'button'; card.className = 'youtube-result' + (youtubeMode === 'shorts' ? ' shorts' : '');
+        card.setAttribute('aria-pressed', 'false');
+        var img = document.createElement('img'); img.loading = 'lazy'; img.alt = '';
+        if (result.thumbnail) img.src = result.thumbnail;
+        var title = document.createElement('span'); title.className = 'yt-title'; title.textContent = result.title;
+        var channel = document.createElement('span'); channel.className = 'yt-channel'; channel.textContent = result.channel;
+        card.appendChild(img); card.appendChild(title); card.appendChild(channel);
+        card.addEventListener('click', function () {
+          Array.prototype.forEach.call(youtubeResults.querySelectorAll('.youtube-result'), function (other) { other.setAttribute('aria-pressed', 'false'); });
+          card.setAttribute('aria-pressed', 'true');
+          selectedYoutubeVideo = result;
+          $('#watchPlay').disabled = false;
+          $('#watchTitle').textContent = result.title;
+          youtubeStatus.textContent = 'Selected: ' + result.title + '. Press Play selected to watch inside ChillZone.';
+          loadSource();
+        });
+        youtubeResults.appendChild(card);
+      });
+    }).catch(function (error) {
+      youtubeStatus.textContent = 'YouTube search could not load: ' + error.message + ' Check the API key, API restrictions, quota, and network connection.';
+    });
+  }
   $('#watchPlay').addEventListener('click', loadSource);
   $('#watchReload').addEventListener('click', function () { watchV.reload(); });
   $('#watchFull').addEventListener('click', function () { goFull($('#watchViewer')); });
   watchV.bannerBtn.addEventListener('click', function () {
-    selectedSource = SOURCES.filter(function (s) { return s.id === 'nasayt'; })[0] || SOURCES[0]; renderSources(); loadSource();
+    selectedSource = SOURCES.filter(function (source) { return source.id === 'youtube'; })[0] || SOURCES[0];
+    renderSources();
+    youtubeBrowser.hidden = false;
+    youtubeQuery.focus();
   });
+  youtubeForm.addEventListener('submit', function (event) { event.preventDefault(); searchYoutube(youtubeQuery.value); });
+  youtubeVideosMode.addEventListener('click', function () { setYoutubeMode('videos'); });
+  youtubeShortsMode.addEventListener('click', function () { setYoutubeMode('shorts'); });
 
   renderGames(); renderSources();
 
@@ -1429,7 +1582,7 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
     }
     var saved = null;
     try { saved = sessionStorage.getItem('chillzone-entered'); } catch (e) {}
-    if (saved && location.protocol !== 'blob:') { gate.hidden = true; if (window.chillZoneSetUsername) window.chillZoneSetUsername(saved); var pn = document.getElementById('profileName'); if (pn) pn.textContent = saved; var pi = document.getElementById('profileNameInput'); if (pi) pi.value = saved; return; }
+    if (saved) { gate.hidden = true; if (window.chillZoneSetUsername) window.chillZoneSetUsername(saved); var pn = document.getElementById('profileName'); if (pn) pn.textContent = saved; var pi = document.getElementById('profileNameInput'); if (pi) pi.value = saved; return; }
     open();
     stepName.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1478,19 +1631,22 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
       if (!agree.checked) { termsErr.textContent = 'Tick the box to accept the terms and enter.'; agree.focus(); return; }
       termsErr.textContent = '';
       if (blobMode.checked && location.protocol === 'blob:') {
+        // This page is already running as the automatic Blob copy; don't create a duplicate.
         enter();
         return;
       }
       if (blobMode.checked) {
-        // The visible bookmark reminder above the buttons is the reminder; launch
-        // directly from the user's click so popup blockers are less likely to stop it.
+        // Fallback for browsers where automatic Blob navigation was unavailable.
         var blobTab = window.open('about:blank', '_blank');
         if (!blobTab) {
           termsErr.textContent = 'Your browser blocked the new tab. Allow pop-ups for this page, then try Blob? again.';
           return;
         }
-        enter();
-        if (!openWholeSiteBlob(blobTab)) {
+        // Capture the page while the entry gate is still visible, so the Blob copy
+        // includes the username screen and Terms/Blob checkboxes.
+        var opened = openWholeSiteBlob(blobTab);
+        if (opened) enter();
+        else {
           if (!blobTab.closed) blobTab.close();
           termsErr.textContent = termsErr.textContent || 'Could not create the Blob copy. You can continue using the original page.';
         }
@@ -1791,29 +1947,6 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
   // Start with the Home view; the original sections remain intact as separate pages.
   var initial=(location.hash||'').slice(1);if(!pageIds.includes(initial))initial='home';showPage(initial);
-})();
-</script>
-
-
-
-<script id="chillzone-auto-blob">
-(function () {
-  'use strict';
-  // The Blob copy must not create another Blob and loop forever.
-  if (location.protocol === 'blob:' || !/^https?:$/.test(location.protocol)) return;
-  try {
-    var html = '<!doctype html>\n' + document.documentElement.outerHTML;
-    var baseHref = location.origin + location.pathname.replace(/[^/]*$/, '');
-    var baseTag = '<base href="' + baseHref.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '">';
-    if (/<head\b[^>]*>/i.test(html) && !/<base\b/i.test(html)) {
-      html = html.replace(/<head\b[^>]*>/i, function (head) { return head + baseTag; });
-    }
-    var blobUrl = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
-    // Keep the URL's origin-page directory as the base for images, styles, and scripts.
-    location.replace(blobUrl + (location.hash || ''));
-  } catch (err) {
-    console.error('ChillZone could not create its automatic Blob copy:', err);
-  }
 })();
 </script>
 
