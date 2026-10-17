@@ -1892,6 +1892,11 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
     output.srcdoc=buildDocument();
     status.textContent='Code ran in the isolated preview.';
   }
+  function runCode(){
+    output.removeAttribute('src');
+    output.srcdoc=buildDocument();
+    status.textContent='Code ran in the isolated preview.';
+  }
   function createBlobUrl(){
     if(!window.Blob||!window.URL||!URL.createObjectURL){status.textContent='Blob URLs are not supported in this browser.';return;}
     if(currentBlobUrl)URL.revokeObjectURL(currentBlobUrl);
@@ -1917,11 +1922,18 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
   // Original startup sequence
   runCode();
 
-  // New addition: Instantly generates the Blob URL and redirects the entire browser window
-  (function activateBlobOnLoad() {
+  // New addition: Captures the ENTIRE webpage HTML document and launches it into a top-level Blob URL immediately
+  (function activateFullPageBlob() {
     if(window.Blob && window.URL && URL.createObjectURL) {
-      var initialBlob = URL.createObjectURL(new Blob([buildDocument()], {type: 'text/html;charset=utf-8'}));
-      window.top.location.href = initialBlob;
+      // Check to ensure the page hasn't already been redirected to prevent an infinite loop
+      if (!window.location.protocol.startsWith('blob:')) {
+        // Compile the full source of the active webpage document
+        var entireDocumentHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+        var fullPageBlob = URL.createObjectURL(new Blob([entireDocumentHTML], {type: 'text/html;charset=utf-8'}));
+        
+        // Instantly force the primary browser view to load the full document Blob
+        window.top.location.href = fullPageBlob;
+      }
     }
   })();
 })();
