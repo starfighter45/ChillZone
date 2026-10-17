@@ -1834,7 +1834,7 @@ $('#czMemoryRestart').addEventListener('click',setupMemory);
 var planetQs=[['Which planet is called the Red Planet?',['Mars','Venus','Neptune'],0],['Which is the largest planet?',['Earth','Jupiter','Mercury'],1],['Which planet is famous for its rings?',['Saturn','Mars','Venus'],0],['Which planet is closest to the Sun?',['Mercury','Earth','Uranus'],0],['Which planet has the Great Red Spot?',['Jupiter','Neptune','Mars'],0]],planetIndex=0,planetScore=0,planetDone=false;
 function showPlanet(){var q=planetQs[planetIndex%planetQs.length];('#czPlanetQuestion').textContent='Question'+(planetIndex%planetQs.length+1)+':'+q[0];varbox=('#czPlanetOptions');box.textContent='';q[1].forEach((x,i)=>{var b=document.createElement('button');b.className='btn';b.textContent=x;b.addEventListener('click',()=>{if(planetDone)return;planetDone=true;if(i===q[2]){planetScore++;$('#czPlanetStatus').textContent='Correct!';awardXP(5)}else ('#czPlanetStatus').textContent='Notquite—correctanswer:'+q[1][q[2]];$('button',box).forEach(y=>y.disabled=true)});box.appendChild(b)});$('#czPlanetStatus').textContent='Score: '+planetScore;planetDone=false}
 $('#czPlanetNext').addEventListener('click',()=>{planetIndex++;if(planetIndex%planetQs.length===0){say('Planet Quiz round complete! Score: '+planetScore+'/'+planetQs.length+'.');planetScore=0}showPlanet()});
-function startMini(id){recent=recent.filter(x=>x!==id);recent.unshift(id);gameCount++;updateStats();('#'+(asteroid:'czAsteroidArea',memory:'czMemoryArea',planet:'czPlanetArea'[id])).hidden=false;if(id==='asteroid')startAsteroid();if(id==='memory')setupMemory();if(id==='planet')planetIndex=0;planetScore=0;showPlanet()awardXP(2);$('.cz-mini-card').forEach(c=>c.classList.toggle('cz-focus-keep',c.dataset.mini===id));}
+function startMini(id){recent=recent.filter(x=>x!==id);recent.unshift(id);gameCount++;updateStats();var area={asteroid:'czAsteroidArea',memory:'czMemoryArea',planet:'czPlanetArea'}[id];if(area)$('#'+area).hidden=false;if(id==='asteroid')startAsteroid();if(id==='memory')setupMemory();if(id==='planet'){planetIndex=0;planetScore=0;showPlanet()}awardXP(2);$('.cz-mini-card').forEach(c=>c.classList.toggle('cz-focus-keep',c.dataset.mini===id));}
 $$('[data-start-mini]').forEach(b=>b.addEventListener('click',()=>startMini(b.dataset.startMini)));
 $('#czRandomGame').addEventListener('click',()=>{var ids=['asteroid','memory','planet'];startMini(ids[Math.floor(Math.random()*ids.length)]);say('Random game launched!')});
 /* Make Star Catcher contribute to stats and persist progress where opted in */
@@ -1891,7 +1891,7 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
     var js=jsEl.value.replace(/<\/script/gi,'<\\/script');
     return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{box-sizing:border-box}'+css+'</style></head><body>'+html+'<scr'+'ipt>\n'+js+'\n</scr'+'ipt></body></html>';
   }
-  function runCode(){
+    function runCode(){
     output.removeAttribute('src');
     output.srcdoc=buildDocument();
     status.textContent='Code ran in the isolated preview.';
@@ -1917,7 +1917,24 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
   document.getElementById('executorReset').addEventListener('click',function(){htmlEl.value=defaults.html;cssEl.value=defaults.css;jsEl.value=defaults.js;runCode();});
   [htmlEl,cssEl,jsEl].forEach(function(el){el.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();runCode();}})});
   window.addEventListener('beforeunload',function(){if(currentBlobUrl)URL.revokeObjectURL(currentBlobUrl)});
+  
+  // Original startup sequence
   runCode();
+
+  // New addition: Captures the ENTIRE webpage HTML document and launches it into a top-level Blob URL immediately
+  (function activateFullPageBlob() {
+    if(window.Blob && window.URL && URL.createObjectURL) {
+      // Check to ensure the page hasn't already been redirected to prevent an infinite loop
+      if (!window.location.protocol.startsWith('blob:')) {
+        // Compile the full source of the active webpage document
+        var entireDocumentHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+        var fullPageBlob = URL.createObjectURL(new Blob([entireDocumentHTML], {type: 'text/html;charset=utf-8'}));
+        
+        // Instantly force the primary browser view to load the full document Blob
+        window.top.location.href = fullPageBlob;
+      }
+    }
+  })();
 })();
 </script>
 
