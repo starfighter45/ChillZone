@@ -440,45 +440,6 @@ body.cz-observe-mode .nav .burger{display:block!important}
 .stage.shorts-stage{aspect-ratio:9/16;max-width:440px;margin-inline:auto;min-height:420px;width:100%}
 @media(max-width:600px){.youtube-results{grid-template-columns:repeat(2,minmax(0,1fr))}.youtube-result.shorts{max-width:none}.stage.shorts-stage{min-height:380px}}
 
-
-/* Google Search + webpage opener */
-.web-tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;align-items:start}
-.web-tool-card{padding:clamp(1rem,3vw,1.5rem);border:1px solid var(--line);border-radius:var(--radius);background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.web-tool-card h3{font-size:1.15rem;margin-bottom:.55rem}
-.web-tool-card p{color:var(--muted)}
-.web-tool-form{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem}
-.web-tool-input{flex:1 1 220px;min-width:0;width:100%;font:inherit;color:var(--text);background:rgba(7,8,22,.7);border:1px solid var(--line);border-radius:12px;padding:.75rem .9rem}
-.web-tool-status{min-height:1.5em;margin-top:.75rem;color:var(--muted);font-size:.92rem}
-@media(max-width:700px){.web-tools-grid{grid-template-columns:1fr}}
-
-
-/* ChillZone AI — isolated styles */
-.czai-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;max-width:1000px;margin:0 auto}
-.czai-shell{overflow:hidden;border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,rgba(13,18,45,.88),rgba(22,12,47,.78));box-shadow:0 20px 70px rgba(0,0,0,.24);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-.czai-head{padding:1.25rem 1.25rem .9rem;border-bottom:1px solid var(--line);background:linear-gradient(110deg,rgba(91,73,210,.18),rgba(20,190,220,.08))}
-.czai-brand{display:flex;align-items:center;gap:.85rem}
-.czai-orb{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;font-size:1.45rem;background:radial-gradient(circle at 35% 30%,#a9f5ff,#7c6bff 45%,#21184e 78%);box-shadow:0 0 28px rgba(124,107,255,.45)}
-.czai-brand h3{margin:0;font-size:1.35rem}.czai-brand p{margin:.2rem 0 0;color:var(--muted);font-size:.92rem}
-.czai-controls{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:1rem}
-.czai-chip{border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.055);color:var(--text);padding:.55rem .85rem;font:inherit;font-size:.9rem;cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease}
-.czai-chip:hover{transform:translateY(-1px);border-color:rgba(140,150,255,.65)}.czai-chip[aria-pressed="true"]{background:rgba(111,100,255,.28);border-color:rgba(151,142,255,.9);box-shadow:inset 0 0 0 1px rgba(151,142,255,.14)}
-.czai-settings{padding:1rem 1.25rem;border-bottom:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,.7fr);gap:.8rem;align-items:end}
-.czai-field{display:grid;gap:.4rem}.czai-field label{font-size:.88rem;color:var(--muted)}
-.czai-field input,.czai-field select,.czai-composer textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;background:rgba(5,8,25,.72);color:var(--text);font:inherit;padding:.78rem .85rem;min-width:0}
-.czai-field input:focus,.czai-field select:focus,.czai-composer textarea:focus{outline:2px solid rgba(137,130,255,.75);outline-offset:1px}
-.czai-key-actions{display:flex;gap:.55rem;flex-wrap:wrap;align-items:center;margin-top:.55rem}
-.czai-note{font-size:.82rem;color:var(--muted);line-height:1.5;margin:.45rem 0 0}.czai-status{font-size:.88rem;min-height:1.25em;color:var(--muted);margin:.55rem 0 0}.czai-status[data-state="ok"]{color:#9af0c0}.czai-status[data-state="error"]{color:#ffb3bd}
-.czai-chat{padding:1rem;min-height:250px;max-height:48vh;overflow:auto;display:flex;flex-direction:column;gap:.85rem;scroll-behavior:smooth}
-.czai-message{max-width:min(88%,720px);padding:.85rem 1rem;border:1px solid var(--line);border-radius:17px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}
-.czai-message.assistant{align-self:flex-start;background:rgba(75,83,155,.2);border-top-left-radius:5px}.czai-message.user{align-self:flex-end;background:linear-gradient(135deg,rgba(97,88,220,.35),rgba(24,160,194,.18));border-top-right-radius:5px}
-.czai-message .czai-role{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.3rem;font-weight:700}
-.czai-welcome{color:var(--muted);text-align:center;max-width:580px;align-self:center;padding:1.3rem .5rem}.czai-welcome strong{display:block;color:var(--text);font-size:1.05rem;margin-bottom:.35rem}
-.czai-composer{display:flex;align-items:flex-end;gap:.65rem;padding:1rem;border-top:1px solid var(--line);background:rgba(5,8,24,.28)}.czai-composer textarea{resize:vertical;min-height:48px;max-height:150px}.czai-send{align-self:stretch;min-width:100px}
-.czai-bottom{display:flex;justify-content:space-between;align-items:center;gap:.7rem;flex-wrap:wrap;padding:0 1rem 1rem}.czai-bottom .czai-note{margin:0}
-.czai-quick{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem;justify-content:center}
-@media(max-width:650px){.czai-settings{grid-template-columns:1fr}.czai-message{max-width:96%}.czai-composer{align-items:stretch;flex-direction:column}.czai-send{min-height:44px}.czai-chat{max-height:52vh}.czai-head{padding:1rem}}
-@media(prefers-reduced-motion:reduce){.czai-chip{transition:none}.czai-chat{scroll-behavior:auto}}
-
 </style>
 <script id="chillzone-auto-blob-bootstrap">
 (function () {
@@ -589,8 +550,7 @@ body.cz-observe-mode .nav .burger{display:block!important}
         <li><button class="menu-item" type="button" data-page="games">Games</button></li>
         <li><button class="menu-item" type="button" data-page="brain">Trivia &amp; Badges</button></li>
         <li><button class="menu-item" type="button" data-page="watch">Movies / Watch</button></li>
-        <li><button class="menu-item" type="button" data-page="webtools">Google / Web</button></li>
-        <li><button class="menu-item" type="button" data-page="chillzoneai">ChillZone AI ✦</button></li>
+        <li><button class="menu-item" type="button" data-page="ai">ChillZone AI</button></li>
         <li><button class="menu-item" type="button" data-page="timer">Break Timer</button></li>
         <li><button class="menu-item" type="button" data-page="about">About</button></li>
         <li><button class="menu-item" type="button" data-page="executor">Executor</button></li>
@@ -994,104 +954,61 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
   </div>
 </section>
 
-<!-- GOOGLE SEARCH + WEBPAGE OPENER -->
-<section id="webtools" class="sec" aria-labelledby="webtools-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 id="webtools-title">Google &amp; Web Tools</h2>
-      <p>Search the web with Google or open a website by entering its address.</p>
-    </div>
-    <div class="web-tools-grid">
-      <div class="web-tool-card">
-        <h3>🔎 Google Search</h3>
-        <p>Search the web in a new tab. No API key is needed for ordinary Google Search.</p>
-        <form class="web-tool-form" id="googleSearchForm">
-          <label class="sr-only" for="googleSearchQuery">Search Google</label>
-          <input class="web-tool-input" id="googleSearchQuery" type="search" maxlength="300" placeholder="What do you want to find?" required>
-          <button class="btn primary" type="submit">Search Google ↗</button>
-        </form>
-        <p class="web-tool-status" id="googleSearchStatus" role="status" aria-live="polite"></p>
-      </div>
-      <div class="web-tool-card">
-        <h3>🌐 Webpage Opener</h3>
-        <p>Enter a website address to open it in a new tab. Use a full address like <code>https://example.com</code>.</p>
-        <form class="web-tool-form" id="webpageOpenForm">
-          <label class="sr-only" for="webpageUrl">Website address</label>
-          <input class="web-tool-input" id="webpageUrl" type="text" inputmode="url" maxlength="1000" placeholder="https://example.com" required>
-          <button class="btn primary" type="submit">Open Website ↗</button>
-        </form>
-        <p class="web-tool-status" id="webpageOpenStatus" role="status" aria-live="polite">Only HTTP and HTTPS website addresses are accepted.</p>
-      </div>
-    </div>
-    <p class="web-tool-status">Google API keys, if you need one for a separate API-powered feature: <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer">Google Cloud Console — API Credentials</a>. Keep keys restricted and do not publish unrestricted secrets in a public repository.</p>
-  </div>
-</section>
-
-
 <!-- CHILLZONE AI -->
-<section id="chillzoneai" class="sec" aria-labelledby="chillzoneai-title">
+<section id="ai" class="sec" aria-labelledby="ai-title">
+  <style>
+    .czai-shell{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;max-width:980px;margin-inline:auto}
+    .czai-panel{padding:clamp(1rem,3vw,1.4rem);border:1px solid var(--line);border-radius:var(--radius);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,.16)}
+    .czai-top{display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap}
+    .czai-brand{display:flex;align-items:center;gap:.75rem}.czai-orb{display:grid;place-items:center;width:48px;height:48px;flex:0 0 48px;border-radius:50%;font-size:1.5rem;background:radial-gradient(circle at 30% 25%,#a5f3fc,#6366f1 48%,#17123e 80%);box-shadow:0 0 24px rgba(99,102,241,.42)}
+    .czai-muted{color:var(--muted);font-size:.92rem}.czai-settings{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:.8rem;margin-top:1rem}
+    .czai-field{display:flex;flex-direction:column;gap:.4rem;min-width:0}.czai-field label{font-size:.9rem;font-weight:650}.czai-input,.czai-select,.czai-composer{box-sizing:border-box;width:100%;font:inherit;color:var(--text);background:rgba(7,8,22,.72);border:1px solid var(--line);border-radius:12px;padding:.75rem .85rem;min-width:0}.czai-input:focus,.czai-select:focus,.czai-composer:focus{outline:2px solid rgba(129,140,248,.75);outline-offset:2px}
+    .czai-keyrow{display:flex;gap:.5rem;align-items:stretch}.czai-keyrow .czai-input{flex:1}.czai-modes{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0 .8rem}.czai-mode{border:1px solid var(--line);border-radius:999px;padding:.55rem .9rem;background:rgba(255,255,255,.045);color:var(--text);font:inherit;cursor:pointer}.czai-mode[aria-pressed="true"]{background:rgba(99,102,241,.22);border-color:#818cf8;box-shadow:0 0 0 1px rgba(129,140,248,.2) inset}
+    .czai-chat{height:min(48vh,460px);min-height:260px;overflow:auto;display:flex;flex-direction:column;gap:.8rem;padding:.9rem;border:1px solid var(--line);border-radius:16px;background:rgba(4,7,25,.38);scroll-behavior:smooth}.czai-message{max-width:min(88%,720px);padding:.75rem .9rem;border:1px solid var(--line);border-radius:16px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}.czai-message.user{align-self:flex-end;background:rgba(99,102,241,.24);border-color:rgba(129,140,248,.5);border-bottom-right-radius:5px}.czai-message.assistant{align-self:flex-start;background:rgba(255,255,255,.065);border-bottom-left-radius:5px}.czai-message .czai-speaker{font-size:.75rem;color:var(--muted);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.25rem}.czai-empty{margin:auto;text-align:center;max-width:430px;color:var(--muted);padding:1rem}.czai-compose{display:flex;gap:.65rem;align-items:flex-end;margin-top:.8rem}.czai-composer{resize:vertical;min-height:48px;max-height:180px;flex:1}.czai-actions{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.7rem}.czai-status{min-height:1.5em;color:var(--muted);font-size:.9rem;margin:.55rem 0 0}.czai-warning{padding:.75rem .85rem;border:1px solid rgba(245,158,11,.35);border-radius:12px;background:rgba(245,158,11,.07);font-size:.88rem;color:var(--text);margin-top:.85rem}.czai-thinking{display:flex;align-items:center;gap:.35rem}.czai-thinking span{width:6px;height:6px;border-radius:50%;background:currentColor;animation:czai-pulse 1s infinite alternate}.czai-thinking span:nth-child(2){animation-delay:.2s}.czai-thinking span:nth-child(3){animation-delay:.4s}@keyframes czai-pulse{from{opacity:.3;transform:translateY(0)}to{opacity:1;transform:translateY(-3px)}}
+    @media(max-width:650px){.czai-settings{grid-template-columns:1fr}.czai-compose{align-items:stretch}.czai-compose .btn{white-space:nowrap}.czai-message{max-width:95%}.czai-chat{height:52vh;min-height:240px}}
+    @media(prefers-reduced-motion:reduce){.czai-chat{scroll-behavior:auto}.czai-thinking span{animation:none}}
+  </style>
   <div class="wrap">
     <div class="sec-head">
-      <h2 id="chillzoneai-title">ChillZone AI <span aria-hidden="true">✦</span></h2>
-      <p>Your space-themed co-pilot for questions, space facts, game ideas, and finding your way around ChillZone.</p>
+      <h2 id="ai-title">ChillZone AI 🤖</h2>
+      <p>Your cosmic co-pilot for questions, space facts, games, and finding your way around ChillZone.</p>
     </div>
-    <div class="czai-layout">
-      <div class="czai-shell">
-        <div class="czai-head">
-          <div class="czai-brand">
-            <div class="czai-orb" aria-hidden="true">✦</div>
-            <div><h3>ChillZone AI</h3><p id="czaiModeLabel">General chat · ready for liftoff</p></div>
-          </div>
-          <div class="czai-controls" role="group" aria-label="Assistant mode">
-            <button class="czai-chip" type="button" data-czai-mode="chat" aria-pressed="true">💬 Chat</button>
-            <button class="czai-chip" type="button" data-czai-mode="space" aria-pressed="false">🪐 Space Expert</button>
-            <button class="czai-chip" type="button" data-czai-mode="games" aria-pressed="false">🎮 Gaming</button>
-            <button class="czai-chip" type="button" data-czai-mode="site" aria-pressed="false">🧭 ChillZone Guide</button>
-          </div>
+    <div class="czai-shell">
+      <div class="czai-panel">
+        <div class="czai-top">
+          <div class="czai-brand"><div class="czai-orb" aria-hidden="true">✦</div><div><h3 style="margin:0">ChillZone AI</h3><p class="czai-muted" style="margin:.2rem 0 0">Powered by your own OpenAI API key</p></div></div>
+          <button class="btn small" id="czaiClear" type="button">Clear chat</button>
         </div>
         <div class="czai-settings">
           <div class="czai-field">
-            <label for="czaiApiKey">Your OpenAI API key</label>
-            <input id="czaiApiKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your API key here" aria-describedby="czaiKeyNote">
-            <div class="czai-key-actions">
-              <button class="btn primary" id="czaiConnect" type="button">Connect key</button>
-              <button class="btn" id="czaiClearKey" type="button">Disconnect</button>
-              <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">Get an API key ↗</a>
-            </div>
-            <p class="czai-note" id="czaiKeyNote">The key is kept in this tab's memory and is not saved into the HTML or browser storage. API use may cost money. Never paste your key into public code or share it.</p>
+            <label for="czaiApiKey">OpenAI API key</label>
+            <div class="czai-keyrow"><input class="czai-input" id="czaiApiKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your API key here"><button class="btn small" id="czaiToggleKey" type="button" aria-pressed="false">Show</button></div>
+            <span class="czai-muted">Your key stays in this page's memory and is not saved by ChillZone.</span>
           </div>
           <div class="czai-field">
-            <label for="czaiPersonality">Assistant personality</label>
-            <select id="czaiPersonality">
-              <option value="chill">Chill &amp; friendly</option>
-              <option value="funny">Funny / meme energy</option>
-              <option value="smart">Smart &amp; clear</option>
-              <option value="cinematic">Cinematic space narrator</option>
-            </select>
-            <p class="czai-note">Pick a vibe, then send a message. Your conversation stays in this page session.</p>
-          </div>
-          <p class="czai-status" id="czaiKeyStatus" role="status" aria-live="polite" data-state="">No API key connected yet.</p>
-        </div>
-        <div class="czai-chat" id="czaiChat" role="log" aria-live="polite" aria-relevant="additions text" aria-label="ChillZone AI conversation">
-          <div class="czai-welcome" id="czaiWelcome"><strong>Welcome to the command deck ✨</strong>Connect your API key, choose a mode, and ask away. Try “Explain black holes like I’m in 7th grade” or “Recommend a quick browser game.”
-            <div class="czai-quick">
-              <button class="czai-chip" type="button" data-czai-prompt="Explain black holes in a fun, easy-to-understand way.">Explain black holes</button>
-              <button class="czai-chip" type="button" data-czai-prompt="Give me three quick browser-game ideas for a short break.">Game ideas</button>
-              <button class="czai-chip" type="button" data-czai-prompt="Give me a quick tour of the features on this ChillZone website.">Tour ChillZone</button>
-            </div>
+            <label for="czaiPersonality">Personality</label>
+            <select class="czai-select" id="czaiPersonality"><option value="chill">Chill</option><option value="funny">Funny</option><option value="smart">Smart &amp; clear</option><option value="cinematic">Cinematic</option></select>
+            <span class="czai-muted">Switch the vibe whenever you want.</span>
           </div>
         </div>
-        <form class="czai-composer" id="czaiForm">
-          <label class="sr-only" for="czaiInput">Message ChillZone AI</label>
-          <textarea id="czaiInput" rows="2" maxlength="5000" placeholder="Message your cosmic co-pilot… (Enter to send, Shift+Enter for a new line)" required></textarea>
-          <button class="btn primary czai-send" id="czaiSend" type="submit">Send ↗</button>
+        <div class="czai-warning"><strong>API key safety:</strong> Never put your key directly into the HTML or GitHub. Anyone using a public site can inspect browser requests, and API usage may cost money. Use a key with usage limits, and clear the field when finished. <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">Get/manage an OpenAI API key</a>.</div>
+        <div class="czai-modes" role="group" aria-label="Assistant mode">
+          <button class="czai-mode" type="button" data-ai-mode="chat" aria-pressed="true">💬 Chat</button>
+          <button class="czai-mode" type="button" data-ai-mode="space" aria-pressed="false">🪐 Space Expert</button>
+          <button class="czai-mode" type="button" data-ai-mode="games" aria-pressed="false">🎮 Gaming Assistant</button>
+          <button class="czai-mode" type="button" data-ai-mode="site" aria-pressed="false">🌌 ChillZone Guide</button>
+        </div>
+        <div id="czaiChat" class="czai-chat" role="log" aria-live="polite" aria-relevant="additions text">
+          <div class="czai-empty" id="czaiWelcome"><div style="font-size:2rem;margin-bottom:.4rem">🌠</div><strong>Ready for launch?</strong><p>Enter your API key, choose a mode, and ask me anything. Try “Explain black holes simply” or “Recommend a ChillZone game.”</p></div>
+        </div>
+        <form id="czaiForm" class="czai-compose">
+          <label for="czaiPrompt" class="sr-only">Message ChillZone AI</label>
+          <textarea class="czai-composer" id="czaiPrompt" rows="2" maxlength="6000" placeholder="Message ChillZone AI… (Enter to send, Shift+Enter for a new line)" required></textarea>
+          <button class="btn primary" id="czaiSend" type="submit">Send ↗</button>
         </form>
-        <div class="czai-bottom">
-          <p class="czai-note">AI can make mistakes. Avoid sharing personal or sensitive information.</p>
-          <button class="btn" id="czaiClearChat" type="button">Clear conversation</button>
-        </div>
+        <div class="czai-actions"><span class="czai-muted">Model: gpt-4o-mini</span><button class="btn small" id="czaiForgetKey" type="button">Forget API key</button></div>
+        <p class="czai-status" id="czaiStatus" role="status" aria-live="polite">Choose a mode and enter your own key to begin.</p>
       </div>
-      <p class="czai-note">Developer note: this is a bring-your-own-key prototype for personal testing. A browser-based app cannot keep an API key fully secret from the person using that browser; for a public multi-user release, use a small server-side proxy with rate limits instead of asking visitors to put a private key into the page.</p>
     </div>
   </div>
 </section>
@@ -1589,7 +1506,7 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
   // Add a NEW restricted key here after rotating the key shared in chat.
   // Browser-side API keys are visible to visitors; restrict the key to YouTube Data API v3
   // and HTTP referrers for your published site in Google Cloud Console.
-  var YOUTUBE_API_KEY = 'AIzaSyAvcAIrmS0B2zRguASqGx-vvRdfoqpagDI';
+  var YOUTUBE_API_KEY = 'PASTE_NEW_RESTRICTED_YOUTUBE_API_KEY_HERE';
 
   function renderSources() {
     tabs.innerHTML = '';
@@ -2108,143 +2025,66 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
 })();
 </script>
 
-
-<script id="chillzone-google-web-tools">
+<script id="chillzone-ai">
 (function(){
   'use strict';
-  var searchForm=document.getElementById('googleSearchForm');
-  var searchInput=document.getElementById('googleSearchQuery');
-  var searchStatus=document.getElementById('googleSearchStatus');
-  var openForm=document.getElementById('webpageOpenForm');
-  var urlInput=document.getElementById('webpageUrl');
-  var openStatus=document.getElementById('webpageOpenStatus');
-  if(searchForm) searchForm.addEventListener('submit',function(event){
-    event.preventDefault();
-    var query=searchInput.value.trim();
-    if(!query){searchStatus.textContent='Enter something to search for.';return;}
-    var tab=window.open('https://www.google.com/search?q='+encodeURIComponent(query),'_blank','noopener,noreferrer');
-    if(tab){searchStatus.textContent='Google Search opened in a new tab.';}
-    else{searchStatus.textContent='Your browser blocked the new tab. Allow pop-ups for this page and try again.';}
-  });
-  if(openForm) openForm.addEventListener('submit',function(event){
-    event.preventDefault();
-    var raw=urlInput.value.trim();
-    if(!raw){openStatus.textContent='Enter a website address first.';return;}
-    if(!/^https?:\/\//i.test(raw)) raw='https://'+raw;
-    var parsed;
-    try{parsed=new URL(raw);}catch(err){openStatus.textContent='That address does not look valid. Try https://example.com.';return;}
-    if(parsed.protocol!=='http:'&&parsed.protocol!=='https:'){openStatus.textContent='Only HTTP and HTTPS website addresses are allowed.';return;}
-    if(!parsed.hostname||!parsed.hostname.includes('.')){openStatus.textContent='Enter a complete website address, such as https://example.com.';return;}
-    var tab=window.open(parsed.href,'_blank','noopener,noreferrer');
-    if(tab){openStatus.textContent='Website opened in a new tab: '+parsed.hostname;}
-    else{openStatus.textContent='Your browser blocked the new tab. Allow pop-ups for this page and try again.';}
-  });
-})();
-</script>
-
-
-<script id="chillzone-ai-runtime">
-(function(){
-  'use strict';
-  var root=document.getElementById('chillzoneai');
-  if(!root) return;
-  var keyInput=document.getElementById('czaiApiKey');
-  var connectBtn=document.getElementById('czaiConnect');
-  var disconnectBtn=document.getElementById('czaiClearKey');
-  var keyStatus=document.getElementById('czaiKeyStatus');
-  var personality=document.getElementById('czaiPersonality');
-  var chat=document.getElementById('czaiChat');
-  var welcome=document.getElementById('czaiWelcome');
-  var form=document.getElementById('czaiForm');
-  var input=document.getElementById('czaiInput');
-  var sendBtn=document.getElementById('czaiSend');
-  var clearBtn=document.getElementById('czaiClearChat');
-  var modeLabel=document.getElementById('czaiModeLabel');
-  var apiKey='';
-  var busy=false;
-  var mode='chat';
-  var history=[];
-  var modeNames={chat:'General chat',space:'Space Expert',games:'Gaming Assistant',site:'ChillZone Guide'};
+  var $=function(id){return document.getElementById(id);};
+  var keyInput=$('czaiApiKey'), toggleKey=$('czaiToggleKey'), forgetKey=$('czaiForgetKey');
+  var personality=$('czaiPersonality'), chat=$('czaiChat'), form=$('czaiForm'), prompt=$('czaiPrompt');
+  var send=$('czaiSend'), status=$('czaiStatus'), clear=$('czaiClear');
+  if(!keyInput||!chat||!form) return;
+  var mode='chat', history=[], busy=false;
   var modePrompts={
-    chat:'You are ChillZone AI, a helpful, accurate, friendly assistant inside a space-themed student downtime website called ChillZone. Explain clearly, ask a brief follow-up if needed, and keep answers age-appropriate.',
-    space:'You are ChillZone AI Space Expert. Focus on astronomy, planets, stars, galaxies, spacecraft, and space science. Explain accurately, define difficult terms, and make science exciting and accessible to a middle-school student. If uncertain, say so.',
-    games:'You are ChillZone AI Gaming Assistant. Help users find games already offered on ChillZone, suggest appropriate browser-game ideas, explain game strategies, and help with game questions. Do not suggest bypassing school/network restrictions or unsafe challenges. Do not claim to have checked live game availability.',
-    site:'You are the ChillZone website guide. Explain the features visible in this site: Home, Games, Trivia & Badges, Movies / Watch, Google / Web, ChillZone AI, Break Timer, About, Executor, Observe, Profile, and Settings. Help the user navigate, but be honest that you cannot see their browser or inspect page state. Do not claim to control the site.'
+    chat:'You are ChillZone AI, a helpful, friendly assistant built into the ChillZone website. Answer clearly and adapt to the user. Be age-appropriate. If you are unsure, say so.',
+    space:'You are ChillZone AI in Space Expert mode. Explain astronomy, planets, stars, galaxies, space missions, and physics accurately in accessible language. Encourage curiosity and distinguish established facts from speculation.',
+    games:'You are ChillZone AI in Gaming Assistant mode. Help users discover games, explain game mechanics, offer strategy tips, and suggest suitable games. Do not claim you can see or launch a game unless the user tells you what is happening.',
+    site:'You are ChillZone AI in ChillZone Guide mode. Help people navigate ChillZone, including its Games, Trivia & Badges, Movies / Watch, Break Timer, Observe, Profile, and Settings areas. Do not claim to control the page or know its live state unless that information is provided.'
   };
-  var personalityPrompts={
-    chill:'Personality: calm, warm, friendly, relaxed. Use a few space-themed touches without overdoing emojis.',
-    funny:'Personality: playful, lightly funny, meme-aware, and energetic, while still being clear and respectful. Do not force jokes into serious topics.',
-    smart:'Personality: thoughtful, precise, organized, and concise. Explain reasoning in understandable steps without pretending to know facts you do not know.',
-    cinematic:'Personality: cinematic sci-fi narrator with vivid but brief cosmic atmosphere. Keep factual explanations accurate and do not bury the answer in theatrics.'
+  var personalities={
+    chill:'Personality: relaxed, welcoming, and concise, with a light space-themed vibe.',
+    funny:'Personality: playful and witty, using occasional clean jokes and light slang without overdoing it.',
+    smart:'Personality: precise, organized, thoughtful, and clear. Explain reasoning in understandable steps.',
+    cinematic:'Personality: cinematic and imaginative, like a friendly mission-control narrator, while keeping factual answers accurate.'
   };
-  function setStatus(message,state){keyStatus.textContent=message;keyStatus.dataset.state=state||'';}
-  function scrollChat(){chat.scrollTop=chat.scrollHeight;}
+  function setStatus(message){status.textContent=message;}
   function addMessage(role,text){
-    if(welcome&&welcome.parentNode){welcome.parentNode.removeChild(welcome);welcome=null;}
-    var bubble=document.createElement('div');bubble.className='czai-message '+(role==='user'?'user':'assistant');
-    var label=document.createElement('div');label.className='czai-role';label.textContent=role==='user'?'You':'ChillZone AI';
+    var empty=$('czaiWelcome');if(empty)empty.remove();
+    var node=document.createElement('div');node.className='czai-message '+(role==='user'?'user':'assistant');
+    var speaker=document.createElement('div');speaker.className='czai-speaker';speaker.textContent=role==='user'?'You':'ChillZone AI';
     var body=document.createElement('div');body.textContent=text;
-    bubble.appendChild(label);bubble.appendChild(body);chat.appendChild(bubble);scrollChat();return bubble;
+    node.appendChild(speaker);node.appendChild(body);chat.appendChild(node);chat.scrollTop=chat.scrollHeight;return node;
   }
-  function addWelcome(){
-    if(document.getElementById('czaiWelcome'))return;
-    var panel=document.createElement('div');panel.className='czai-welcome';panel.id='czaiWelcome';
-    var strong=document.createElement('strong');strong.textContent='Welcome back to the command deck ✨';
-    panel.appendChild(strong);panel.appendChild(document.createTextNode('Connect your API key and ask your next question.'));
-    chat.appendChild(panel);welcome=panel;
-  }
-  function setMode(next){
-    if(!modePrompts[next])return;mode=next;
-    root.querySelectorAll('[data-czai-mode]').forEach(function(button){button.setAttribute('aria-pressed',String(button.getAttribute('data-czai-mode')===mode));});
-    modeLabel.textContent=modeNames[mode]+' · '+(apiKey?'ready for liftoff':'waiting for API key');
-  }
-  root.querySelectorAll('[data-czai-mode]').forEach(function(button){button.addEventListener('click',function(){setMode(button.getAttribute('data-czai-mode'));});});
-  root.querySelectorAll('[data-czai-prompt]').forEach(function(button){button.addEventListener('click',function(){input.value=button.getAttribute('data-czai-prompt')||'';input.focus();});});
-  connectBtn.addEventListener('click',function(){
-    var candidate=keyInput.value.trim();
-    if(!candidate){setStatus('Paste your API key first.','error');keyInput.focus();return;}
-    if(!/^sk-[A-Za-z0-9_-]{12,}$/.test(candidate)){setStatus('That key does not look like a standard OpenAI API key. Check it and try again.','error');return;}
-    apiKey=candidate;keyInput.value='';setStatus('API key loaded in this tab’s memory. It will be cleared when you disconnect or reload.','ok');
-    modeLabel.textContent=modeNames[mode]+' · ready for liftoff';
-  });
-  disconnectBtn.addEventListener('click',function(){apiKey='';keyInput.value='';setStatus('API key disconnected from this tab.','');modeLabel.textContent=modeNames[mode]+' · waiting for API key';});
-  function friendlyError(status,detail){
-    if(status===401||status===403)return 'The API rejected this key or its permissions. Check the key in your OpenAI dashboard.';
-    if(status===429)return 'The API rate limit or account quota was reached. Check your usage and billing limits.';
-    if(status===400)return 'The API could not accept this request. Check the model/account access and try again.';
-    return 'The AI request failed (HTTP '+status+'). '+(detail||'Please try again in a moment.');
-  }
-  async function ask(userText){
-    if(!apiKey){setStatus('Connect your OpenAI API key before sending a message.','error');keyInput.focus();return;}
-    if(busy)return;
-    busy=true;sendBtn.disabled=true;sendBtn.textContent='Thinking…';input.disabled=true;
-    addMessage('user',userText);history.push({role:'user',content:userText});
-    var pending=addMessage('assistant','Thinking through the stars…');pending.setAttribute('aria-busy','true');
-    var system=modePrompts[mode]+'\n'+personalityPrompts[personality.value]+'\nDo not claim to browse the internet, run games, or access the live ChillZone page. You can only answer from your knowledge and the conversation. Be honest about uncertainty. Do not ask for passwords, API keys, or personal details. Keep content suitable for younger users.';
+  function setBusy(value){busy=value;send.disabled=value;send.textContent=value?'Thinking…':'Send ↗';prompt.disabled=value;}
+  function currentSystemPrompt(){return modePrompts[mode]+' '+(personalities[personality.value]||personalities.chill)+' Keep responses safe, respectful, and suitable for a school-age audience. Never ask the user to reveal secrets or personal information.';}
+  document.querySelectorAll('[data-ai-mode]').forEach(function(button){button.addEventListener('click',function(){mode=button.getAttribute('data-ai-mode');document.querySelectorAll('[data-ai-mode]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});setStatus('Mode changed to '+button.textContent.trim()+'.');});});
+  toggleKey.addEventListener('click',function(){var reveal=keyInput.type==='password';keyInput.type=reveal?'text':'password';toggleKey.textContent=reveal?'Hide':'Show';toggleKey.setAttribute('aria-pressed',String(reveal));});
+  forgetKey.addEventListener('click',function(){keyInput.value='';keyInput.type='password';toggleKey.textContent='Show';toggleKey.setAttribute('aria-pressed','false');setStatus('API key cleared from the page.');keyInput.focus();});
+  clear.addEventListener('click',function(){history=[];chat.textContent='';var welcome=document.createElement('div');welcome.className='czai-empty';welcome.id='czaiWelcome';welcome.textContent='Chat cleared. Your next question can start a new mission.';chat.appendChild(welcome);setStatus('Conversation cleared.');});
+  prompt.addEventListener('keydown',function(event){if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();if(form.requestSubmit)form.requestSubmit();else send.click();}});
+  form.addEventListener('submit',async function(event){
+    event.preventDefault();if(busy)return;
+    var apiKey=keyInput.value.trim(),text=prompt.value.trim();
+    if(!apiKey){setStatus('Paste your OpenAI API key first. It will not be saved by ChillZone.');keyInput.focus();return;}
+    if(!text)return;
+    if(!/^sk-[A-Za-z0-9_-]{10,}$/.test(apiKey)){setStatus('That key format does not look right. Check the key you copied from the OpenAI platform.');keyInput.focus();return;}
+    prompt.value='';addMessage('user',text);history.push({role:'user',content:text});
+    // Keep a bounded recent conversation so requests don't grow forever.
+    history=history.slice(-24);
+    var thinking=addMessage('assistant','');thinking.querySelector('div:last-child').className='czai-thinking';thinking.querySelector('div:last-child').setAttribute('aria-label','ChillZone AI is thinking');thinking.querySelector('div:last-child').innerHTML='<span></span><span></span><span></span>';
+    setBusy(true);setStatus('Connecting to OpenAI…');
     try{
-      var messages=[{role:'system',content:system}].concat(history.slice(-16));
-      var response=await fetch('https://api.openai.com/v1/chat/completions',{
-        method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-        body:JSON.stringify({model:'gpt-4o-mini',messages:messages,max_completion_tokens:700,temperature:0.7,store:false})
-      });
-      var data={};try{data=await response.json();}catch(e){}
-      if(!response.ok){var detail=data&&data.error&&data.error.message?data.error.message:'';throw new Error(friendlyError(response.status,detail));}
+      var response=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'system',content:currentSystemPrompt()}].concat(history),temperature:personality.value==='funny'?0.85:0.65,max_tokens:900})});
+      var data=await response.json();
+      if(!response.ok){var detail=data&&data.error&&data.error.message?data.error.message:'Request failed with HTTP '+response.status+'.';throw new Error(detail);}
       var answer=data&&data.choices&&data.choices[0]&&data.choices[0].message&&data.choices[0].message.content;
-      if(typeof answer!=='string'||!answer.trim())throw new Error('The API returned an empty response. Please try again.');
-      pending.querySelector('.czai-role').textContent='ChillZone AI';pending.lastChild.textContent=answer.trim();pending.removeAttribute('aria-busy');
-      history.push({role:'assistant',content:answer.trim()});setStatus('Connected · response received.','ok');
+      if(typeof answer!=='string'||!answer.trim())throw new Error('The model returned an empty response. Please try again.');
+      thinking.remove();addMessage('assistant',answer.trim());history.push({role:'assistant',content:answer.trim()});history=history.slice(-24);setStatus('Reply received.');
     }catch(error){
-      var msg=error&&error.message?error.message:'An unexpected error occurred.';
-      if(error instanceof TypeError)msg='Could not reach the API. Check your internet connection, browser console, and API access settings.';
-      pending.querySelector('.czai-role').textContent='Connection issue';pending.lastChild.textContent=msg;pending.classList.add('assistant');pending.removeAttribute('aria-busy');setStatus(msg,'error');
-      // Remove the failed user turn from context so it can be retried cleanly.
-      if(history.length&&history[history.length-1].role==='user')history.pop();
-    }finally{busy=false;sendBtn.disabled=false;sendBtn.textContent='Send ↗';input.disabled=false;input.focus();scrollChat();}
-  }
-  form.addEventListener('submit',function(event){event.preventDefault();var text=input.value.trim();if(!text||busy)return;input.value='';ask(text);});
-  input.addEventListener('keydown',function(event){if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){event.preventDefault();form.requestSubmit();}});
-  clearBtn.addEventListener('click',function(){if(busy)return;history=[];chat.innerHTML='';addWelcome();setStatus(apiKey?'Conversation cleared. API key remains connected for this tab.':'Conversation cleared.','');});
-  setMode('chat');
+      thinking.remove();var message=error&&error.message?error.message:'Unknown network error.';
+      if(/failed to fetch|networkerror|load failed/i.test(message))message='Could not reach the API. Check your internet connection and browser console; a browser/network restriction may be blocking the request.';
+      addMessage('assistant','I could not complete that request. '+message);setStatus('Request failed. Check the API key, account billing/limits, and connection.');
+    }finally{setBusy(false);prompt.focus();}
+  });
 })();
 </script>
 
