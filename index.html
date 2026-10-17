@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1712,12 +1714,12 @@ button { padding: .6rem 1rem; border: 0; border-radius: 999px; cursor: pointer; 
 (function(){
 'use strict';
 var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
-var msg=$('#czMessage'), gameCount=0, triviaCorrect=0, xp=0, levelNames=['Cadet','Pilot','Commander','Galaxy Legend'], saveBox=$('#czSave');
+var msg=('#czMessage'),gameCount=0,triviaCorrect=0,xp=0,levelNames=['Cadet','Pilot','Commander','GalaxyLegend'],saveBox=('#czSave');
 var prefs={motion:false,parallax:true,pointer:true,dim:false,focus:false,text:'1',difficulty:'medium',leaveConfirm:false};
 try{saveBox.checked=localStorage.getItem('chillzoneSaveEnabled')==='yes'}catch(e){}
 var defaultPrefs={motion:false,parallax:true,pointer:true,dim:false,focus:false,text:'1',difficulty:'medium',leaveConfirm:false};
 function say(t){if(msg)msg.textContent=t}
-function updateStats(){ $('#czGamesPlayed').textContent=gameCount;$('#czTriviaCorrect').textContent=triviaCorrect;$('#czXP').textContent=xp;$('#czLevel').textContent=levelNames[Math.min(levelNames.length-1,Math.floor(xp/100))];}
+function updateStats(){ ('#czGamesPlayed').textContent=gameCount;('#czTriviaCorrect').textContent=triviaCorrect;('#czXP').textContent=xp;('#czLevel').textContent=levelNames[Math.min(levelNames.length-1,Math.floor(xp/100))];}
 function awardXP(n){xp+=n;updateStats();say('+'+n+' XP! Total: '+xp+'. Level: '+levelNames[Math.min(3,Math.floor(xp/100))]+'.')}
 function applyPrefs(){
  document.body.classList.toggle('cz-low-motion',prefs.motion||window.matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -1725,7 +1727,7 @@ function applyPrefs(){
  document.body.classList.toggle('cz-dim',prefs.dim);document.body.classList.toggle('cz-focus',prefs.focus);
  document.documentElement.style.fontSize=prefs.text+'em';
  ['czMotion','czParallax','czPointer','czDim','czFocus'].forEach(function(id,i){var el=$('#'+id);if(el)el.checked=[prefs.motion,prefs.parallax,prefs.pointer,prefs.dim,prefs.focus][i]});
- $('#czTextSize').value=prefs.text;$('#czDifficulty').value=prefs.difficulty;$('#czLeaveConfirm').checked=!!prefs.leaveConfirm;
+ ('#czTextSize').value=prefs.text;('#czDifficulty').value=prefs.difficulty;$('#czLeaveConfirm').checked=!!prefs.leaveConfirm;
 }
 function loadPrefs(){if(!saveBox.checked)return;try{var v=JSON.parse(localStorage.getItem('chillzonePrefs')||'null');if(v) prefs=Object.assign({},defaultPrefs,v)}catch(e){}}
 function persist(){if(!saveBox.checked)return;try{localStorage.setItem('chillzonePrefs',JSON.stringify(prefs));localStorage.setItem('chillzoneProgress',JSON.stringify({xp:xp,triviaCorrect:triviaCorrect}))}catch(e){say('Browser storage is unavailable. Settings still work for this visit.')}}
@@ -1745,7 +1747,7 @@ window.addEventListener('beforeunload',function(e){if(prefs.leaveConfirm){e.prev
 saveBox.addEventListener('change',function(){if(this.checked){try{localStorage.setItem('chillzoneSaveEnabled','yes')}catch(e){}persist();say('Saving enabled. ChillZone settings and progress may now be stored in this browser.')}else{try{localStorage.removeItem('chillzoneSaveEnabled');localStorage.removeItem('chillzonePrefs');localStorage.removeItem('chillzoneProgress')}catch(e){}say('Saving disabled. Saved ChillZone settings and progress were removed where possible.')}})
 $('#czResetSettings').addEventListener('click',function(){prefs=Object.assign({},defaultPrefs);saveBox.checked=false;try{localStorage.removeItem('chillzonePrefs');localStorage.removeItem('chillzoneProgress')}catch(e){}applyPrefs();say('Settings restored to defaults. Background artwork and colors were not changed.')});
 $('#czClockBtn').addEventListener('click',function(){var a=$('#czClockArea');a.hidden=!a.hidden;this.textContent=a.hidden?'Show clock':'Hide clock';if(!a.hidden)clock()});
-function clock(){if($('#czClockArea').hidden)return;var d=new Date();$('#czClock').textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});$('#czDate').textContent=d.toLocaleDateString([], {year:'numeric',month:'short',day:'numeric'});setTimeout(clock,1000)}
+function clock(){if(('#czClockArea').hidden)return;vard=newDate();('#czClock').textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});$('#czDate').textContent=d.toLocaleDateString([], {year:'numeric',month:'short',day:'numeric'});setTimeout(clock,1000)}
 var facts=['Jupiter is the largest planet in our Solar System.','A light-year measures distance, not time.','The Sun contains most of the mass in our Solar System.','Mars has the tallest known volcano in the Solar System: Olympus Mons.','Saturn’s rings are made mostly of ice and rocky particles.','A day on Venus is longer than its year.','The Milky Way contains billions of stars.'];
 $('#czFactBtn').addEventListener('click',()=>say('🌌 Space fact: '+facts[Math.floor(Math.random()*facts.length)]));
 $('#czActivityBtn').addEventListener('click',()=>{var a=[['Asteroid Dodge','#czAsteroidArea'],['Cosmic Memory','#czMemoryArea'],['Planet Quiz','#czPlanetArea']][Math.floor(Math.random()*3)];$(a[1]).hidden=false;$(a[1]).closest('.cz-mini-card').scrollIntoView({behavior:prefs.motion?'auto':'smooth',block:'center'});say('Random activity selected: '+a[0]+'.')});
@@ -1753,19 +1755,19 @@ $('#czHelpBtn').addEventListener('click',()=>say('Quick help: use the navigation
 var keyTargets=['home','games','brain','watch','timer','about'];document.addEventListener('keydown',function(e){if(!e.altKey)return;var n=Number(e.key);if(n>=1&&n<=6){e.preventDefault();$('#'+keyTargets[n-1]).scrollIntoView({behavior:prefs.motion?'auto':'smooth'});}});
 
 /* Floating Settings launcher: keeps settings out of the page's normal scroll flow. */
-var settingsFloat=$('#settingsFloat'), settingsClose=$('#settingsClose');
+var settingsFloat=('#settingsFloat'),settingsClose=('#settingsClose');
 function setSettingsOpen(open){document.body.classList.toggle('cz-settings-open',open);settingsFloat.setAttribute('aria-expanded',String(open));settingsFloat.setAttribute('aria-label',open?'Close settings':'Open settings');settingsFloat.title=open?'Close settings':'Settings';settingsFloat.textContent=open?'✕':'⚙️';if(open){$('#settings').scrollTop=0;settingsClose.focus()}else settingsFloat.focus()}
 settingsFloat.addEventListener('click',function(){setSettingsOpen(!document.body.classList.contains('cz-settings-open'))});
 settingsClose.addEventListener('click',function(){setSettingsOpen(false)});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(document.body.classList.contains('cz-settings-open'))setSettingsOpen(false);if(!$('#profilePanel').hidden)closeProfile();if(!$('#observePanel').hidden)$('#observePanel').hidden=true;if(!$('#observeSettingsPanel').hidden)$('#observeSettingsPanel').hidden=true;}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(document.body.classList.contains('cz-settings-open'))setSettingsOpen(false);if(!('#profilePanel').hidden)closeProfile();if(!('#observePanel').hidden)('#observePanel').hidden=true;if(!('#observeSettingsPanel').hidden)$('#observeSettingsPanel').hidden=true;}});
 /* Pinned top-bar profile panel. */
-var profilePanel=$('#profilePanel'),profileToggle=$('#profileToggle');
+var profilePanel=('#profilePanel'),profileToggle=('#profileToggle');
 function closeProfile(){profilePanel.hidden=true;profileToggle.setAttribute('aria-expanded','false')}
-profileToggle.addEventListener('click',function(){var open=profilePanel.hidden;profilePanel.hidden=!open;profileToggle.setAttribute('aria-expanded',String(open));if(open){var n='';try{n=sessionStorage.getItem('chillzone-entered')||''}catch(e){}$('#profileName').textContent=n||'Explorer';$('#profileNameInput').value=n;$('#profileNameInput').focus()}});
+profileToggle.addEventListener('click',function(){var open=profilePanel.hidden;profilePanel.hidden=!open;profileToggle.setAttribute('aria-expanded',String(open));if(open){var n='';try{n=sessionStorage.getItem('chillzone-entered')||''}catch(e){}('#profileName').textContent=n||'Explorer';('#profileNameInput').value=n;$('#profileNameInput').focus()}});
 $('#profileClose').addEventListener('click',closeProfile);
 $('#profileSave').addEventListener('click',function(){var n=$('#profileNameInput').value.replace(/\s+/g,' ').trim();if(n.length<2){$('#profileStatus').textContent='Please enter at least 2 characters.';return}try{sessionStorage.setItem('chillzone-entered',n)}catch(e){}$('#profileName').textContent=n;$('#profileStatus').textContent='Explorer name updated for this visit.';if(window.chillZoneSetUsername)window.chillZoneSetUsername(n)});
 /* Observe mode: hide the normal page and keep the space background, top bar, and discovery controls. */
-var observeNav=$('#observeNav'),observeDiscover=$('#observeDiscover'),observeSettingsToggle=$('#observeSettingsToggle'),observeSettingsPanel=$('#observeSettingsPanel'),observePanel=$('#observePanel'),observeCollection=$('#observeCollection'),observeFound=$('#observeFound'),observeFlyby=$('#observeFlyby'),observeTimer=null,observeFlybyTimer=null,observeRate=4,observeChance={Common:90,Uncommon:70,Rare:50,Legendary:20};
+var observeNav=('#observeNav'),observeDiscover=('#observeDiscover'),observeSettingsToggle=('#observeSettingsToggle'),observeSettingsPanel=('#observeSettingsPanel'),observePanel=('#observePanel'),observeCollection=('#observeCollection'),observeFound=('#observeFound'),observeFlyby=('#observeFlyby'),observeTimer=null,observeFlybyTimer=null,observeRate=4,observeChance={Common:90,Uncommon:70,Rare:50,Legendary:20};
 var observeItems=[
  {name:'Astronaut',icon:'🧑‍🚀',rarity:'Common',detail:'A space explorer in a suit.'},
  {name:'Space Shuttle',icon:'🛰️',rarity:'Common',detail:'A reusable spacecraft.'},
@@ -1786,8 +1788,8 @@ var observeItems=[
 var discovered=[];
 function renderObserveCatalog(){var catalog=$('#observeCatalog');catalog.textContent='';[observeItems[0],observeItems[4],observeItems[8],observeItems[12],observeItems[13],observeItems[14]].forEach(function(o){var row=document.createElement('div');row.className='observe-object';var ico=document.createElement('span');ico.className='obj-icon';ico.textContent=o.icon;var info=document.createElement('div');var title=document.createElement('strong');title.textContent=o.name;var rarity=document.createElement('span');rarity.className='rarity '+o.rarity.toLowerCase();rarity.textContent=o.rarity;var detail=document.createElement('small');detail.textContent=o.detail;info.appendChild(title);info.appendChild(rarity);info.appendChild(detail);row.appendChild(ico);row.appendChild(info);catalog.appendChild(row)})}
 function renderObserveCollection(){if(!discovered.length){observeCollection.innerHTML='<p class="session-note">Objects will be added automatically as they appear.</p>';return}observeCollection.textContent='';discovered.slice().reverse().forEach(function(o){var row=document.createElement('div');row.className='observe-object';var ico=document.createElement('span');ico.className='obj-icon';ico.textContent=o.icon;var info=document.createElement('div');var title=document.createElement('strong');title.textContent=o.name;var rarity=document.createElement('span');rarity.className='rarity '+o.rarity.toLowerCase();rarity.textContent=o.rarity;var detail=document.createElement('small');detail.textContent=o.detail;info.appendChild(title);info.appendChild(rarity);info.appendChild(detail);row.appendChild(ico);row.appendChild(info);observeCollection.appendChild(row)})}
-function updateObserveRate(){observeRate=Number($('#observeRate').value)||4;$('#observeRateValue').textContent=String(observeRate);scheduleObserveSpawn();}
-function updateObserveChance(key,inputId,valueId){observeChance[key]=Number($(inputId).value);$(valueId).textContent=observeChance[key]+'%';}
+function updateObserveRate(){observeRate=Number(('#observeRate').value)||4;('#observeRateValue').textContent=String(observeRate);scheduleObserveSpawn();}
+function updateObserveChance(key,inputId,valueId){observeChance[key]=Number((inputId).value);(valueId).textContent=observeChance[key]+'%';}
 function scheduleObserveSpawn(){window.clearTimeout(observeTimer);if(document.body.classList.contains('cz-observe-mode'))observeTimer=window.setTimeout(spawnObserveObject,60000/Math.max(1,observeRate));}
 function chooseObserveItem(){var passed={Common:Math.random()*100<observeChance.Common,Uncommon:Math.random()*100<observeChance.Uncommon,Rare:Math.random()*100<observeChance.Rare,Legendary:Math.random()*100<observeChance.Legendary};var rarity=passed.Legendary?'Legendary':passed.Rare?'Rare':passed.Uncommon?'Uncommon':passed.Common?'Common':null;if(!rarity)return null;var tier=observeItems.filter(function(o){return o.rarity===rarity});return tier[Math.floor(Math.random()*tier.length)];}
 function spawnObserveObject(){if(!document.body.classList.contains('cz-observe-mode'))return;var item=chooseObserveItem();if(!item){observeFound.textContent='Nothing drifted into view this time. Keep observing…';scheduleObserveSpawn();return;}observeFlyby.classList.remove('active');void observeFlyby.offsetWidth;observeFlyby.querySelector('.flyby-icon').textContent=item.icon;observeFlyby.querySelector('strong').textContent=item.name;observeFlyby.querySelector('small').textContent=item.rarity;observeFlyby.style.top=(18+Math.random()*58)+'%';observeFlyby.classList.add('active');discovered.push(item);observeFound.textContent='Drifting by: '+item.name+' — '+item.rarity+'! Added to your discoveries.';renderObserveCollection();window.clearTimeout(observeFlybyTimer);observeFlybyTimer=window.setTimeout(function(){observeFlyby.classList.remove('active')},12000);scheduleObserveSpawn();}
@@ -1807,11 +1809,13 @@ loadPrefs();applyPrefs();restoreProgress();updateStats();
 
 /* Game finder, favorites, recent list */
 var favs=new Set(), recent=[];
-function visibleMiniFilter(mode){$$('.cz-mini-card').forEach(c=>{c.hidden=(mode==='favorites'&&!favs.has(c.dataset.mini))||(mode==='recent'&&recent.indexOf(c.dataset.mini)<0)});$('#czGameListStatus').textContent=mode==='all'?'Showing all built-in mini-games.':mode==='favorites'?'Showing favorite mini-games.':'Showing recently played mini-games.'}
+function visibleMiniFilter(mode){$('.cz-mini-card').forEach(c=>c.hidden=(mode==='favorites'&&!favs.has(c.dataset.mini))||(mode==='recent'&&recent.indexOf(c.dataset.mini)<0));('#czGameListStatus').textContent=mode==='all'?'Showing all built-in mini-games.':mode==='favorites'?'Showing favorite mini-games.':'Showing recently played mini-games.'}
 $$('[data-fav]').forEach(b=>b.addEventListener('click',function(){var id=this.dataset.fav;if(favs.has(id)){favs.delete(id);this.textContent='☆ Favorite'}else{favs.add(id);this.textContent='★ Favorited'}say('Favorites are stored for this visit only.')}));
-$('#czShowFavorites').addEventListener('click',()=>visibleMiniFilter('favorites'));$('#czShowRecent').addEventListener('click',()=>visibleMiniFilter('recent'));$('#czShowAllGames').addEventListener('click',()=>visibleMiniFilter('all'));
-function filterGames(){var q=$('#czGameSearch').value.toLowerCase(),f=$('#czGameFilter').value;$$('.cz-mini-card').forEach(c=>c.hidden=(c.dataset.title.toLowerCase().indexOf(q)<0)||(f==='portal'));var cards=$$('#gameCards .card');cards.forEach(c=>{var t=c.textContent.toLowerCase();c.hidden=!!q&&t.indexOf(q)<0});}
-$('#czGameSearch').addEventListener('input',filterGames);$('#czGameFilter').addEventListener('change',filterGames);
+('#czShowFavorites').addEventListener('click',()=>visibleMiniFilter('favorites'));('#czShowRecent').addEventListener('click',()=>visibleMiniFilter('recent'));$('#czShowAllGames').addEventListener('click',()=>visibleMiniFilter('all'));
+function filterGames(){var q=('#czGameSearch').value.toLowerCase(),f=('#czGameFilter').value;
+('.cz-mini-card').forEach(c=>c.hidden=(c.dataset.title.toLowerCase().indexOf(q)<0)||(f==='portal'));varcards=
+('#gameCards .card');cards.forEach(c=>{var t=c.textContent.toLowerCase();c.hidden=!!q&&t.indexOf(q)<0});}
+('#czGameSearch').addEventListener('input',filterGames);('#czGameFilter').addEventListener('change',filterGames);
 
 /* Asteroid Dodge */
 var cv=$('#czAsteroidCanvas'),ctx=cv.getContext('2d'),running=false,raf=0,px=280,rocks=[],score=0,last=0,held=0;
@@ -1820,17 +1824,17 @@ function stopAsteroid(){running=false;cancelAnimationFrame(raf)}
 function asteroidLoop(t){if(!running)return;var dt=Math.min(32,t-last);last=t;px=Math.max(16,Math.min(544,px+held*dt*.32));rocks.forEach(r=>r.y+=r.v*dt/16);if(Math.random()<.045+(prefs.difficulty==='hard'?.05:prefs.difficulty==='easy'?-.02:0))rocks.push({x:12+Math.random()*536,y:-10,r:7+Math.random()*6,v:1.2+Math.random()*1.4});rocks=rocks.filter(r=>r.y<280);if(rocks.some(r=>Math.abs(r.x-px)<r.r+12&&Math.abs(r.y-243)<r.r+8)){stopAsteroid();$('#czAsteroidStatus').textContent='Collision! Score: '+score+'. Press Start / Restart to try again.';awardXP(Math.min(15,score));return}score++;drawAsteroid();raf=requestAnimationFrame(asteroidLoop)}
 function startAsteroid(){stopAsteroid();running=true;rocks=[];score=0;px=280;last=performance.now();$('#czAsteroidStatus').textContent='Avoid the asteroids!';drawAsteroid();raf=requestAnimationFrame(asteroidLoop)}
 $('#czAsteroidStart').addEventListener('click',startAsteroid);
-$('#czAsteroidLeft').addEventListener('pointerdown',()=>held=-1);$('#czAsteroidRight').addEventListener('pointerdown',()=>held=1);['czAsteroidLeft','czAsteroidRight'].forEach(id=>$('#'+id).addEventListener('pointerup',()=>held=0));
-document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&& !$('#czAsteroidArea').hidden)held=-1;if(e.key==='ArrowRight'&&!$('#czAsteroidArea').hidden)held=1});document.addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight')held=0});
+('#czAsteroidLeft').addEventListener('pointerdown',()=>held=-1);('#czAsteroidRight').addEventListener('pointerdown',()=>held=1);['czAsteroidLeft','czAsteroidRight'].forEach(id=>$('#'+id).addEventListener('pointerup',()=>held=0));
+document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'&& !('#czAsteroidArea').hidden)held=-1;if(e.key==='ArrowRight'&&!('#czAsteroidArea').hidden)held=1});document.addEventListener('keyup',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight')held=0});
 /* Cosmic Memory */
 var symbols=['🌎','🌙','🪐','☄️','🚀','⭐','🌌','🛰️'], first=null,lock=false,matches=0;
 function setupMemory(){first=null;lock=false;matches=0;var deck=symbols.concat(symbols).sort(()=>Math.random()-.5),grid=$('#czMemoryGrid');grid.textContent='';deck.forEach((sym,i)=>{var b=document.createElement('button');b.className='cz-memory-card';b.textContent='?';b.setAttribute('aria-label','Hidden card '+(i+1));b.dataset.symbol=sym;b.dataset.index=i;b.addEventListener('click',()=>{if(lock||b.disabled||b.textContent!=='?')return;b.textContent=sym;b.setAttribute('aria-label',sym);if(!first){first=b;return}if(first.dataset.symbol===b.dataset.symbol){first.disabled=true;b.disabled=true;first=null;matches++;if(matches===symbols.length){$('#czMemoryStatus').textContent='All pairs found! +25 XP';awardXP(25)}else $('#czMemoryStatus').textContent=matches+' of '+symbols.length+' pairs found.'}else{lock=true;var prev=first;setTimeout(()=>{prev.textContent='?';b.textContent='?';prev.setAttribute('aria-label','Hidden card');b.setAttribute('aria-label','Hidden card');first=null;lock=false},650)}});grid.appendChild(b)});$('#czMemoryStatus').textContent='Find all 8 matching pairs.'}
 $('#czMemoryRestart').addEventListener('click',setupMemory);
 /* Planet Quiz */
 var planetQs=[['Which planet is called the Red Planet?',['Mars','Venus','Neptune'],0],['Which is the largest planet?',['Earth','Jupiter','Mercury'],1],['Which planet is famous for its rings?',['Saturn','Mars','Venus'],0],['Which planet is closest to the Sun?',['Mercury','Earth','Uranus'],0],['Which planet has the Great Red Spot?',['Jupiter','Neptune','Mars'],0]],planetIndex=0,planetScore=0,planetDone=false;
-function showPlanet(){var q=planetQs[planetIndex%planetQs.length];$('#czPlanetQuestion').textContent='Question '+(planetIndex%planetQs.length+1)+': '+q[0];var box=$('#czPlanetOptions');box.textContent='';q[1].forEach((x,i)=>{var b=document.createElement('button');b.className='btn';b.textContent=x;b.addEventListener('click',()=>{if(planetDone)return;planetDone=true;if(i===q[2]){planetScore++;$('#czPlanetStatus').textContent='Correct!';awardXP(5)}else $('#czPlanetStatus').textContent='Not quite—correct answer: '+q[1][q[2]];$$('button',box).forEach(y=>y.disabled=true)});box.appendChild(b)});$('#czPlanetStatus').textContent='Score: '+planetScore;planetDone=false}
+function showPlanet(){var q=planetQs[planetIndex%planetQs.length];('#czPlanetQuestion').textContent='Question'+(planetIndex%planetQs.length+1)+':'+q[0];varbox=('#czPlanetOptions');box.textContent='';q[1].forEach((x,i)=>{var b=document.createElement('button');b.className='btn';b.textContent=x;b.addEventListener('click',()=>{if(planetDone)return;planetDone=true;if(i===q[2]){planetScore++;$('#czPlanetStatus').textContent='Correct!';awardXP(5)}else ('#czPlanetStatus').textContent='Notquite—correctanswer:'+q[1][q[2]];$('button',box).forEach(y=>y.disabled=true)});box.appendChild(b)});$('#czPlanetStatus').textContent='Score: '+planetScore;planetDone=false}
 $('#czPlanetNext').addEventListener('click',()=>{planetIndex++;if(planetIndex%planetQs.length===0){say('Planet Quiz round complete! Score: '+planetScore+'/'+planetQs.length+'.');planetScore=0}showPlanet()});
-function startMini(id){recent=recent.filter(x=>x!==id);recent.unshift(id);gameCount++;updateStats();$('#'+({asteroid:'czAsteroidArea',memory:'czMemoryArea',planet:'czPlanetArea'}[id])).hidden=false;if(id==='asteroid')startAsteroid();if(id==='memory')setupMemory();if(id==='planet'){planetIndex=0;planetScore=0;showPlanet()}awardXP(2);$$('.cz-mini-card').forEach(c=>c.classList.toggle('cz-focus-keep',c.dataset.mini===id));}
+function startMini(id){recent=recent.filter(x=>x!==id);recent.unshift(id);gameCount++;updateStats();('#'+(asteroid:'czAsteroidArea',memory:'czMemoryArea',planet:'czPlanetArea'[id])).hidden=false;if(id==='asteroid')startAsteroid();if(id==='memory')setupMemory();if(id==='planet')planetIndex=0;planetScore=0;showPlanet()awardXP(2);$('.cz-mini-card').forEach(c=>c.classList.toggle('cz-focus-keep',c.dataset.mini===id));}
 $$('[data-start-mini]').forEach(b=>b.addEventListener('click',()=>startMini(b.dataset.startMini)));
 $('#czRandomGame').addEventListener('click',()=>{var ids=['asteroid','memory','planet'];startMini(ids[Math.floor(Math.random()*ids.length)]);say('Random game launched!')});
 /* Make Star Catcher contribute to stats and persist progress where opted in */
@@ -1844,7 +1848,7 @@ var hints=$('#czTriviaHints');if(hints)hints.addEventListener('change',()=>say(h
 /* Award session XP for trivia completions by watching result visibility */
 var resultNode=$('#quizResult');if(resultNode){var wasHidden=resultNode.hidden;new MutationObserver(function(){if(wasHidden&&!resultNode.hidden){var text=resultNode.textContent;var m=text.match(/You got (\\d+) out of (\\d+)/);if(m){var n=Number(m[1]);triviaCorrect+=n;awardXP(n*10);updateStats();persist()}}wasHidden=resultNode.hidden}).observe(resultNode,{attributes:true,attributeFilter:['hidden']})}
 /* Daily mission label is deterministic for a given local date; mission is a lightweight local challenge. */
-var daily=new Date();var dayKey=daily.getFullYear()+'-'+(daily.getMonth()+1)+'-'+daily.getDate();var dailyEl=document.createElement('div');dailyEl.className='glass cz-settings-live';dailyEl.innerHTML='<h3>Daily Space Mission 🛰️</h3><p>Today’s mission: complete one trivia round or finish a mini-game. Progress is session-only unless saving is enabled.</p><button class="btn primary" type="button" id="czDailyMission">Mark mission complete</button><p class="cz-status" id="czDailyStatus" role="status">Mission awaiting launch.</p>';$('#brain .wrap').appendChild(dailyEl);$('#czDailyMission').addEventListener('click',function(){if(this.dataset.done)return;this.dataset.done='1';$('#czDailyStatus').textContent='Mission complete! +20 XP. Great work, explorer!';awardXP(20);persist()});
+var daily=new Date();var dayKey=daily.getFullYear()+'-'+(daily.getMonth()+1)+'-'+daily.getDate();var dailyEl=document.createElement('div');dailyEl.className='glass cz-settings-live';dailyEl.innerHTML='<h3>Daily Space Mission 🛰️</h3><p>Today’s mission: complete one trivia round or finish a mini-game. Progress is session-only unless saving is enabled.</p><button class="btn primary" type="button" id="czDailyMission">Mark mission complete</button><p class="cz-status" id="czDailyStatus" role="status">Mission awaiting launch.</p>';('#brain.wrap').appendChild(dailyEl);('#czDailyMission').addEventListener('click',function(){if(this.dataset.done)return;this.dataset.done='1';$('#czDailyStatus').textContent='Mission complete! +20 XP. Great work, explorer!';awardXP(20);persist()});
 /* Cosmetic transitions; preserves the existing background art and colors. */
 $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.focus)s.classList.add('cz-focus-keep')}));
 })();
@@ -1887,11 +1891,6 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
     var js=jsEl.value.replace(/<\/script/gi,'<\\/script');
     return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{box-sizing:border-box}'+css+'</style></head><body>'+html+'<scr'+'ipt>\n'+js+'\n</scr'+'ipt></body></html>';
   }
-    function runCode(){
-    output.removeAttribute('src');
-    output.srcdoc=buildDocument();
-    status.textContent='Code ran in the isolated preview.';
-  }
   function runCode(){
     output.removeAttribute('src');
     output.srcdoc=buildDocument();
@@ -1918,24 +1917,7 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
   document.getElementById('executorReset').addEventListener('click',function(){htmlEl.value=defaults.html;cssEl.value=defaults.css;jsEl.value=defaults.js;runCode();});
   [htmlEl,cssEl,jsEl].forEach(function(el){el.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();runCode();}})});
   window.addEventListener('beforeunload',function(){if(currentBlobUrl)URL.revokeObjectURL(currentBlobUrl)});
-  
-  // Original startup sequence
   runCode();
-
-  // New addition: Captures the ENTIRE webpage HTML document and launches it into a top-level Blob URL immediately
-  (function activateFullPageBlob() {
-    if(window.Blob && window.URL && URL.createObjectURL) {
-      // Check to ensure the page hasn't already been redirected to prevent an infinite loop
-      if (!window.location.protocol.startsWith('blob:')) {
-        // Compile the full source of the active webpage document
-        var entireDocumentHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-        var fullPageBlob = URL.createObjectURL(new Blob([entireDocumentHTML], {type: 'text/html;charset=utf-8'}));
-        
-        // Instantly force the primary browser view to load the full document Blob
-        window.top.location.href = fullPageBlob;
-      }
-    }
-  })();
 })();
 </script>
 
@@ -1974,3 +1956,5 @@ $$('main section').forEach(s=>s.addEventListener('pointerenter',()=>{if(prefs.fo
 
 </body>
 </html>
+
+
